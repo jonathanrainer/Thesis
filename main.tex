@@ -1,0 +1,35 @@
+\documentclass[fontsize=11pt,a4paper,twoside,abstracton,numbers=noenddot,BCOR=13mm,DIV=calc,toc=chapterentrydotfill]{scrbook}
+
+\usepackage[T1]{fontenc} % prevents < in text mode turning into
+\usepackage{textcomp}    % ?', etc
+\usepackage[osf]{newpxtext} % New PX Font
+\usepackage{newpxmath} % New PX Font (Math)
+%\usepackage{nimbusmononarrow} % nicer typewriter-style fonts
+%\usepackage{cmbright} % nice san serif fonts
+\usepackage{microtype} % micro-typographical extensions for
+% pdf(e)(la)tex
+\usepackage[british]{babel} % British hyphenation patterns, etc.
+\usepackage[backend=biber]{biblatex}
+\bibliography{bibtex/bibliography.bib}
+\usepackage{titling}
+\usepackage{hyperref}
+
+\begin{document}
+	
+	\include{chapters/titlepage}
+	\frontmatter
+	
+	\include{chapters/abstract}
+	\include{chapters/contents}
+	\include{chapters/acknowledgements}
+	\include{chapters/declaration}
+	\mainmatter
+	\include{chapters/introduction}
+	\include{chapters/literature}
+	\include{chapters/trace_assisted_caching}
+	\include{chapters/experimental_design}
+	\include{chapters/results_analysis}
+	\include{chapters/conclusion}
+	\printbibliography
+	
+\end{document}
