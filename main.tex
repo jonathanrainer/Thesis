@@ -1,18 +1,22 @@
-\documentclass[fontsize=11pt,a4paper,twoside,abstracton,numbers=noenddot,BCOR=13mm,DIV=calc,toc=chapterentrydotfill]{scrbook}
+\documentclass[fontsize=12pt,a4paper,twoside,numbers=noenddot,BCOR=13mm,DIV=calc,toc=chapterentrydotfill, parskip=half*, titlepage=true, usegeometry]{scrbook}
 
 \usepackage[T1]{fontenc} % prevents < in text mode turning into
 \usepackage{textcomp}    % ?', etc
-\usepackage[osf]{newpxtext} % New PX Font
+\usepackage{newpxtext} % New PX Font
 \usepackage{newpxmath} % New PX Font (Math)
 %\usepackage{nimbusmononarrow} % nicer typewriter-style fonts
 %\usepackage{cmbright} % nice san serif fonts
 \usepackage{microtype} % micro-typographical extensions for
 % pdf(e)(la)tex
 \usepackage[british]{babel} % British hyphenation patterns, etc.
-\usepackage[backend=biber]{biblatex}
+\usepackage[backend=biber, style=numeric, citestyle=numeric-comp, natbib]{biblatex}
 \bibliography{bibtex/bibliography.bib}
 \usepackage{titling}
 \usepackage{hyperref}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage[top=20mm, bottom=40mm, left=37mm, right=20mm]{geometry}
+\pagestyle{headings}
 
 \begin{document}
 	
@@ -30,6 +34,6 @@
 	\include{chapters/experimental_design}
 	\include{chapters/results_analysis}
 	\include{chapters/conclusion}
-	\printbibliography
+	\printbibliography[heading=bibintoc]
 	
 \end{document}

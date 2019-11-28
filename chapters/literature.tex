@@ -1,1 +1,51 @@
-\chapter{Literature}
+
+\chapter{Literature Review}
+
+This chapter presents a review of the literature surrounding memory latency reduction. It first focuses on more traditional methods, considering caching in its totality and then branching out to look beyond the cache to other methods of controlling latency, such as memory technology changes or scheduling. In the second section the focus moves to newer techniques that involve tracing and then finishes with a summary and evaluation of the position the literature presents.
+
+\section{Cache Intrinsic Techniques}
+
+After their first introduction to super-computers in the 1960's \cite{pattersonComputerOrganizationDesign2018} caches have become a standard part of almost any memory architecture. Iterative improvements, thanks to Moore's law, have pushed the performance of caches to higher and higher levels but this is not the whole story. Despite advances in technology it is still the case that the cache replacement policy is the most significant factor when determining how effective a cache will be at reducing memory latency \cite{hennessyComputerArchitectureQuantitative2019}.
+
+\subsection{Cache Replacement Policy}
+
+In it's simplest form a cache replacement policy is simply a way of deciding what happens when a cache gets full. For direct-mapped caches they are not important because there is only one location for a piece of data to inhabit. Consequently, if it is full there is no choice as to which element is replaced. However in set-associative caches the choice of replacement policy is absolutely crucial \cite{hennessyComputerArchitectureQuantitative2019} and as such there has been much research into which policies yield the best outcomes across a variety of metrics.
+
+When discussing various policies that are useful in reducing latency it's good to have in mind two policies that are often referred to in the literature but are not actually implemented. The first of these is known as \texttt{OPT} \cite{jeongOptimalReplacementsCaches1999} a theoretical optimal replacement policy which, by some unspecified means, can perfectly predict which cache block will be needed furthest in the future. Consequently when the decision is made to replace a cache block it will make an optimal decision. Due to the requirement to have perfect fore-knowledge of memory requirements, some authors \cite{jeongOptimalReplacementsCaches1999, pandaSurveyReplacementStrategies2016} are of the belief that it is not possible to implement. We will see in future sections that this may be an incorrect assumption but for the purposes of this section \texttt{OPT} will be used as a comparison to measure the performance of other cache replacement polcies as compared to the theoretical gold standard.
+
+The second theoretical replacement policy is that of random replacement or \texttt{RAND}. Under this scheme when a decision on replacement has to be made, the choice is made completely at random without reference to any other information \cite{beladyStudyReplacementAlgorithms1966}. Again this method is not usually implemented by cache designers when optimising for latency reduction \cite{karedlaCachingStrategiesImprove1994} but its utility is as the lower end of a continuum, bounded by \texttt{OPT} at the other end. So any cache replacement policy that is to be useful, has to justify the extra resources it will use by being better than \texttt{RAND} but will probably be worse than \texttt{OPT} because no policy can ever have perfect fore-knowledge.
+
+\subsubsection{Arrival-Time Based Techniques}
+
+One of the more simple cache replacement policies is to decide which cache line is to be replaced based on when the item entered the cache, or its arrival time. When implementing a technique like this you have two essential options: either you remove the most recently arrived cache line, or you remove the one that arrived furthest back in the past. The first of these two options is almost never used because it violates the principles of temporal locality, i.e. if something has been referenced recently it has a higher probabilty of being referenced in the immeadiate future, so the second is used. To implement this most designers choose a FIFO queue, sometimes referred to in the literature as a Round-Robin queue. A lot of implementers choose this technique because it has a very low hardware requirement \cite{pandaSurveyReplacementStrategies2016} which leads to a low cost, esepcially useful in embedded system design. On the other hand it's not highly performative \cite{al-zoubiPerformanceEvaluationCache2004}, often performing similarly to \texttt{RAND} despite the slight increase in hardware. 
+
+Due to its low performance research into using FIFO queues has been limited. Often \texttt{FIFO} is used a baseline to compare other policies to \cite{faresPerformanceEvaluationTraditional2012} rather than being implemented in its own right as it's simple to simulate. However \citet{wei-chetsengPRRLowoverheadCache2012} have experimented with combining a FIFO policy with cache-line locking and this produces similar performance to a Least-Recently-Used (LRU) policy but uses a lot less hardware to do so. There are more complex policies that would do even better, but when these are not possible, FIFO is a viable option, especially when combined with other techniques to supplement its short-comings. All in all \texttt{FIFO} is a good baseline to build from, and a viable option to implement if resources are limited, however we can use more information to make better decisions if we consider frequency of access. 
+
+\subsubsection{Frequency Based Techniques}
+
+A slightly more sophisticated approach to cache replacement is to count the number of times a cache block or line has been accessed, and then to evict the one with the lowest frequency of access, this approach is known as Least Frequently Used or (LFU) . In terms of implementation the most common form is to turn the cache into a priority queue where keys are calculated according to a variety of different formula \cite{podlipnigSurveyWebCache2003}. In addition implementations choose between perfect LFU, where every object is uniquely tracked across replacements, and in-cache LFU where counts are only tracked when items are in the cache, this is by far the most common otpion \cite{podlipnigSurveyWebCache2003}.
+
+Desipite it's simplicity in concept, LFU has several problems that often make it unsuitable for many applications without modification. The first is the problem of cache pollution \cite{karedlaCachingStrategiesImprove1994} where a cache block has a high number of accesses very early on and then is never referenced again. This causes the block to remain in the cache much longer than it should usefully do, giving less space for other more necessary blocks. The second problem is that often you can end up with many different cache blocks having the same frequency count so you need some kind of tiebreaking arbitration \cite{podlipnigSurveyWebCache2003}. This then means you  have to allocate more resources to the cache replacement algorithm just to resolve ties. Moreover the hardware to keep track of all the frequency counts, potentially across multiple replacements, gives a very high hardware overhead and increased energy consumptio, something many embedded systems cannot afford \cite{pandaSurveyReplacementStrategies2016}. 
+
+Some have attempted however to address some of the shortcomings of LFU with a variety of augmentations, most of which relate to adding ageing parameters to counter cache pollution. \citet{arlittEvaluatingContentManagement2000} suggests calculating 
+
+\subsubsection{Recency Based Techniques}
+
+\subsubsection{Hybrid Methods}
+
+\subsection{Improving Cache Technology}
+
+\subsection{Multi-Level Caches}
+
+\subsection{Prefecting \& Pre-loading}
+
+\section{Cache Extrinsic Techniques}
+
+\subsection{Hardware Changes}
+
+\subsection{Scheduling}
+
+\subsection{Program Rewriting}
+
+\chapter{Utilising Tracing to Reduce Memory Latency}
+

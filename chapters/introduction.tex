@@ -1,7 +1,92 @@
 \chapter{Introduction}
 
-Hello World!\cite{pattersonComputerOrganizationDesign2018}
+\emph{This chapter outlines the motivation behind the programme of research into trace-assisted caches and lays out the aims and hypotheses of this research. A structure of the thesis is also presented.}
 
 \section{Motivation}
 
-\subsection{Caching is Awful}
+% Basically computers are accessing memory all the time, it's inherent to their very fetch->decode->execute cycle.
+% So program execution times are strongly coupled to latency of external memory.
+% The aim obviously then is to make this access time as short as possible but there are limits as to what's possible economically and with the space available on current chips. -> Explain how access time is inversely proportional to cost & space.
+
+At its most basic, a computer consists of a CPU, a store of memory and an I/O system to facilitate the movement of data between the first two parts. The operation of a computer is then to repeatedly fetch an instruction from memory, fetch any operands the instruction might refer to, execute the instruction and then possibly write back any results to memory \cite{przybylskiCacheMemoryHierarchy1990}. Main memory therefore plays an integral role in the operation of a computer and so the access time\footnotetext{The time between issuing a request to memory and getting a valid response} of memory is one of the key factors that dictates the overall execution time of a program \cite{pattersonComputerOrganizationDesign2018} \cite{pattersonCaseIntelligentRAM1997}. 
+
+With that in mind the aim when designing memory systems is to try and keep access times comparable to CPU clock speeds, so when an instruction is issued the data is available immediately without having to stall the whole system. However, this can become problematic very quickly. SRAM memory, the fastest type of off-chip memory available commercially, provides access times of 0.5-2.5ns but costs somewhere in the region of £400 - 800 per GB. By comparison, DRAM memory is substantially cheaper, at between £8 - £16 per GB but only boasts access times of 50 - 70 ns \cite{pattersonComputerOrganizationDesign2018}, a difference of two orders of magnitude in price and access time. In addition, for the same amount of silicon you can fabricate more DRAM than SRAM, so it's harder to produce in large quantities. As a result of having a very large store of very fast access memory is impossible if you want it to be economically viable.
+
+% This is made even worse by the fact that the disparity between memory latency and processor speed, i.e. processors can issue more instructions faster but memory latency hasn't kept up.
+
+This is made even worse by the fact that ever since the invention of the first computing machines there has been a gap between the speed at which a processor can issue instructions and the speed at which memory can satisfy them \cite{wilkesMemoryGapFuture2001}. This has become known as the `processor-memory gap', and as time has gone on this has got worse and worse\cite{pattersonComputerOrganizationDesign2018}, with processors improving in speed exponentially thanks to Moore's Law, but memory technologies increasing at a fraction of that rate. This is a problem because the abstraction presented to programmers abstracts away time, making it appear that each statement or instruction takes amount of time to execute as any other. So either the entire field of software engineering would have to adapt to take account of time, something many programming languages are very unsuited for \cite{furiaModelingTimeComputing2010}, or there has to be some way to change how memory controllers work to try and reduce this latency in the average case.
+
+% TODO: Insert graph from H&{ here}
+
+% The solution that has persisted since the 1960's is to use caching linked with a memory hierarchy to create the illusion of very fast memory accessed. 
+% In reality what's going on is that a small portion of the contents of main memory, hopefully the portion that is going to be accessed soon, are kept within the cache using a much faster access memory technology. Then when a request is made by the processor, if the data is in the cache it can be satisfied very quickly, there has been a cache hit. If the data is chosen badly however the cache will then need to signal the main memory to get the required data. 
+% This means that the memory bottleneck is alleviated to a greater degree in the average case, especially if well designed cache policies are used to decide what data is stored in the cache and when it should be replaced etc.
+
+\subsection{Caches \& Memory Hierarchies}
+
+The solution to this, first seen in super-computers in the 1960's \cite{pattersonComputerOrganizationDesign2018}, was to design main memory as a hierarchy of different memory technologies \cite{wilkesSlaveMemoriesDynamic1965} and combine this with caching to give the illusion of very fast memory accesses \cite{smithCacheMemories1982}. Caching works by setting aside a small portion of very fast memory to contain a copy of some of the elements of main memory. Then when a processor requests a piece of data, if the data is already in the cache, the request can be dealt with almost instantly leading to very low memory latency \footnote{This is known as a cache hit}. Alternatively if the data is not in the cache then the cache communicates with main memory to get the data required and either fills an empty space in the cache or writes back the data currently occupying the necessary slot \footnote{This is known as a cache miss}. Caches move data in and out based on their replacement policy and this can vary from a very simple FIFO policy, to something more esoteric like random replacement \cite{al-zoubiPerformanceEvaluationCache2004}. If the cache replacement policy is designed well,  then in the majority of cases any data requested by the CPU will be in the cache when it's requested. This leads to a drop in the average case memory access time and so the 'processor-memory gap' is alleviated without incurring enormous cost to hardware designers.
+
+% However the cache misses, when they happen, are still a problem. There are compulsory misses that happen when the cache is empty but there are also inevitably times when the cache becomes full and so has to write some data back to memory, incurring almost a double penalty depedent on the particular cache policy that is in place. This is exacerbated even further by the fact that in modern CPUs with complex pipelines a memory stall can not only affect the latency of the LOAD instruction itself but also the latency of many other instructions in the pipeline depedent on how it's designed.
+% At the same time as this, whilst memory operations are common in applications, up to 40% of instructions are loads/stores in some cases, they are not the majority. So when a lot of programs are considered, there are many occasions where the memory bus is completely inactive before then stalling the whole processor while it waits for a memory operation to complete. 
+% OOO processors have recognised this for a long time and use lots of different methods to try and re-order memory operations to take advantage of this slack time. However they are limited due to static analysis providing limited information as to certain memory operations. I.E weird addressing modes lead to making it hard to see if you can move stuff in a transparent way. 
+
+All that being said, caching does introduce a host of problems of it own, for all the benefit it brings in bringing down the average case access time. As some cache misses are inevitable, because the cache becomes full or because the cache is initialised empty, these still significantly impact performance \cite{al-zoubiPerformanceEvaluationCache2004}. This is exacerbated even further in modern processors due to the use of pipelines to increase instruction-level-parallelism. In pipelined architectures a stall in a memory operation can cause a subset (or in the worst case every) instruction in the pipeline to be stalled, meaning that cache misses not only impact the instruction they occur as part of but other surrounding instructions as well \cite{pattersonComputerOrganizationDesign2018}, though this is highly dependent on the implementation of the pipeline and how \texttt{LOAD}s and \texttt{STORE}s are handled. At the same time as this, memory operations take up between 30\% and 40\% of the instructions in a typical program \cite{bieniaPARSECBenchmarkSuite2008, limayeWorkloadCharacterizationSPEC2018}, which leaves the majority of the instructions as not requiring a reference to external memory (apart from the initial fetch). That means there are many times where the memory bus is idle and then has to stall the processor to perform the required memory operation. This has been recognised by Out-of-Order processors for a long time and they address this by using static-analysis and compile time techniques to allow instructions to be re-ordered to take advantage of the slack present without changing the semantics of the program \cite{hennessyComputerArchitectureQuantitative2019}. However this technique is limited because those techniques reveal nothing about the dynamic behaviour of programs, meaning that not all the slack can be utilised \cite{whithamTimePredictableOutofOrderExecution2010}. 
+
+\subsection{Predicting Dynamic Behaviour}
+
+If we develop this idea slightly further a natural question to ask is why can we not exploit the slack that exists within programs without changing the order their instructions execute in? The problem is that no processor is clairvoyant, in other words, a processor is only `concious' of the instruction it is executing at the current time. It has no concept of a state before or after the execution of the current instruction and simply keeps applying the fetch, decode, execute cycle until the power is turned off, as mentioned in the introduction. As a consequence there needs to be some `intelligence' applied somewhere else in the process, as changing the way the processor works, at such a deep level would be very challenging.
+
+To get round this problem some authors have implemented techniques like cache pre-loading \cite{ozawaCacheMissHeuristics1995}, which loads the cache with data before the first instruction has been executed to try and cut down on compulsory misses, or pre-fetching \cite{garsideRealtimePrefetchingSharedmemory2015} where when a cache miss happens not only is the requested data fetched but a selection of other data too, to try and predict what data will be requested next. The problem with these approaches it the are ill-suited to caching data, as opposed to instructions, which is where this thesis focuses. Pre-fetching and pre-loading both work very well for instruction data due to it's characteristics \cite{leeWhenPrefetchingWorks2012, smithCacheMemories1982}. Most programming code is sequential, and when it contains loops or control change statements they are generally changing between blocks of sequential code. What both of these methods lack is a way of feeding back information from the program itself to inform their choice of the data to pre-load, rather than relying on heuristics or other methods.
+
+% This is obviously very frustrating, there is time where memory buses are idle and could be exploited to reduce the overall execution time of the program but they can't be used because the processor is only aware of the instructions it is currently executing. 
+% Some solutions to this are methods like pre-fetching and cache pre-loading but these are not based on information from the program they are using observed general program traits (like spatial locality) or in some cases just randomly guessing what will be required. Processors cannot be clairvoyant.
+
+\subsection{Tracing \& Trace-Assisted Caching}
+
+Tracing is the act of recording every action taken by a processor in the execution of a program. It's a technique often used for debugging and profiling applications and the traces are often recorded during execution and then examined offline due to their size and complexity. However in recent times many commercial tracing solutions have started to appear \cite{CoreSightBaseSystem18, NiosIIProcessor2019} with very condensed trace formats and fast hardware buffers, to the point where it would almost be possible to consider trace data online, as the processor was producing it. However very little research has been done into this area \cite{ponugotiEnablingOntheFlyHardware2019} as many commercial solutions do not offer the level of introspection that would be required to make decisions because there are concerns around implementation leakage and trace efficiency.
+
+However, with many new CPU designs being released under the OpenHardware \cite{OpenSourceHardware} umbrella it's now possible to see how complex processors manipulate data and track various events that occur within the processor without breaking any rules around IP. Consequently the question must be asked, if we could take the information we can measure from a trace and feed it back to a more intelligent cache, would it be able to make better decisions about which pieces of data to keep in the cache and which to evict, with the ultimate aim of eliminating cache misses completely?
+% In modern CPUs the ability to trace the execution of programs is quite advanced and many commercial products exist to take traces and use them for debugging or profiling purposes.
+% However relatively little research has been done as to what happens if you made a processor record traces of its own execution and then used those traces to alter the processor's behaviour based on a higher probability of predicting the next action it is likely to take.
+% Obviously it wouldn't be 100% accurate because the path taken through a program can change if different data is presented, but it's not an all or nothing venture. Any improvement in any cache miss will reduce the overall execution  time of the program.
+
+Suppose we have a CPU with a Harvard Architecture and piece of hardware that can accurately track all of the accesses to data memory made by the CPU. If this information could be stored and communicated to a cache it should be possible to base the cache replacement policy on this data. The cache could then act in a predictive fashion, executing \texttt{LOAD}s before they are required and pre-loading data or dealing with write-backs for \texttt{STORE}s so there should never need to be a cache miss in the ideal case. This approach would better utilise the available slack time within a program and lead to reductions in the execution time of programs. This approach, I have dubbed 'Trace-Assisted Caching' and the development and implementation of this technique is detailed within forthcoming sections.
+
+% So how could this be done, by vector could this be leveraged? Well, if we return to caches the reason why cache misses occur is because it's impossible to create a clairvoyant cache replacement policy. 
+% If we fed traces back into the cache, it could, transparently to the processor, move data around in accordance with those traces. Then in an ideal world every time the processor issued a load or store instruction it would be a cache hit because the data would already be there. % This would better utilise the slack present in programs and lead to a reduction in overall execution times for programs. 
+% I propose:
+
+\section{Hypothesis \& Aims}
+
+This thesis presents evidence to support the assertion that:
+
+\emph{"By recording traces from program execution and then applying the recorded data to future runs of a program, execution time will decrease as memory requests are re-ordered to take account of existing slack time".}
+
+In order to investigate this I will construct hardware to record traces of external memory accesses in a compressed form and then construct further hardware that will attach to an existing cache implementation to provide the policy needed to test the hypothesis. This work will be conducted using the RI5CY processor \cite{gautschiNearThresholdRISCVCore2017} from the PULP Foundation, that implements the RISC-V ISA \cite{watermanRISCVInstructionSet2019}.
+
+As a result this thesis aims to:
+
+\begin{enumerate}
+	\item Construct a hardware trace recorder (Gouram) to record all external memory interactions for the RI5CY
+	\item Construct a hardware wrapper for a direct-mapped, and 8-way set associative cache (Enokida) 
+	\item Measure the performance of the Mälardalen Benchmark Suite \cite{gustafssonMalardalenWCETBenchmarks2010} on 5 hardware implementations
+	\begin{itemize}
+		\item RI5CY with No Cache (Direct Connected to Memory)
+		\item RI5CY with a Direct Mapped Cache
+		\item RI5CY with an 8-way Set Associative Cache
+		\item RI5CY with a Direct Mapped, Trace-Assisted Cache
+		\item RI5CY with an 8-way Set Associative, Trace-Assisted Cache
+	\end{itemize}
+	\item Analyse the programs that show the most improvement in overall execution time and attempt to characterise programs that are most amenable to this enhancement.
+\end{enumerate}
+
+\section{Thesis Structure}
+
+The rest of the thesis is structured as follows:
+\begin{itemize}
+	\item Chapter 2 introduces the background literature for this topic and explains the gaps that necessitate this research direction.
+	\item Chapter 3 presents a more thorough explanation the Trace-Assisted Caching technique 
+	\item Chapter 4 explains the implementation of the Trace-Assisted Caches and the Trace Recorder and discusses the experimental set up that yielded the results
+	\item Chapter 5 analyses the results presented
+	\item Chapter 6 summarises the results and presents an evaluation and any earmarks future work to further develop this idea.
+\end{itemize}
