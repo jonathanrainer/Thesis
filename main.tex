@@ -1,4 +1,4 @@
-\documentclass[fontsize=12pt,a4paper,twoside,numbers=noenddot,BCOR=13mm,DIV=calc,toc=chapterentrydotfill, parskip=half*, titlepage=true, usegeometry]{scrbook}
+\documentclass[fontsize=11pt,a4paper,twoside,numbers=noenddot,BCOR=13mm,DIV=calc,toc=chapterentrydotfill, parskip=half*, titlepage=true, usegeometry]{scrbook}
 
 \usepackage[T1]{fontenc} % prevents < in text mode turning into
 \usepackage{textcomp}    % ?', etc
@@ -15,8 +15,16 @@
 \usepackage{hyperref}
 \usepackage{csquotes}
 \usepackage{amsmath}
+\usepackage[acronym, toc, nomain, xindy]{glossaries}
+\usepackage{mathtools}
+\usepackage[texindy]{imakeidx}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
 \usepackage[top=20mm, bottom=40mm, left=37mm, right=20mm]{geometry}
 \pagestyle{headings}
+\makeglossaries
+\include{extra-tex/glossaries}
+\include{extra-tex/commands}
 
 \begin{document}
 	
@@ -34,6 +42,8 @@
 	\include{chapters/experimental_design}
 	\include{chapters/results_analysis}
 	\include{chapters/conclusion}
+	
+	\printglossaries
 	\printbibliography[heading=bibintoc]
 	
 \end{document}
