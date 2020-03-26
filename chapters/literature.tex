@@ -13,6 +13,8 @@ Our ultimate goal in this research project is to reduce the overall latency of m
 
 \section{Cache Intrinsic Techniques}
 
+\label{sec:cache}
+
 After their first introduction to super-computers in the 1960's \cite{pattersonComputerOrganizationDesign2018} caches have become a standard part of almost any memory architecture. Iterative improvements, thanks to Moore's law, have pushed the performance of caches to higher and higher levels but this is not the whole story. Despite advances in technology it is still the case that the cache replacement policy is the most significant factor when determining how effective a cache will be at reducing memory latency \cite{hennessyComputerArchitectureQuantitative2019}.
 
 \subsection{Cache Replacement Policy}
@@ -144,23 +146,41 @@ The next step change in victim caches comes from \citet{khanUsingDeadBlocks2010}
 
 \section{Cache Extrinsic Techniques}
 
-Returning to our diagram we can now turn to techniques that look beyond just the cache and look to other parts of the memory system. Specifically this section will consider scheduling of memory requests to reduce latency. Software optimisation, particularly with regards to compilers and linkers and finally a section on prefetching and the efficacy of that to reduce latency. 
+If we now return to our overview diagram we can now consider methods to reduce latency that are not focussed on the cache. First we'll consider prefetching, so latency is reduced by trying to execute memory operations in advance of the need for them, that will be followed by a section on Memory Scheduling and how re-ordering memory accesses can be beneficial. Finally there will be a short section on Code Transformations to aid latency reduction.
+
+\subsection{Prefetching}
+
+Prefetching, at its heart, is very simple. It means attempting to issue memory instructions before they are needed by the processor so that the long latency main memory access can be hidden and when eventually the data is called for it's already there. Obviously this is idealised and realising a perfect version of this scheme is impossible without clairvoyancy many authors have constructed schemes that perform a function similar to this with varying degrees of success. Prefetching methods are loosely split into software and hardware types but some combine elements of both.
+
+\subsubsection{Software-based Prefetching}
+
+Software-based Prefetching tends to involve either the compiler or the programmer giving explicit instructions to the memory control system to perform a prefetch action. This is exactly the approach taken by \citet{callahanSoftwarePrefetching1991} in that the compiler decides when a prefetch instruction should be executed. \citeauthor{callahanSoftwarePrefetching1991} focuses this on loops and makes the assumption that the memory latency of a load in the loop will be covered by one iteration of the loop. With this in mind prefetches are inserted into the loop body so that on the next iteration of the loop the data necessary will always be present. However this is quite a primitive approach to the placement of prefetch instructions so in work by \citet{mowryDesignEvaluationCompiler1992} they refine the algorithm in an attempt to pre-fetch for only those accesses that are likely to be cache misses and so eliminating prefetches, that would have been made under the previous scheme, for objects already in the cache.  \citet{zhangSpeedingIrregularApplications1995} takes the idea of explicitly inserting instructions further by marking in the code groups of records that should be pre-fetched together. This allows the compiler to bind these, seemingly disparate, pieces of data together so when they are accessed in the program they can be prefetched exploiting non-obvious (to the compiler) spatial locality. Another approach to software prefetching is proposed by \citet{lipastiSPAIDSoftwarePrefetching1995} in the form of \gls{spaid}, this is a heuristic that inserts prefetch instructions for the data referenced by pointers when they're used as arguments to a procedure. \citet{lukCompilerbasedPrefetchingRecursive1996} takes a similar approach but considers pointers in recursive data structures, proposing several different algorithms for prefecthing them. The problem with both of these previous schemes is that one is only proposed and the other is implemented by hand, adding lots of complexity to the task of a programmer but also they leave somewhat open the question of how the recursive structure or pointer candidates are discovered, which is the key to the efficacy of approaches like this.
+
+There are several problems with software prefetching that render it a dead-end in research terms. The first is that the addition of prefetch instructions can as much as double the size of the executable code \cite{leeWhenPrefetchingWorks2012}. This a problem for two reasons, first in embedded CPUs it's uneconomical, there simply isn't space to double the code size to gain a small increase in performance, but also for general purpose CPUs there's no guarantee that all those extra instructions will actually be effective. The placement of software prefetch instructions must be made at the 'Goldilocks' \footnote{Not too close but not too far way} point before the actual memory request is made. If the prefetch is made too close the memory request it won't have time to complete before it's required so the processor will still stall, but if it's made too far away from the access then there's a chance it could be displaced from the cache by another memory operation which would still cause a cache miss. Finally to even calculate this 'Golilocks' point would require knowledge of the system that is either very hard to attain or may not even be knowable statically such as the latencies of all the memory components involved, or the state of each component for a particular code point. As a result of this, this section will focus on hardware-based prefetching.
+
+\subsubsection{Hardware-based Prefetching}
+
+In comparison to software-based prefetching hardware based prefetching does not rely on the programmer or compiler to insert prefetch instructions instead the prefetching happens entirely transparently to the programmer and is handled by structures in hardware that dictate when and how prefetches occur. The earliest example of this is from \citet{smithCacheMemories1982} where he describes \gls{obl} which, as it sounds, simply fetches the block next to the current one, this can be triggered either on every miss, on every memory access or using a tagging system so it prefetches on a miss or when a prefetch is good, i.e. it prevents a miss. \citet{jouppiImprovingDirectmappedCache1990} develops this idea with a hardware structure known as a stream buffer, this uses \citeauthor{smithCacheMemories1982}'s ideas but places the prefetched data into an auxillary structure rather than straight into the cache. This avoids the issue of having prefetched data replaced by another cache operation. This is also effective at reducing runtime of programs as \citet{farkasHowUsefulAre1995} demonstrates with 26\% runtime reductions on average. \citet{fuDataPrefetchingMultiprocessor1991} develops the ideas of \gls{obl} by defining it as a special case of sequential prefetching, where you instruct the memory unit to get the next $p$ consecutive blocks after the one you want. However as they point out some data is stored in a pattern which is still regular but has large gaps so they introduce stride prefetching, whereby $p$ blocks are still prefetched but each block is separated by a given number of bytes. \citet{baerEffectiveOnchipPreloading1991a} develops further the idea of stride prefetching but makes the stride dynamic by predicting it based on tracking good and bad prefetches and correcting the stride length accordingly. A similar approach is taken by \citet{fuStrideDirectedPrefetching1992} with the use of a stride prediction table, though this is limited to prediction in loops only. \citet{dahlgrenFixedAdaptiveSequential1993} takes on the idea of adaptation but applys it to sequential prefetching instead, monitoring the number of successful preteches and slowly increasing the degree of prefetching\footnote{how many elements are prefetched in each interation}, while \citet{palacharlaEvaluatingStreamBuffers1994} synthesises several ideas together to extend stream buffers with filtering and non-unit strides. \citet{chenEffectiveHardwarebasedData1995} meanwhile extended the work from \citeyear{baerEffectiveOnchipPreloading1991a}\cite{baerEffectiveOnchipPreloading1991a} to create a correlated reference prediction table that solves the problem of misprediction when nested loops are invovled. All of these approaches show reductions in execution time for the benchmarks they use, but they are still focussed on predictable regular data patterns like loops or contiguous memory sections. The next step in the development of this method is account for irregular data patterns.
+
+On of the first pieces of work to attempt to account for irregular data patterns is by \citet{alexanderDistributedPrefetchbufferCache1996}. In this approach stride is taken as a baseline but instead of trying to predict individual addresses to prefetch this work attempts to predict blocks of addresses instead. This takes advantage of the fact that memory references tend to cluster and so if you can predict a block of addresses effectively you will decrease latency through spatial locality. \citet{rothDependenceBasedPrefetching1998}
+
+\subsubsection{Combination-based Prefetching}
 
 \subsection{Scheduling}
 
-
-
-\subsection{Program Rewriting}
-
-\subsection{Prefecting \& Pre-loading}
+\subsection{Program Transformaton}
 
 \section{Incorporating Tracing to Reduce Latency}
+
+In the third portion of this literature review we consider the use of tracing to reduce latency.
 
 \subsection{Tracing as a Control Loop}
 
 \subsection{Other Uses of Tracing}
 
 \section{Conclusion}
+
+Having considered a vast swathe of the literature in the last three sections we are forced to ask where this leaves us.
 
 \subsection{Problems with Cache-based Solutions}
 

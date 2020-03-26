@@ -115,19 +115,6 @@
   keywords = {Artificial neural networks,cache storage,caching probability,FIFO,Fuzzy logic,Hybrid Caching,hybrid least frequently used,hybrid LFU-SVM,information retrieval,Internet,Internet infrastructure,Kernel,Least Frequency Used,locality concept,NLANR dataset,pattern classification,proximity concept,Proxy,Radio frequency,Replacement,service providers,Soft Computing,support vector machine,Support Vector Machine,support vector machines,Support vector machines,SVM-LRU,Training,Web access,Web Caching,Web caching scheme,Web objects,Web proxy,Web Proxy}
 }
 
-@inproceedings{akessonClassificationAnalysisPredictable2010,
-  title = {Classification and {{Analysis}} of {{Predictable Memory Patterns}}},
-  booktitle = {2010 {{IEEE}} 16th {{International Conference}} on {{Embedded}} and {{Real}}-{{Time Computing Systems}} and {{Applications}}},
-  author = {Akesson, B. and Jr, W. Hayes and Goossens, K.},
-  date = {2010-08},
-  pages = {367--376},
-  doi = {10.1109/RTCSA.2010.35},
-  abstract = {The verification complexity of real-time requirements in embedded systems grows exponentially with the number of applications, as resource sharing prevents independent verification using simulation-based approaches. Formal verification is a promising alternative, although its applicability is limited to systems with predictable hardware and software. SDRAM memories are common examples of essential hardware components with unpredictable timing behavior, typically preventing use of formal approaches. A predictable SDRAM controller has been proposed that provides guarantees on bandwidth and latency by dynamically scheduling memory patterns, which are statically computed sequences of SDRAM commands. However, the proposed patterns become increasingly inefficient as memories become faster, making them unsuitable for DDR3 SDRAM. This paper extends the memory pattern concept in two ways. Firstly, we introduce a burst count parameter that enables patterns to have multiple SDRAM bursts per bank, which is required for DDR3 memories to be used efficiently. Secondly, we present a classification of memory pattern sets into four categories based on the combination of patterns that cause worst-case bandwidth and latency to be provided. Bounds on bandwidth and latency are derived that apply to all pattern types and burst counts, as opposed to the single case covered by earlier work. Experimental results show that these extensions are required to support the most efficient pattern sets for many use-cases. We also demonstrate that the burst count parameter increases efficiency in presence of large requests and enables a wider range of real-time requirements to be satisfied.},
-  eventtitle = {2010 {{IEEE}} 16th {{International Conference}} on {{Embedded}} and {{Real}}-{{Time Computing Systems}} and {{Applications}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\KGXWW4BB\\Akesson et al. - 2010 - Classification and Analysis of Predictable Memory .pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ZBWX45L8\\5591843.html},
-  keywords = {Bandwidth,burst count,classification,Clocks,DDR3 SDRAM,DRAM chips,dynamic scheduling,dynamically scheduling memory patterns,embedded systems,formal verification,memory controller,Memory management,memory patterns,predictability,predictable hardware,predictable memory patterns,predictable software,Real time systems,real-time requirements,SDRAM,SDRAM memories,Switches,timing,Timing,timing behavior}
-}
-
 @inproceedings{al-zoubiPerformanceEvaluationCache2004,
   title = {Performance Evaluation of Cache Replacement Policies for the {{SPEC CPU2000}} Benchmark Suite},
   booktitle = {Proceedings of the 42nd Annual {{Southeast}} Regional Conference on   - {{ACM}}-{{SE}} 42},
@@ -268,20 +255,6 @@
   eventtitle = {2003 46th {{Midwest Symposium}} on {{Circuits}} and {{Systems}}},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\25GNNL92\\Aly et al. - 2003 - Variable-way set associative cache design for embe.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\GP34ZZ4T\\1562565.html},
   keywords = {associativity,Benchmark testing,cache design,cache size,cache storage,Computational modeling,computer architecture,Computer architecture,content-addressable storage,Costs,Degradation,embedded system,Embedded system,embedded systems,Energy consumption,Hardware,low-power electronics,low-power operation modes,memory architecture,Memory architecture,miss rate reduction,power consumption,Power generation economics,set-associative cache,SimpleScalar simulator,Spec2000 Benchmarks,static profiling,variable-way set associative cache}
-}
-
-@inproceedings{ammenoucheInstructionLevelMethodReducing2009,
-  title = {On {{Instruction}}-{{Level Method}} for {{Reducing Cache Penalties}} in {{Embedded VLIW Processors}}},
-  booktitle = {2009 11th {{IEEE International Conference}} on {{High Performance Computing}} and {{Communications}}},
-  author = {Ammenouche, Samir and Touati, Sid-Ahmed-Ali and Jalby, William},
-  date = {2009-06},
-  pages = {196--205},
-  issn = {null},
-  doi = {10.1109/HPCC.2009.32},
-  abstract = {Usual cache optimisation techniques for high performance computing are difficult to apply in embedded VLIW applications. First, embedded applications are not always well structured, and few regular loop nests exist. Real world applications in embedded computing contain hot loops with pointers, indirect arrays accesses, function calls, indirect function calls, non constant stride accesses, etc. Consequently, loop transformations for reducing cache misses are impossible to apply, especially at the back-end level. Second, the strides of memory accesses do not appear to be constant at source code level, because of indirect accesses. Hence, usual prefetching techniques are not applicable. Third, embedded VLIW processors are "cheap" products, they have limited hardware dynamic mechanisms compared to high performance processors : no out-of-order execution, reduced memory hierarchies, small direct mapped caches, lower clock frequencies, etc. Consequently, the code optimisations methods must be simple and take care of code size. This article presents a back-end code optimisation for tolerating non-blocking cache effects at the instruction level (not at the loop level). Our method is based on a robust combination of memory pre-loading with data prefetching, allowing us to optimise both regular and irregular applications at the assembly level. Our experiments with mediabench and SPEC2000 benchmarks suites on the ST231 VLIW processor show a positive performance gain (compared to codes generated with -O3 compiler optimisation flag). Our method induces negligible code size growth (less than 3.9 \% in the extreme case).},
-  eventtitle = {2009 11th {{IEEE International Conference}} on {{High Performance Computing}} and {{Communications}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\4TPMK83Z\\Ammenouche et al. - 2009 - On Instruction-Level Method for Reducing Cache Pen.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\7J44REXE\\5166994.html},
-  keywords = {back-end code optimisation,cache optimisation,cache penalty,cache storage,Clocks,data prefetching,Data prefetching,embedded computing,Embedded computing,embedded systems,embedded VLIW processor,Frequency,Hardware,high performance computing,High performance computing,high performance processor,instruction sets,instruction-level method,non-blocking cache,Optimization methods,Out of order,pre-loading,Prefetching,Robustness,very long instruction word machines,VLIW}
 }
 
 @inproceedings{an-chowlaiDeadblockPredictionDeadblock2001,
@@ -677,19 +650,6 @@
   keywords = {3D stacked memories,Benchmark testing,computer architectures,DRAM chips,Integrated circuit interconnections,latency claims,Memory management,power consumption,Random access memory,Solid modeling,Three-dimensional displays,three-dimensional integrated circuits,through-silicon vias,Through-silicon vias}
 }
 
-@inproceedings{chatterjeeManagingDRAMLatency2014,
-  title = {Managing {{DRAM Latency Divergence}} in {{Irregular GPGPU Applications}}},
-  booktitle = {{{SC}} '14: {{Proceedings}} of the {{International Conference}} for {{High Performance Computing}}, {{Networking}}, {{Storage}} and {{Analysis}}},
-  author = {Chatterjee, N. and O'Connor, M. and Loh, G. H. and Jayasena, N. and Balasubramonia, R.},
-  date = {2014-11},
-  pages = {128--139},
-  doi = {10.1109/SC.2014.16},
-  abstract = {Memory controllers in modern GPUs aggressively reorder requests for high bandwidth usage, often interleaving requests from different warps. This leads to high variance in the latency of different requests issued by the threads of a warp. Since a warp in a SIMT architecture can proceed only when all of its memory requests are returned by memory, such latency divergence causes significant slowdown when running irregular GPGPU applications. To solve this issue, we propose memory scheduling mechanisms that avoid inter-warp interference in the DRAM system to reduce the average memory stall latency experienced by warps. We further reduce latency divergence through mechanisms that coordinate scheduling decisions across multiple independent memory channels. Finally we show that carefully orchestrating the memory scheduling policy can achieve low average latency for warps, without compromising bandwidth utilization. Our combined scheme yields a 10.1\% performance improvement for irregular GPGPU workloads relative to a throughput-optimized GPU memory controller.},
-  eventtitle = {{{SC}} '14: {{Proceedings}} of the {{International Conference}} for {{High Performance Computing}}, {{Networking}}, {{Storage}} and {{Analysis}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\576J8EEP\\Chatterjee et al. - 2014 - Managing DRAM Latency Divergence in Irregular GPGP.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\NUT6FVPY\\7012998.html},
-  keywords = {average memory stall latency,Bandwidth,bandwidth utilization,DRAM chips,DRAM system,graphics processing units,Graphics processing units,high bandwidth usage,independent memory channels,Instruction sets,interleaving requests,interwarp interference,irregular GPGPU applications,latency divergence,memory controllers,Memory management,memory requests,memory scheduling mechanisms,memory scheduling policy,Parallel processing,Random access memory,scheduling decisions,SIMT architecture,storage management chips,throughput-optimized GPU memory controller}
-}
-
 @inproceedings{chaudhuriPseudoLIFOFoundationNew2009a,
   title = {Pseudo-{{LIFO}}: The Foundation of a New Family of Replacement Policies for Last-Level Caches},
   shorttitle = {Pseudo-{{LIFO}}},
@@ -722,7 +682,7 @@
 @inproceedings{chendingMemoryBandwidthBottleneck2000,
   title = {The Memory of Bandwidth Bottleneck and Its Amelioration by a Compiler},
   booktitle = {Proceedings 14th {{International Parallel}} and {{Distributed Processing Symposium}}. {{IPDPS}} 2000},
-  author = {Chen Ding and Kennedy, K.},
+  author = {Ding, Chen and Kennedy, K.},
   date = {2000-05},
   pages = {181--189},
   issn = {null},
@@ -731,6 +691,36 @@
   eventtitle = {Proceedings 14th {{International Parallel}} and {{Distributed Processing Symposium}}. {{IPDPS}} 2000},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\L2R5HP7N\\Chen Ding and Kennedy - 2000 - The memory of bandwidth bottleneck and its amelior.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ZFA4GI77\\845980.html},
   keywords = {Bandwidth,bandwidth bottleneck memory,bandwidth-based performance model,compiler optimizations,Delay,Electronic switching systems,Lapping,latency,memory hierarchy,optimising compilers,Optimizing compilers,performance bottleneck,Pipeline processing,program performance,Program processors,Read-write memory,software performance evaluation,software prefetching,Technological innovation,Tellurium}
+}
+
+@article{chenEffectiveHardwarebasedData1995,
+  title = {Effective Hardware-Based Data Prefetching for High-Performance Processors},
+  author = {Chen, Tien-Fu and Jean-Loup Baer},
+  date = {1995-05},
+  journaltitle = {IEEE Transactions on Computers},
+  volume = {44},
+  pages = {609--623},
+  issn = {2326-3814},
+  doi = {10.1109/12.381947},
+  abstract = {Memory latency and bandwidth are progressing at a much slower pace than processor performance. In this paper, we describe and evaluate the performance of three variations of a hardware function unit whose goal is to assist a data cache in prefetching data accesses so that memory latency is hidden as often as possible. The basic idea of the prefetching scheme is to keep track of data access patterns in a reference prediction table (RPT) organized as an instruction cache. The three designs differ mostly on the timing of the prefetching. In the simplest scheme (basic), prefetches can be generated one iteration ahead of actual use. The lookahead variation takes advantage of a lookahead program counter that ideally stays one memory latency time ahead of the real program counter and that is used as the control mechanism to generate the prefetches. Finally the correlated scheme uses a more sophisticated design to detect patterns across loop levels. These designs are evaluated by simulating the ten SPEC benchmarks on a cycle-by-cycle basis. The results show that 1) the three hardware prefetching schemes all yield significant reductions in the data access penalty when compared with regular caches, 2) the benefits are greater when the hardware assist augments small on-chip caches, and 3) the lookahead scheme is the preferred one cost-performance wise.{$<>$}},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\LM4Q6ZZW\\Tien-Fu Chen and Jean-Loup Baer - 1995 - Effective hardware-based data prefetching for high.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\77GV4N64\\381947.html},
+  keywords = {Bandwidth,Bridges,cache storage,Coherence,Computer science,Counting circuits,data access patterns,data cache,Delay,fault tolerant computing,Hardware,hardware function unit,hardware prefetching schemes,hardware-based data prefetching,high-performance processors,instruction cache,lookahead program counter,lookahead scheme,memory latency,performance evaluation,Predictive models,Prefetching,prefetching data accesses,reference prediction table,SPEC benchmarks,Timing},
+  note = {Conference Name: IEEE Transactions on Computers},
+  number = {5}
+}
+
+@inproceedings{chenEffectiveProgrammablePrefetch1995,
+  title = {An Effective Programmable Prefetch Engine for On-Chip Caches},
+  booktitle = {Proceedings of the 28th {{Annual International Symposium}} on {{Microarchitecture}}},
+  author = {Chen, Tien-Fu},
+  date = {1995-11},
+  pages = {237--242},
+  issn = {1072-4451},
+  doi = {10.1109/MICRO.1995.476831},
+  abstract = {Prefetching has been shown to be one of several effective approaches that can tolerate large memory latencies. In this paper, we consider a prefetch engine called Hare, which handles prefetches at run time and is built in addition to the data pipelining in the on-chip data cache for high-performance processors. The key design is that it is programmable so that techniques of software prefetching can be also employed in exploiting the benefits of prefetching. The engine always launches prefetches ahead of current execution, which is controlled by the program counter. We evaluate the proposed scheme by trace-driven simulation and consider area and cycle time factors for the evaluation of cost-effectiveness. Our performance results show that the prefetch engine can significantly reduce data access penalty with only little prefetching overhead.},
+  eventtitle = {Proceedings of the 28th {{Annual International Symposium}} on {{Microarchitecture}}},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ARIDNNMI\\Tien-Fu Chen - 1995 - An effective programmable prefetch engine for on-c.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\9BMWF7J7\\476831.html},
+  keywords = {cache storage,computer architecture,Computer architecture,Computer science,Counting circuits,data cache,Delay,Engines,Hardware,Hare,high-performance processors,memory latencies,on-chip caches,performance evaluation,Pipeline processing,prefetch engine,Prefetching,Process design,programmable,software prefetching,storage management,Time factors,trace-driven simulation}
 }
 
 @inproceedings{chenMALRUMisspenaltyAware2017,
@@ -1510,6 +1500,20 @@
   number = {1-2}
 }
 
+@inproceedings{gaoCollectiveLoopFusion1993,
+  title = {Collective Loop Fusion for Array Contraction},
+  booktitle = {Languages and {{Compilers}} for {{Parallel Computing}}},
+  author = {Gao, G. and Olsen, R. and Sarkar, V. and Thekkath, R.},
+  editor = {Banerjee, Utpal and Gelernter, David and Nicolau, Alex and Padua, David},
+  date = {1993},
+  pages = {281--295},
+  publisher = {{Springer Berlin Heidelberg}},
+  location = {{Berlin, Heidelberg}},
+  abstract = {In this paper we propose a loop fusion algorithm specifically designed to increase opportunities for array contraction. Array contraction is an optimization that transforms array variables into scalar variables within a loop nest. In contrast to array elements, scalar variables have better cache behavior and can be allocated to registers. In past work we investigated loop interchange and loop reversal as optimizations that increase opportunities for array contraction [13]. This paper extends this work by including the loop fusion optimization. The fusion method discussed in this paper uses the maxflow-mincut algorithm to do loop clustering. Our collective loop fusion algorithm is efficient, and we demonstrate its usefulness for array contraction with a simple example.},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\R7HINZNJ\\Gao et al. - 1993 - Collective loop fusion for array contraction.pdf},
+  isbn = {978-3-540-48201-7}
+}
+
 @thesis{garsideRealtimePrefetchingSharedmemory2015,
   title = {Real-Time {{Prefetching On Shared}}-Memory {{Multi}}-Core {{Systems}}},
   author = {Garside, Jamie},
@@ -1618,6 +1622,20 @@ to improve the worst-case execution time of a running task.},
   eventtitle = {Proceedings. 15th {{IEEE International Conference}} on {{Application}}-{{Specific Systems}}, {{Architectures}} and {{Processors}}, 2004.},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\BYWGTP86\\Gomez et al. - 2004 - Optimizing the memory bandwidth with loop morphing.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\LB42VFU5\\1342472.html},
   keywords = {Bandwidth,bandwidth allocation,Costs,data assignment,Delay,Embedded system,embedded systems,instruction scheduling,loop fusion,loop morphing,loop splitting,memory access scheduling,memory architecture,Memory architecture,memory bandwidth optimization,optimisation,Optimizing compilers,Performance loss,Processor scheduling,program compilers,program control structures,Runtime,scheduling,strip mining,Strips}
+}
+
+@inproceedings{gornishIntegratedHardwareSoftware1994,
+  title = {An {{Integrated Hardware}}/{{Software Data Prefetching Scheme}} for {{Shared}}-{{Memory Multiprocessors}}},
+  booktitle = {1994 {{Internatonal Conference}} on {{Parallel Processing Vol}}. 2},
+  author = {Gornish, E.H. and Veidenbaum, A.},
+  date = {1994-08},
+  volume = {2},
+  pages = {281--284},
+  issn = {null},
+  doi = {10.1109/ICPP.1994.57},
+  abstract = {Both hardware and software prefetching have been shown to be effective in tolerating the large memory latencies inherent in in in shared-memory multiprocessors; however, both types of prefetching have their shortcomings. In this paper, we propose an integrated hardware/software prefetching method that uses simple hardware that can handle most data accesses and software prefetching for the few remaining accesses. This yields an effective scheme that minimizes both CPU overhead and hardware costs. Execution-driven simulations show our method to be very effective.},
+  eventtitle = {1994 {{Internatonal Conference}} on {{Parallel Processing Vol}}. 2},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ZGVD7Y55\\Gornish and Veidenbaum - 1994 - An Integrated HardwareSoftware Data Prefetching S.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\38JY4SQR\\5727800.html}
 }
 
 @article{gortFormalanalysisbasedTraceComputation2012,
@@ -1828,7 +1846,7 @@ to improve the worst-case execution time of a running task.},
   shorttitle = {Computer Architecture},
   author = {Hennessy, John L. and Patterson, David A.},
   date = {2019},
-  edition = {6th},
+  edition = {6},
   publisher = {{Morgan Kaufmann Publishers}},
   location = {{Cambridge, MA}},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\JV6VPGZ7\\Hennessy - Computer Architecture A Quantitative Approach.pdf},
@@ -2210,12 +2228,15 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   title = {Predictive {{Cache Modeling}} and {{Analysis}}},
   author = {Kegley, Russell and Preston, Jonathan and Dougherty, Brian and White, Jules and Gokhale, Anirudda},
   date = {2011-11},
-  institution = {{LOCKHEED MARTIN AERONAUTICS CO FORT WORTH TX}},
+  institution = {{Lockheed Martin Aeronautics Corporation}},
+  location = {{Fort Worth, TX}},
   url = {https://apps.dtic.mil/docs/citations/ADA552968},
   urldate = {2019-09-16},
   abstract = {This work applied particle swarm heuristic optimization techniques to the problem of finding a near-optimal order in which to schedule tasks in a real-time embedded system in order to minimize cache miss rates experienced by the software. Reducing the number of cache misses is an important component of runtime execution efficiency. We demonstrated runtime reductions of 3-5\% in execution time, significant for embedded systems attempting to add new capability without upgrading hardware. The expectation is that these gains can be improved further by the use of hardware with pseudo-LRU cache behavior.},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\M5W66TST\\Kegley et al. - 2011 - Predictive Cache Modeling and Analysis.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\W6K7EAKC\\ADA552968.html},
-  langid = {english}
+  langid = {english},
+  number = {AFRL-RI-RS-TR-2011-266},
+  type = {Technical Report}
 }
 
 @article{kellyVariableQosShared1999,
@@ -2660,20 +2681,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   number = {2}
 }
 
-@inproceedings{liuLAMSLatencyawareMemory2016,
-  title = {{{LAMS}}: {{A}} Latency-Aware Memory Scheduling Policy for Modern {{DRAM}} Systems},
-  shorttitle = {{{LAMS}}},
-  booktitle = {2016 {{IEEE}} 35th {{International Performance Computing}} and {{Communications Conference}} ({{IPCCC}})},
-  author = {Liu, W. and Huang, P. and Kun, T. and Lu, T. and Zhou, K. and Li, C. and He, X.},
-  date = {2016-12},
-  pages = {1--8},
-  doi = {10.1109/PCCC.2016.7820660},
-  abstract = {This paper introduces a new memory scheduling policy called LAMS, which is inspired by a recently proposed memory architecture and targets for future high capacity memory systems. As memory capacity increases, the bit-lines connected to memory row buffers become much longer, dramatically lengthening memory access latency, due to increased parasitic capacitance. Recent study has proposed to partition long bit-lines into near and far (relative to the row buffer) segments via inserting isolation transistors such that access to near segment can be accomplished much faster, while access to far segment remains nearly the same. However, how to effectively leverage the new memory architecture still remains unexplored. We suggest to take advantage of this new memory architecture via performing latency-aware memory scheduling for pending requests to explore their performance potentials. In this scheduling policy, each memory request is classified to one of the following three categories, row-buffer hit, near-buffer, and far-buffer. Based on the classification, it issues requests in the order of row-buffer hit → near-buffer → far-buffer. In doing so, it avoids long-latency requests blocking short-latency memory requests, reducing total memory queuing time in the memory controller and improving overall memory performance. Our evaluation results on a simulated memory system show that comparing with the commonly used FR-FCFS scheduler, our LAMS improves performance and energy efficiency by up to 20.6\% and 34\%, respectively. Even comparing with the four competitive schedulers chosen from memory scheduling champion (MSC), LAMS still improves performance and energy efficiency by up to 6.1\% and 23.4\%, respectively.},
-  eventtitle = {2016 {{IEEE}} 35th {{International Performance Computing}} and {{Communications Conference}} ({{IPCCC}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\H55ZJHPU\\Liu et al. - 2016 - LAMS A latency-aware memory scheduling policy for.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\M8BIZSVW\\7820660.html},
-  keywords = {buffer storage,DRAM chips,DRAM systems,far-buffer classification,FR-FCFS scheduler,LAMS,latency-aware memory scheduling policy,memory access latency,memory architecture,Memory architecture,memory capacity,memory queuing time,near-buffer classification,Parasitic capacitance,Processor scheduling,Random access memory,row-buffer hit classification,Scheduling,System performance,Transistors}
-}
-
 @inproceedings{liuMultibankMemoryAccess2010,
   title = {Multi-Bank Memory Access Scheduler and Scalability},
   booktitle = {2010 2nd {{International Conference}} on {{Computer Engineering}} and {{Technology}}},
@@ -2741,7 +2748,7 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   doi = {10.1109/CSO.2010.81},
   abstract = {Memory Wall is a bottleneck of enhancing the performance of computer system, and appearance of multiprocessors (CMPs) makes it more. How to reduce Memory Access Latency is a critical issue we have to deal with. Memory controller is difficult to optimize, the controller needs to obey all DRAM timing constraints to provide correct functionality. State-of -the-art DDR2 SDRAM chips often have a large number of timing constraints that must be obeyed when scheduling commands, for instance, over 50 timing constrains. We have made deep research on optimized memory access scheduling. In order to efficiently utilize the bandwidth and reduce the latency, Memory Access Scheduling optimization adapts the characters of DRAM to reschedule the memory access. By studying effective data bar which is generated by Genetic Algorithm, we mine four rules. So we just use these four rules to schedule in Memory Access Controller. The results of experiment show that compared with FR-FCFS (first-ready first-come first-serve) scheduling strategy, the rule based algorithm improves the performance of scheduling and the ideal speedup is near 1.5 times. The best speedup of the test of spec2000 is 1.467, and the worst speedup is 1.078.},
   eventtitle = {2010 {{Third International Joint Conference}} on {{Computational Science}} and {{Optimization}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\72D9UFMK\\Luo et al. - 2010 - Design and Realization of an Optimized Memory Acce.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\44V4AJRA\\5533016.html},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\R8GX48R9\\Luo et al. - 2010 - Design and Realization of an Optimized Memory Acce.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\44V4AJRA\\5533016.html},
   keywords = {Bandwidth,Constraint optimization,data mining,DDR2,DDR2 SDRAM chips,Delay,Design optimization,DRAM chips,first-ready first-come first-serve scheduling,FR-FCFS scheduling strategy,genetic algorithm,genetic algorithm (GA),genetic algorithms,Genetic algorithms,memory access controller,memory access latency,memory access scheduling,memory controller,multiprocessing systems,multiprocessors,optimized memory access scheduler,processor scheduling,Processor scheduling,Random access memory,rule based algorithm,Scheduling algorithm,scheduling commands,SDRAM,timing,Timing}
 }
 
@@ -2822,20 +2829,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   eventtitle = {Proceedings {{Seventeenth Conference}} on {{Advanced Research}} in {{VLSI}}},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\RNYWVVFA\\Martin et al. - 1997 - The design of an asynchronous MIPS R3000 microproc.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\HSNQUHMM\\634853.html},
   keywords = {0.6 micron,280 MIPS,7 W,arithmetic,asynchronous circuits,Asynchronous circuits,asynchronous microprocessor,circuit techniques,CMOS design,CMOS digital integrated circuits,CMOS technology,computer architecture,Computer science,Delay,Energy consumption,high throughput,high-performance asynchronous pipeline,Low voltage,microprocessor chips,Microprocessors,MIPS R3000,pipeline processing,pipelined caches,Pipelines,precise exceptions,registers,Robustness,Throughput,VLSI}
-}
-
-@inproceedings{mcfarlingProgramOptimizationInstruction1989,
-  title = {Program Optimization for Instruction Caches},
-  author = {McFarling, S.},
-  date = {1989},
-  pages = {183--191},
-  publisher = {{ACM Press}},
-  doi = {10.1145/70082.68200},
-  url = {http://portal.acm.org/citation.cfm?doid=70082.68200},
-  urldate = {2020-01-06},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2M8IVMBF\\McFarling - Program Optimization for Instruction Caches.pdf},
-  isbn = {978-0-89791-300-3},
-  langid = {english}
 }
 
 @inproceedings{megiddoARCSelfTuningLow2003,
@@ -3018,18 +3011,33 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   series = {{{ASPLOS V}}}
 }
 
+@inproceedings{mutluRunaheadExecutionAlternative2003,
+  title = {Runahead Execution: An Alternative to Very Large Instruction Windows for out-of-Order Processors},
+  shorttitle = {Runahead Execution},
+  booktitle = {The {{Ninth International Symposium}} on {{High}}-{{Performance Computer Architecture}}, 2003. {{HPCA}}-9 2003. {{Proceedings}}.},
+  author = {Mutlu, O. and Stark, J. and Wilkerson, C. and Patt, Y.N.},
+  date = {2003-02},
+  pages = {129--140},
+  issn = {1530-0897},
+  doi = {10.1109/HPCA.2003.1183532},
+  abstract = {Today's high performance processors tolerate long latency operations by means of out-of-order execution. However, as latencies increase, the size of the instruction window must increase even faster if we are to continue to tolerate these latencies. We have already reached the point where the size of an instruction window that can handle these latencies is prohibitively large in terms of both design complexity and power consumption. And, the problem is getting worse. This paper proposes runahead execution as an effective way to increase memory latency tolerance in an out-of-order processor without requiring an unreasonably large instruction window. Runahead execution unblocks the instruction window blocked by long latency operations allowing the processor to execute far ahead in the program path. This results in data being prefetched into caches long before it is needed. On a machine model based on the Intel/spl reg/ Pentium/spl reg/ processor, having a 128-entry instruction window, adding runahead execution improves the IPC (instructions per cycle) by 22\% across a wide range of memory intensive applications. Also, for the same machine model, runahead execution combined with a 128-entry window performs within 1\% of a machine with no runahead execution and a 384-entry instruction window.},
+  eventtitle = {The {{Ninth International Symposium}} on {{High}}-{{Performance Computer Architecture}}, 2003. {{HPCA}}-9 2003. {{Proceedings}}.},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\CUGMVD6U\\Mutlu et al. - 2003 - Runahead execution an alternative to very large i.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\XYQED8PI\\1183532.html},
+  keywords = {cache storage,caches,Delay,delays,Energy consumption,Engines,Hardware,high performance processors,instructions per cycle,memory latency tolerance,Microprocessors,Out of order,out-of-order processors,parallel architectures,performance evaluation,Prefetching,runahead execution,Software,Trademarks,Windows}
+}
+
 @article{mutluRunaheadExecutionEffective2003,
   title = {Runahead Execution: {{An}} Effective Alternative to Large Instruction Windows},
   shorttitle = {Runahead Execution},
-  author = {Mutlu, O. and Stark, J. and Wilkerson, C. and Patt, Y. N.},
+  author = {Mutlu, O. and Stark, J. and Wilkerson, C. and Patt, Y.N.},
   date = {2003-11},
   journaltitle = {IEEE Micro},
   volume = {23},
   pages = {20--25},
-  issn = {0272-1732},
+  issn = {1937-4143},
   doi = {10.1109/MM.2003.1261383},
   abstract = {An instruction window that can tolerate latencies to DRAM memory is prohibitively complex and power hungry. To avoid having to build such large windows, runahead execution uses otherwise-idle clock cycles to achieve an average 22 percent performance improvement for processors with instruction windows of contemporary sizes. This technique incurs only a small hardware cost and does not significantly increase the processor's complexity.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\4UCPZSDD\\Mutlu et al. - 2003 - Runahead execution An effective alternative to la.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\NJL46HQQ\\1261383.html},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\HVDMXSFS\\Mutlu et al. - 2003 - Runahead execution An effective alternative to la.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\52VB72BN\\1261383.html},
   keywords = {Clocks,computer architecture,Costs,Delay,DRAM memory,Energy consumption,Hardware,instruction sets,instruction windows,Microarchitecture,Out of order,Random access memory,Registers,Retirement,runahead execution,storage management},
   number = {6}
 }
@@ -3240,6 +3248,23 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   langid = {english}
 }
 
+@article{palacharlaEvaluatingStreamBuffers1994,
+  title = {Evaluating Stream Buffers as a Secondary Cache Replacement},
+  author = {Palacharla, S. and Kessler, R. E.},
+  date = {1994-04-01},
+  journaltitle = {ACM SIGARCH Computer Architecture News},
+  shortjournal = {SIGARCH Comput. Archit. News},
+  volume = {22},
+  pages = {24--33},
+  issn = {0163-5964},
+  doi = {10.1145/192007.192014},
+  url = {https://doi.org/10.1145/192007.192014},
+  urldate = {2020-03-22},
+  abstract = {Today's commodity microprocessors require a low latency memory system to achieve high sustained performance. The conventional high-performance memory system provides fast data access via a large secondary cache. But large secondary caches can be expensive, particularly in large-scale parallel systems with many processors (and thus many caches).We evaluate a memory system design that can be both cost-effective as well as provide better performance, particularly for scientific workloads: a single level of (on-chip) cache backed up only by Jouppi's stream buffers [10] and a main memory. This memory system requires very little hardware compared to a large secondary cache and doesn't require modifications to commodity processors. We use trace-driven simulation of fifteen scientific applications from the NAS and PERFECT suites in our evaluation. We present two techniques to enhance the effectiveness of Jouppi's original stream buffers: filtering schemes to reduce their memory bandwidth requirement and a scheme that enables stream buffers to prefetch data being accessed in large strides. Our results show that, for the majority of our benchmarks, stream buffers can attain hit rates that are comparable to typical hit rates of secondary caches. Also, we find that as the data-set size of the scientific workload increases the performance of streams typically improves relative to secondary cache performance, showing that streams are more scalable to large data-set sizes.},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\UBMDURPM\\Palacharla and Kessler - 1994 - Evaluating stream buffers as a secondary cache rep.pdf},
+  number = {2}
+}
+
 @article{pandaExpertPrefetchPrediction2016,
   title = {Expert {{Prefetch Prediction}}: {{An Expert Predicting}} the {{Usefulness}} of {{Hardware Prefetchers}}},
   shorttitle = {Expert {{Prefetch Prediction}}},
@@ -3254,6 +3279,22 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\G7L6PJ8W\\Panda and Balachandran - 2016 - Expert Prefetch Prediction An Expert Predicting t.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\5E528GPU\\7110318.html},
   keywords = {Accuracy,AMPM,cache,Cache,cache storage,filtering theory,GHB-PC/DC,Hardware,hardware prefetchers,Hardware prefetching,Hardware Prefetching,memory systems,Memory systems,Pollution,Prediction algorithms,prefetch addresses,Prefetching,prefetching algorithm,Radiation detectors,Random access memory,SMS,weighted-majority filter},
   number = {1}
+}
+
+@article{pandaMemoryDataOrganization1997,
+  title = {Memory Data Organization for Improved Cache Performance in Embedded Processor Applications},
+  author = {Panda, Preeti Ranjan and Dutt, Nikil D. and Nicolau, Alexandru},
+  date = {1997-10},
+  journaltitle = {ACM Transactions on Design Automation of Electronic Systems (TODAES)},
+  volume = {2},
+  pages = {384--409},
+  issn = {1084-4309, 1557-7309},
+  doi = {10.1145/268424.268464},
+  url = {http://dl.acm.org/doi/10.1145/268424.268464},
+  urldate = {2020-03-26},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\N2FKNTRE\\Panda et al. - 1997 - Memory data organization for improved cache perfor.pdf},
+  langid = {english},
+  number = {4}
 }
 
 @inproceedings{pandaSurveyReplacementStrategies2016,
@@ -3692,17 +3733,21 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {access rates,Bandwidth,cache memory operation,cache storage,Clocks,Computer architecture,Costs,data reference stream,high-bandwidth data cache design,instruction sets,instructions,Laboratories,locality-based interleaved cache,memory architecture,Microcomputers,microcomputers5795109,Microprocessors,multi-bank cache design,multi-issue processors,multi-ported cache design,multiple data references,parallel architectures,parallel programming,performance,performance evaluation,Process design,reference stream characteristics,Rivers,Time division multiplexing}
 }
 
-@inproceedings{rixnerMemoryAccessScheduling2000,
+@inproceedings{rixnerMemoryAccessScheduling2000a,
   title = {Memory Access Scheduling},
-  booktitle = {Proceedings of 27th {{International Symposium}} on {{Computer Architecture}} ({{IEEE Cat}}. {{No}}.{{RS00201}})},
-  author = {Rixner, S. and Dally, W. J. and Kapasi, U. J. and Mattson, P. and Owens, J. D.},
-  date = {2000-06},
+  booktitle = {Proceedings of the 27th Annual International Symposium on {{Computer}} Architecture},
+  author = {Rixner, Scott and Dally, William J. and Kapasi, Ujval J. and Mattson, Peter and Owens, John D.},
+  date = {2000-05-01},
   pages = {128--138},
+  publisher = {{Association for Computing Machinery}},
+  location = {{Vancouver, British Columbia, Canada}},
   doi = {10.1145/339647.339668},
-  abstract = {The bandwidth and latency of a memory system are strongly dependent on the manner in which accesses interact with the "3-D" structure of banks, rows, and columns characteristic of contemporary DRAM chips. There is nearly an order of magnitude difference in bandwidth between successive references to different columns within a row and different rows within a bank. This paper introduces memory access scheduling, a technique that improves the performance of a memory system by reordering memory references to exploit locality within the 3-D memory structure. Conservative reordering, in which the first ready reference in a sequence is performed, improves bandwidth by 40\% for traces from five media benchmarks. Aggressive reordering, in which operations are scheduled to optimize memory bandwidth, improves bandwidth by 93\% for the same set of applications. Memory access scheduling is particularly important for media processors where it enables the processor to make the most efficient use of scarce memory bandwidth.},
-  eventtitle = {Proceedings of 27th {{International Symposium}} on {{Computer Architecture}} ({{IEEE Cat}}. {{No}}.{{RS00201}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ATEENGHW\\Rixner et al. - 2000 - Memory access scheduling.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2EZMNPJD\\854384.html},
-  keywords = {Arithmetic,bandwidth,Bandwidth,Delay,DRAM chips,Laboratories,latency,memory access scheduling,memory system,Out of order,Permission,Pipeline processing,processor scheduling,Processor scheduling,Random access memory,storage management,Streaming media}
+  url = {https://doi.org/10.1145/339647.339668},
+  urldate = {2020-03-24},
+  abstract = {The bandwidth and latency of a memory system are strongly dependent on the manner in which accesses interact with the “3-D” structure of banks, rows, and columns characteristic of contemporary DRAM chips. There is nearly an order of magnitude difference in bandwidth between successive references to different columns within a row and different rows within a bank. This paper introduces memory access scheduling, a technique that improves the performance of a memory system by reordering memory references to exploit locality within the 3-D memory structure. Conservative reordering, in which the first ready reference in a sequence is performed, improves bandwidth by 40\% for traces from five media benchmarks. Aggressive reordering, in which operations are scheduled to optimize memory bandwidth, improves bandwidth by 93\% for the same set of applications. Memory access scheduling is particularly important for media processors where it enables the processor to make the most efficient use of scarce memory bandwidth.},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\U22XYCJG\\Rixner et al. - 2000 - Memory access scheduling.pdf},
+  isbn = {978-1-58113-232-8},
+  series = {{{ISCA}} '00}
 }
 
 @article{rizzoReplacementPoliciesProxy2000,
@@ -3769,6 +3814,23 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {Accuracy,Bandwidth,cache storage,Clocks,Decoding,Delay,dynamic instruction stream,Engines,evaluation,Frequency,high instruction fetch bandwidth,low latency,memory architecture,microarchitecture,Microarchitecture,performance evaluation,performance gain,Performance gain,SPEC95 integer benchmarks,trace cache,trace-level sequencing,Upper bound},
   note = {Conference Name: IEEE Transactions on Computers},
   number = {2}
+}
+
+@article{rothDependenceBasedPrefetching1998,
+  title = {Dependence Based Prefetching for Linked Data Structures},
+  author = {Roth, Amir and Moshovos, Andreas and Sohi, Gurindar S.},
+  date = {1998-10-01},
+  journaltitle = {ACM SIGPLAN Notices},
+  shortjournal = {SIGPLAN Not.},
+  volume = {33},
+  pages = {115--126},
+  issn = {0362-1340},
+  doi = {10.1145/291006.291034},
+  url = {https://doi.org/10.1145/291006.291034},
+  urldate = {2020-03-22},
+  abstract = {We introduce a dynamic scheme that captures the accesspat-terns of linked data structures and can be used to predict future accesses with high accuracy. Our technique exploits the dependence relationships that exist between loads that produce addresses and loads that consume these addresses. By identzj+ing producer-consumer pairs, we construct a compact internal representation for the associated structure and its traversal. To achieve a prefetching eflect, a small prefetch engine speculatively traverses this representation ahead of the executing program. Dependence-based prefetching achieves speedups of up to 25\% on a suite of pointer-intensive programs.},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\PXWF6883\\Roth et al. - 1998 - Dependence based prefetching for linked data struc.pdf},
+  number = {11}
 }
 
 @inproceedings{samieeWRPWeightingReplacement2008,
@@ -3900,14 +3962,19 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
 @inproceedings{shaoBurstSchedulingAccess2007,
   title = {A {{Burst Scheduling Access Reordering Mechanism}}},
   booktitle = {2007 {{IEEE}} 13th {{International Symposium}} on {{High Performance Computer Architecture}}},
-  author = {Shao, J. and Davis, B. T.},
-  date = {2007-02},
+  author = {Shao, Jun and Davis, Brian T.},
+  date = {2007},
   pages = {285--294},
+  publisher = {{IEEE}},
+  location = {{Scottsdale, AZ, USA}},
   doi = {10.1109/HPCA.2007.346206},
-  abstract = {Utilizing the nonuniform latencies of SDRAM devices, access reordering mechanisms alter the sequence of main memory access streams to reduce the observed access latency. Using a revised M5 simulator with an accurate SDRAM module, the burst scheduling access reordering mechanism is proposed and compared to conventional in order memory scheduling as well as existing academic and industrial access reordering mechanisms. With burst scheduling, memory accesses to the same rows of the same banks are clustered into bursts to maximize bus utilization of the SDRAM device. Subject to a static threshold, memory reads are allowed to preempt ongoing writes for reduced read latency, while qualified writes are piggybacked at the end of bursts to exploit row locality in writes and prevent write queue saturation. Performance improvements contributed by read preemption and write piggybacking are identified. Simulation results show that burst scheduling reduces the average execution time of selected SPEC CPU2000 benchmarks by 21\% over conventional bank in order memory scheduling. Burst scheduling also outperforms Intel's patented out of order memory scheduling and the row hit access reordering mechanism by 11\% and 6\% respectively},
+  url = {http://ieeexplore.ieee.org/document/4147669/},
+  urldate = {2020-03-25},
+  abstract = {Utilizing the nonuniform latencies of SDRAM devices, access reordering mechanisms alter the sequence of main memory access streams to reduce the observed access latency. Using a revised M5 simulator with an accurate SDRAM module, the burst scheduling access reordering mechanism is proposed and compared to conventional in order memory scheduling as well as existing academic and industrial access reordering mechanisms. With burst scheduling, memory accesses to the same rows of the same banks are clustered into bursts to maximize bus utilization of the SDRAM device. Subject to a static threshold, memory reads are allowed to preempt ongoing writes for reduced read latency, while qualified writes are piggybacked at the end of bursts to exploit row locality in writes and prevent write queue saturation. Performance improvements contributed by read preemption and write piggybacking are identified. Simulation results show that burst scheduling reduces the average execution time of selected SPEC CPU2000 benchmarks by 21 \% over conventional bank in order memory scheduling. Burst scheduling also outperforms Intel's patented out of order memory scheduling and the row hit access reordering mechanism by 11\% and 6\% respectively.},
   eventtitle = {2007 {{IEEE}} 13th {{International Symposium}} on {{High Performance Computer Architecture}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ZV8GWYP9\\Shao and Davis - 2007 - A Burst Scheduling Access Reordering Mechanism.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ZWPBSKJ6\\4147669.html},
-  keywords = {access latency,Aerospace industry,Bandwidth,burst scheduling access reordering mechanism,bus utilization,Computational modeling,Delay,DRAM chips,Job shop scheduling,M5 simulator,main memory access streams,order memory scheduling,Out of order,Processor scheduling,Read-write memory,scheduling,SDRAM,SDRAM devices,Space exploration,SPEC CPU2000 benchmarks,storage management,system buses}
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\WNWRTS5V\\Shao and Davis - 2007 - A Burst Scheduling Access Reordering Mechanism.pdf},
+  isbn = {978-1-4244-0804-7},
+  langid = {english}
 }
 
 @article{shinDRAMLatencyOptimizationInspired2016,
@@ -4211,7 +4278,7 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   issn = {0272-1732},
   doi = {10.1109/MM.2010.102},
   abstract = {To alleviate bottlenecks in this era of many-core architectures, the authors propose a virtual write queue to expand the memory controller's scheduling window through visibility of cache behavior. Awareness of the physical main memory layout and a focus on writes can shorten both read and write average latency, reduce memory power consumption, and improve overall system performance.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\R33ZGLEH\\Stuecheli et al. - 2011 - Coordinating DRAM and Last-Level-Cache Policies wi.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2T3837LK\\5661752.html},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\D93G3SAW\\Stuecheli et al. - 2011 - Coordinating DRAM and Last-Level-Cache Policies wi.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2T3837LK\\5661752.html},
   keywords = {Bandwidth,cache,Cache memory,cache replacement,cache storage,cache write-back,DRAM,DRAM chips,DRAM page-mode,DRAM parameters,last level cache policy,last-level cache,many core architecture,Memory,memory bandwidth,memory controller scheduling,memory scheduling,multiprocessing systems,performance evaluation,processor scheduling,Processor scheduling,Program processors,Queueing analysis,Random access memory,system performance,virtual write queue},
   number = {1}
 }
@@ -4338,38 +4405,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\EWQW8W3A\\Tian and Liebelt - 2014 - An effectiveness-based adaptive cache replacement .pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\FEIKKXWD\\S014193311300197X.html},
   keywords = {Cache memory,Configurable cache,Micro architecture,Performance,Scan resistance,Thrashing},
   number = {1}
-}
-
-@article{tien-fuchenEffectiveHardwarebasedData1995,
-  title = {Effective Hardware-Based Data Prefetching for High-Performance Processors},
-  author = {Tien-Fu Chen and Jean-Loup Baer},
-  date = {1995-05},
-  journaltitle = {IEEE Transactions on Computers},
-  volume = {44},
-  pages = {609--623},
-  issn = {2326-3814},
-  doi = {10.1109/12.381947},
-  abstract = {Memory latency and bandwidth are progressing at a much slower pace than processor performance. In this paper, we describe and evaluate the performance of three variations of a hardware function unit whose goal is to assist a data cache in prefetching data accesses so that memory latency is hidden as often as possible. The basic idea of the prefetching scheme is to keep track of data access patterns in a reference prediction table (RPT) organized as an instruction cache. The three designs differ mostly on the timing of the prefetching. In the simplest scheme (basic), prefetches can be generated one iteration ahead of actual use. The lookahead variation takes advantage of a lookahead program counter that ideally stays one memory latency time ahead of the real program counter and that is used as the control mechanism to generate the prefetches. Finally the correlated scheme uses a more sophisticated design to detect patterns across loop levels. These designs are evaluated by simulating the ten SPEC benchmarks on a cycle-by-cycle basis. The results show that 1) the three hardware prefetching schemes all yield significant reductions in the data access penalty when compared with regular caches, 2) the benefits are greater when the hardware assist augments small on-chip caches, and 3) the lookahead scheme is the preferred one cost-performance wise.{$<>$}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\LM4Q6ZZW\\Tien-Fu Chen and Jean-Loup Baer - 1995 - Effective hardware-based data prefetching for high.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\77GV4N64\\381947.html},
-  keywords = {Bandwidth,Bridges,cache storage,Coherence,Computer science,Counting circuits,data access patterns,data cache,Delay,fault tolerant computing,Hardware,hardware function unit,hardware prefetching schemes,hardware-based data prefetching,high-performance processors,instruction cache,lookahead program counter,lookahead scheme,memory latency,performance evaluation,Predictive models,Prefetching,prefetching data accesses,reference prediction table,SPEC benchmarks,Timing},
-  note = {Conference Name: IEEE Transactions on Computers},
-  number = {5}
-}
-
-@article{tomiyamaCodePlacementTechniques1997,
-  title = {Code Placement Techniques for Cache Miss Rate Reduction},
-  author = {Tomiyama, Hiroyuki and Yasuura, Hiroto},
-  date = {1997-10-01},
-  journaltitle = {ACM Transactions on Design Automation of Electronic Systems},
-  volume = {2},
-  pages = {410--429},
-  issn = {10844309},
-  doi = {10.1145/268424.268469},
-  url = {http://portal.acm.org/citation.cfm?doid=268424.268469},
-  urldate = {2020-01-06},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\MJAWER2U\\Tomiyama and Yasuura - 1997 - Code placement techniques for cache miss rate redu.pdf},
-  langid = {english},
-  number = {4}
 }
 
 @inproceedings{tsaiJengaSoftwaredefinedCache2017,
@@ -4507,6 +4542,20 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   series = {Lecture {{Notes}} in {{Computer Science}}}
 }
 
+@inproceedings{vanderwielCompilerassistedDataPrefetch1999,
+  title = {A Compiler-Assisted Data Prefetch Controller},
+  booktitle = {Proceedings 1999 {{IEEE International Conference}} on {{Computer Design}}: {{VLSI}} in {{Computers}} and {{Processors}} ({{Cat}}. {{No}}.{{99CB37040}})},
+  author = {Vander Wiel, S.P. and Lilja, D.J.},
+  date = {1999-10},
+  pages = {372--377},
+  issn = {1063-6404},
+  doi = {10.1109/ICCD.1999.808569},
+  abstract = {Data prefetching has been proposed as a means of hiding the memory access latencies of data referencing patterns that defeat caching strategies. Prefetching techniques that either use special cache logic to issue prefetches or that rely on the processor to issue prefetch requests typically involve some compromise between accuracy and instruction overhead. A data prefetch controller (DPC) is proposed that combines low instruction overhead with the flexibility and accuracy of a compiler-directed prefetch mechanism. At run-time, the processor and prefetch controller each execute separate, but cooperating instruction streams. Simulations in which both programs are generated from a single application source file using a commercial compiler show that the prefetch controller can significantly improve the cache utilization and execution time of several SPECfp95 benchmarks. Performance comparisons also indicate that the DPC outperforms software prefetching techniques and prefetching via a hardware reference prediction table.},
+  eventtitle = {Proceedings 1999 {{IEEE International Conference}} on {{Computer Design}}: {{VLSI}} in {{Computers}} and {{Processors}} ({{Cat}}. {{No}}.{{99CB37040}})},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2ZCWC6VI\\Vander Wiel and Lilja - 1999 - A compiler-assisted data prefetch controller.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\J52TXJVL\\808569.html},
+  keywords = {Cache memory,cache storage,cache utilization,caching strategies,circuit layout CAD,circuit simulation,commercial compiler,compiler-assisted data prefetch controller,compiler-directed prefetch mechanism,cooperating instruction streams,data prefetching,data referencing patterns,Delay,Dispatching,DPC,Etching,execution time,Hardware,hardware reference prediction table,instruction overhead,instruction sets,Logic,low instruction overhead,memory access latencies,prefetch controller,prefetch requests,Prefetching,prefetching techniques,Program processors,Read only memory,Runtime,single application source file,software prefetching techniques,SPECfp95 benchmarks,special cache logic}
+}
+
 @article{vanderwielDataPrefetchMechanisms2000,
   title = {Data Prefetch Mechanisms},
   author = {Vanderwiel, Steven P. and Lilja, David J.},
@@ -4551,7 +4600,7 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   doi = {10.1109/IWIA.1997.670415},
   abstract = {This paper discusses an approach to reducing memory latency in future systems. It focuses on systems where a single chip DRAM/processor will not be feasible even in 10 years, e.g. systems requiring a large memory and/or many CPU's. In such systems a solution needs to be found to DRAM latency and bandwidth as well as to inter-chip communication. Utilizing the projected advances in chip I/O bandwidth we propose to implement a decoupled access-execute processor where the access processor is placed in memory. A program is compiled to run as a computational process and several access processes with the latter executing in the DRAM processors. Instruction set extensions are discussed to support this paradigm. Using multi-level branch prediction the access processor stays ahead of the execute processor and keeps the latter supplied with data. The system reduces latency by moving address computation to memory and thus avoiding sending address to memory by the computational processor. This and the fetch-ahead capabilities of the access processor are combined with multiple DRAM "streaming" to improve performance. DRAM caching is assumed to be used to assist in this as well.},
   eventtitle = {Proceedings {{Innovative Architecture}} for {{Future Generation High}}-{{Performance Processors}} and {{Systems}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\A9ZXBAFX\\Veidenbaum and Gallivan - 1997 - Decoupled access DRAM architecture.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\XGK3SY5D\\670415.html},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\NA2WU962\\00670415.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\XGK3SY5D\\670415.html},
   keywords = {access processor,Access protocols,Bandwidth,chip I/O bandwidth,Circuit noise,Circuit synthesis,Clocks,Computer architecture,Computer science,decoupled access-execute processor,Delay,DRAM caching,execute processor,memory architecture,multi-level branch prediction,multiple DRAM,parallel architectures,Random access memory,reducing memory latency,single chip DRAM,Very large scale integration}
 }
 
@@ -4677,7 +4726,7 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   doi = {10.1109/VLSISOC.2010.5642609},
   abstract = {In power and size sensitive embedded systems, flash memory and phase change memory are replacing DRAM as the main memory. Unfortunately, these technologies are limited by their endurance and long write latencies. To minimize the main memory access time, we optimally schedule tasks by an ILP formulation that can be generally applied to other main memory technologies, including DRAM. We also present a heuristic, Wander Scheduling, to solve larger instances in a reasonable amount of time. Our experimental results show that when compared with list scheduling, Wander Scheduling can reduce memory access times by an average of 40.73\% and increase the lifetime of flash and phase change memory by 82.56\%.},
   eventtitle = {2010 18th {{IEEE}}/{{IFIP International Conference}} on {{VLSI}} and {{System}}-on-{{Chip}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\EVVH9Z7G\\Wei-Che Tseng et al. - 2010 - Optimal scheduling to minimize non-volatile memory.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\HJP9WQ5Y\\5642609.html},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\SH8ZWFF9\\05642609.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\HJP9WQ5Y\\5642609.html},
   keywords = {Ash,cache storage,DRAM,DRAM chips,embedded system,flash memories,flash memory,hardware cache,Law,Nonvolatile memory,nonvolatile memory access time minimization,optimal scheduling,Optimal scheduling,phase change memories,phase change memory,processor scheduling,Schedules,Scheduling,wander scheduling}
 }
 
@@ -4871,6 +4920,23 @@ to the primary issues they address and the primary benefits they offer.},
   series = {{{ISCA}} '09}
 }
 
+@article{wulfHittingMemoryWall1995,
+  title = {Hitting the Memory Wall: Implications of the Obvious},
+  shorttitle = {Hitting the Memory Wall},
+  author = {Wulf, Wm. A. and McKee, Sally A.},
+  date = {1995-03-01},
+  journaltitle = {ACM SIGARCH Computer Architecture News},
+  volume = {23},
+  pages = {20--24},
+  issn = {01635964},
+  doi = {10.1145/216585.216588},
+  url = {http://portal.acm.org/citation.cfm?doid=216585.216588},
+  urldate = {2020-03-25},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\KCVD5Z8F\\Wulf and McKee - 1995 - Hitting the memory wall implications of the obvio.pdf},
+  langid = {english},
+  number = {1}
+}
+
 @article{wuLoopPartitionTechnique1996b,
   title = {A Loop Partition Technique for Reducing Cache Bank Conflict in Multithreaded Architecture},
   author = {Wu, Chao-Chin and Chen, Cheng},
@@ -5022,19 +5088,6 @@ to the primary issues they address and the primary benefits they offer.},
   series = {{{ICS}} '09}
 }
 
-@inproceedings{zhangLaxityAwareMemoryAccess2011,
-  title = {A {{Laxity}}-{{Aware Memory Access Scheduler}} for {{High Performance Multimedia SoC}}},
-  booktitle = {2011 {{IEEE}} 11th {{International Conference}} on {{Computer}} and {{Information Technology}}},
-  author = {Zhang, G. and Jiang, Y. and Wang, W. and Su, M.},
-  date = {2011-08},
-  pages = {603--608},
-  doi = {10.1109/CIT.2011.13},
-  abstract = {Nowadays high-performance multimedia SoC design always integrates a variety of function units (FU) into a single chip and these FUs impose great stress on the shared memory system. To improve the memory system utilization and meet a wide range of bandwidth and latency requirements of these FUs, a well-designed memory scheduler that takes the quality-of-service (QoS) into account must be adopted. In this paper, a laxity-aware memory scheduler that can adaptively measure the laxity of each memory access task is proposed. Known the laxity of each memory access task, the proposed memory scheduler can guarantee the necessary bandwidth within a certain time interval, which is crucial to the performance and user experience of multimedia SoCs. Compared to previous proposed memory scheduling algorithms based on bandwidth allocating, the laxity-aware memory scheduler can obtain 14.5\% decrease in memory access latency while preserving high DRAM data bus utilization.},
-  eventtitle = {2011 {{IEEE}} 11th {{International Conference}} on {{Computer}} and {{Information Technology}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\J7YQ3AHG\\Zhang et al. - 2011 - A Laxity-Aware Memory Access Scheduler for High Pe.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\6N9GT9WY\\6036832.html},
-  keywords = {Bandwidth,bandwidth allocation,bandwidth requirement,DRAM data bus utilization,Graphics processing unit,high performance multimedia SoC,latency requirement,laxity-aware memory access scheduler,Memory management,memory scheduling algorithm,Multimedia communication,multimedia systems,quality of service,Quality of service,quality-of-service,Random access memory,scheduling,shared memory system,shared memory systems,System-on-a-chip,system-on-chip}
-}
-
 @inproceedings{zhangPACPLRUCacheReplacement2011,
   title = {{{PAC}}-{{PLRU}}: {{A Cache Replacement Policy}} to {{Salvage Discarded Predictions}} from {{Hardware Prefetchers}}},
   shorttitle = {{{PAC}}-{{PLRU}}},
@@ -5047,6 +5100,24 @@ to the primary issues they address and the primary benefits they offer.},
   eventtitle = {2011 11th {{IEEE}}/{{ACM International Symposium}} on {{Cluster}}, {{Cloud}} and {{Grid Computing}}},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2FSSUDHL\\Zhang et al. - 2011 - PAC-PLRU A Cache Replacement Policy to Salvage Di.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\LI5DFS7J\\5948617.html},
   keywords = {Binary trees,cache architecture,cache blocks,cache replacement policy,cache storage,computer architecture,Filtering,Hardware,hardware prefetchers,high-performance processors,L2 cache miss rate,Mathematical model,memory architecture,memory wall,Microarchitecture,PAC-PLRU,Prefetching,salvage discarded predictions,stride prefetcher}
+}
+
+@inproceedings{zhangSpeedingIrregularApplications1995,
+  title = {Speeding up Irregular Applications in Shared-Memory Multiprocessors: Memory Binding and Group Prefetching},
+  shorttitle = {Speeding up Irregular Applications in Shared-Memory Multiprocessors},
+  booktitle = {Proceedings of the 22nd Annual International Symposium on {{Computer}} Architecture},
+  author = {Zhang, Zheng and Torrellas, Josep},
+  date = {1995-05-01},
+  pages = {188--199},
+  publisher = {{Association for Computing Machinery}},
+  location = {{S. Margherita Ligure, Italy}},
+  doi = {10.1145/223982.224423},
+  url = {https://doi.org/10.1145/223982.224423},
+  urldate = {2020-03-22},
+  abstract = {While many parallel applications exhibit good spatial locality, other important codes in areas like graph problem-solving or CAD do not. Often, these irregular codes contain small records accessed via pointers. Consequently, while the former applications benefit from long cache lines, the latter prefer short lines. One good solution is to combine short lines with prefetching. In this way, each application can exploit the amount of spatial locality that it has. However, prefetching, if provided, should also work for the irregular codes. This paper presents a new prefetching scheme that, while usable by regular applications, is specifically targeted to irregular ones: Memory Binding and Group Prefetching.The idea is to hardware-bind and prefetch together groups of data that the programmer suggests are strongly related to each other. Examples are the different fields in a record or two records linked by a permanent pointer. This prefetching scheme, combined with short cache lines, results in a memory hierarchy design that can be exploited by both regular and irregular applications. Overall, it is better to use a system with short lines (16-32 bytes) and our prefetching than a system with long lines (128 bytes) with or without our prefetching. The former system runs 6 out of 7 Splash-class applications faster. In particular, some of the most irregular applications run 25-40\% faster.},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\PB7585FC\\Zhang and Torrellas - 1995 - Speeding up irregular applications in shared-memor.pdf},
+  isbn = {978-0-89791-698-1},
+  series = {{{ISCA}} '95}
 }
 
 @inproceedings{zhangTagbasedCacheReplacement2010,
