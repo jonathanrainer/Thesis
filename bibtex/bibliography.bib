@@ -257,20 +257,6 @@
   keywords = {associativity,Benchmark testing,cache design,cache size,cache storage,Computational modeling,computer architecture,Computer architecture,content-addressable storage,Costs,Degradation,embedded system,Embedded system,embedded systems,Energy consumption,Hardware,low-power electronics,low-power operation modes,memory architecture,Memory architecture,miss rate reduction,power consumption,Power generation economics,set-associative cache,SimpleScalar simulator,Spec2000 Benchmarks,static profiling,variable-way set associative cache}
 }
 
-@inproceedings{an-chowlaiDeadblockPredictionDeadblock2001,
-  title = {Dead-Block Prediction Dead-Block Correlating Prefetchers},
-  booktitle = {Proceedings 28th {{Annual International Symposium}} on {{Computer Architecture}}},
-  author = {An-Chow Lai and Fide, C. and Falsafi, B.},
-  date = {2001-06},
-  pages = {144--154},
-  issn = {1063-6897},
-  doi = {10.1109/ISCA.2001.937443},
-  abstract = {Effective data prefetching requires accurate mechanisms to predict both "which" cache blocks to prefetch and "when" to prefetch them. This paper proposes the Dead-Block Predictors (DBPs), trace-based predictors that accurately identify "when" an Ll data cache block becomes evictable or "dead". Predicting a dead block significantly enhances prefetching lookahead and opportunity, and enables placing data directly into Ll, obviating the need for auxiliary prefetch buffers. This paper also proposes Dead-Block Correlating Prefetchers (DBCPs), that use address correlation to predict "which" subsequent block to prefetch when a block becomes evictable. A DBCP enables effective data prefetching in a wide spectrum of pointer-intensive, integer, and floating-point applications. We use cycle-accurate simulation of an out-of-order superscalar processor and memory-intensive benchmarks to show that: (1) dead-block prediction enhances prefetching lookahead at least by an order of magnitude as compared to previous techniques, (2) a DBP can predict dead blocks on average with a coverage of 90\% only mispredicting 4\% of the time, (3) a DBCP offers an address prediction coverage of 86\% only mispredicting 3\% of the time, and (4) DBCPs improve performance by 62\% on average and 282\% at best in the benchmarks we studied.},
-  eventtitle = {Proceedings 28th {{Annual International Symposium}} on {{Computer Architecture}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\X4KKEDCV\\An-Chow Lai et al. - 2001 - Dead-block prediction dead-block correlating prefe.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\58454CRN\\937443.html},
-  keywords = {address correlation,auxiliary prefetch buffers,benchmarks,cycle-accurate simulation,Data engineering,data prefetching,data structures,Data structures,dead-block correlating prefetchers,dead-block prediction,Delay,Engines,floating-point applications,Hardware,History,memory-intensive benchmarks,Out of order,out-of-order superscalar processor,parallel processing,performance evaluation,Prefetching,prefetching lookahead,Proposals,storage management,Sun}
-}
-
 @inproceedings{anandkumarHybridCacheReplacement2014,
   title = {A Hybrid Cache Replacement Policy for Heterogeneous Multi-Cores},
   booktitle = {2014 {{International Conference}} on {{Advances}} in {{Computing}}, {{Communications}} and {{Informatics}} ({{ICACCI}})},
@@ -367,23 +353,6 @@
   eventtitle = {Digest of {{Papers COMPCON Spring}} 1992},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\B5IV76D4\\Azimi et al. - 1992 - Two level cache architectures.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\Q6UFIV6V\\186736.html},
   keywords = {buffer storage,cache hierarchy,Clocks,Delay,Engines,Frequency,full speed interface,half speed interface,memory architecture,memory latency sensitivities,Microprocessors,Paper technology,parallel caches,Performance analysis,performance evaluation,Performance gain,performance measures,Random access memory,serial second level caches,Trademarks,two level cache architectures,uniprocessor systems,write back mode}
-}
-
-@article{backaschRuntimeVerificationMulticore2013,
-  title = {Runtime {{Verification}} for {{Multicore SoC}} with {{High}}-Quality {{Trace Data}}},
-  author = {Backasch, Rico and Hochberger, Christian and Weiss, Alexander and Leucker, Martin and Lasslop, Richard},
-  date = {2013-04},
-  journaltitle = {ACM Trans. Des. Autom. Electron. Syst.},
-  volume = {18},
-  pages = {18:1--18:26},
-  issn = {1084-4309},
-  doi = {10.1145/2442087.2442089},
-  url = {http://doi.acm.org/10.1145/2442087.2442089},
-  urldate = {2017-03-07},
-  abstract = {Multicore System-on-Chip (SoC) implementations of embedded systems are becoming very popular. In these systems it is possible to spread out computations over many cores. On one hand this leads to better energy efficiency if clock frequencies and core voltages are reduced. On the other hand this delivers very high performance to the software developer and thus enables complex software systems to be implemented. Unfortunately, debugging and validation of these systems becomes extremely difficult. Various technological approaches try to solve this dilemma. In this contribution we will show a new approach to observe multi-core SoCs and make their internal operations visible to external analysis tools. Also, we show that runtime verification can be employed to analyze and validate these internal operations while the system operates in its normal environment. The combination of these two approaches delivers unprecedented options to the developer to understand and verify system behavior even in complex multicore SoCs.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\DFIGAC8K\\Backasch et al. - 2013 - Runtime Verification for Multicore SoC with High-q.pdf},
-  keywords = {Embedded system,Multicore SoC,runtime verification,synchronisation,test driven development,trace data},
-  number = {2}
 }
 
 @inproceedings{baerEffectiveOnchipPreloading1991a,
@@ -552,17 +521,15 @@
   langid = {english}
 }
 
-@inproceedings{caoPostSiliconTraceAnalysis2017,
-  title = {A {{Post}}-{{Silicon Trace Analysis Approach}} for {{System}}-on-{{Chip Protocol Debug}}},
-  booktitle = {2017 {{IEEE International Conference}} on {{Computer Design}} ({{ICCD}})},
-  author = {Cao, Y. and Zheng, H. and Palombo, H. and Ray, S. and Yang, J.},
-  date = {2017-11},
-  pages = {177--184},
-  doi = {10.1109/ICCD.2017.35},
-  abstract = {Reconstructing system-level behavior from silicon traces is a critical problem in post-silicon validation of System-on-Chip designs. Current industrial practice in this area is primarily manual, depending on collaborative insights of the architects, designers, and validators. This paper presents a trace analysis approach that exploits architectural models of system-level protocols to reconstruct design behavior from partially observed silicon traces in the presence of ambiguous and noisy data. The output of the approach is a set of all potential interpretations of a system's internal execution abstracted to system-level protocols. To support the trace analysis approach, a companion trace signal selection framework guided by system-level protocols is also presented, and its impacts on the complexity and accuracy of the analysis approach are discussed. That approach and the framework have been evaluated on a multi-core System-on-Chip prototype that implements a set of common industrial system-level protocols.},
-  eventtitle = {2017 {{IEEE International Conference}} on {{Computer Design}} ({{ICCD}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\CC4BEFJK\\Cao et al. - 2017 - A Post-Silicon Trace Analysis Approach for System-.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\HEQE2UEE\\8119208.html},
-  keywords = {companion trace signal selection framework,Computer bugs,computer debugging,formal verification,industrial system-level protocols,integrated circuit design,integrated circuit testing,IP networks,Observability,partially observed silicon traces,post-silicon trace analysis approach,post-silicon validation,protocols,Protocols,reconstructing system-level behavior,silicon,Silicon,software architecture,system-on-chip,System-on-chip,system-on-chip designs,system-on-chip protocol debug,system-on-chip prototype,Universal Serial Bus}
+@misc{caoStudyIntegratedPrefetching1995,
+  title = {A Study of Integrated Prefetching and Caching Strategies},
+  author = {Cao, Pei and Felten, Edward W. and Karlin, Anna R. and Li, Kai},
+  date = {1995-05-01},
+  publisher = {{Association for Computing Machinery}},
+  url = {https://doi.org/10.1145/223586.223608},
+  urldate = {2020-04-06},
+  abstract = {Prefetching and caching are effective techniques for improving the performance of file systems, but they have not been studied in an integrated fashion. This paper proposes four properties that optimal integrated strategies for prefetching and caching must satisfy, and then presents and studies two such integrated strategies, called aggressive and conservative. We prove that the performance of the conservative approach is within a factor of two of optimal and that the performance of the aggressive strategy is a factor significantly less than twice that of the optimal case. We have evaluated these two approaches by trace-driven simulation with a collection of file access traces. Our results show that the two integrated prefetching and caching strategies are indeed close to optimal and that these strategies can reduce the running time of applications by up to 50\%.},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\WWVRMBF4\\Cao et al. - 1995 - A study of integrated prefetching and caching stra.pdf}
 }
 
 @inproceedings{carterImpulseBuildingSmarter1999,
@@ -881,21 +848,6 @@
   langid = {english}
 }
 
-@article{consuegraAnalyzingAdaptiveCache2015,
-  title = {Analyzing {{Adaptive Cache Replacement Strategies}}},
-  author = {Consuegra, Mario E. and Martinez, Wendy A. and Narasimhan, Giri and Rangaswami, Raju and Shao, Leo and Vietri, Giuseppe},
-  date = {2015-03-26},
-  url = {http://arxiv.org/abs/1503.07624},
-  urldate = {2019-09-12},
-  abstract = {Adaptive Replacement Cache (ARC) and CLOCK with Adaptive Replacement (CAR) are state-of-the- art "adaptive" cache replacement algorithms invented to improve on the shortcomings of classical cache replacement policies such as LRU, LFU and CLOCK. By separating out items that have been accessed only once and items that have been accessed more frequently, both ARC and CAR are able to control the harmful effect of single-access items flooding the cache and pushing out more frequently accessed items. Both ARC and CAR have been shown to outperform their classical and popular counterparts in practice. Both algorithms are complex, yet popular. Even though they can be treated as online algorithms with an "adaptive" twist, a theoretical proof of the competitiveness of ARC and CAR remained unsolved for over a decade. We show that the competitiveness ratio of CAR (and ARC) has a lower bound of N + 1 (where N is the size of the cache) and an upper bound of 18N (4N for ARC). If the size of cache offered to ARC or CAR is larger than the one provided to OPT, then we show improved competitiveness ratios. The important implication of the above results are that no "pathological" worst-case request sequences exist that could deteriorate the performance of ARC and CAR by more than a constant factor as compared to LRU.},
-  archivePrefix = {arXiv},
-  eprint = {1503.07624},
-  eprinttype = {arxiv},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\N3EN9VJN\\Consuegra et al. - 2015 - Analyzing Adaptive Cache Replacement Strategies.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\RGS6Z6ZU\\1503.html},
-  keywords = {Computer Science - Data Structures and Algorithms},
-  primaryClass = {cs}
-}
-
 @article{cookseyStatelessContentdirectedData2002a,
   title = {A Stateless, Content-Directed Data Prefetching Mechanism},
   author = {Cooksey, Robert and Jourdan, Stephan and Grunwald, Dirk},
@@ -1191,19 +1143,6 @@
   keywords = {Adaptive body bias,Algorithm design and analysis,block based adaptive body biasing algorithm,Correlation,Delay,DRAM,DRAM chips,Integrated circuit modeling,Logic gates,Mathematical model,memory arrays,memory controllers,Process Variation,process variation aware DRAM design,Random access memory,sensitivity based gate level process variation models,simulated annealing,simulated annealing based Vth assignment algorithm,statistical analysis,statistical timing analysis}
 }
 
-@inproceedings{deutschMassiveSignalTracing2014,
-  title = {Massive Signal Tracing Using On-Chip {{DRAM}} for in-System Silicon Debug},
-  booktitle = {2014 {{International Test Conference}}},
-  author = {Deutsch, S. and Chakrabarty, K.},
-  date = {2014-10},
-  pages = {1--10},
-  doi = {10.1109/TEST.2014.7035363},
-  abstract = {Silicon debug is a major challenge due to continuously increasing design complexity. Traditional debug methods using signal tracing suffer from the limited capacity of on-chip trace buffers that only allow for signal observation during a short time window. We propose a low-cost debug architecture for massive signal tracing in ICs that integrate fast DRAM, such as 2D-ICs with embedded DRAM or 3D-stacked ICs with wide-I/O DRAM dies. The key idea is to use available on-chip DRAM for trace-data storage, which results in a significant increase of the observation window compared to traditional methods that use trace buffers. During a debug session, the entire observation window is divided into intervals and a signature is calculated for each observed interval using a multiple-input signature register. At run time, intervals containing erroneous bits are identified by comparing their signature with pre-calculated “golden” signatures that are stored in the DRAM a priori. Only failing intervals including their time stamp are stored into DRAM, which allows for a more efficient use of the memory, resulting in a larger observation window. The proposed method does not require multiple iterations or intermediate processing steps, hence it can be used during functional testing with minimum time overhead associated with the upload of golden signatures and the download of stored debug data to external equipment. We have created a Verilog RTL model for the proposed architecture, synthesized it using a 45 nm CMOS library, and verified its functionality by simulation. The results show that the observation window can be increased by orders of magnitude compared to prior work at comparable hardware cost.},
-  eventtitle = {2014 {{International Test Conference}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\WDASUK38\\Deutsch and Chakrabarty - 2014 - Massive signal tracing using on-chip DRAM for in-s.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\AZGZSZ7T\\7035363.html},
-  keywords = {2D-IC,3D-stacked IC,Bandwidth,buffer circuits,Buffer storage,Clocks,CMOS,CMOS integrated circuits,DRAM chips,elemental semiconductors,hardware description languages,in-system silicon debug,logic testing,multiple-input signature register,on-chip DRAM,on-chip trace buffers t,Random access memory,Registers,Si,signal tracing,silicon,Silicon,size 45 nm,System-on-chip,trace-data storage,Verilog RTL model}
-}
-
 @article{devilleLowcostUsagebasedReplacement1990,
   title = {A Low-Cost Usage-Based Replacement Algorithm for Cache Memories},
   author = {Deville, Yannick},
@@ -1218,19 +1157,6 @@
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\RWRDHF8Z\\Deville - 1990 - A low-cost usage-based replacement algorithm for c.pdf},
   langid = {english},
   number = {4}
-}
-
-@inproceedings{diasCacheDesignAssessment2016,
-  title = {A {{Cache Design Assessment Approach}} for {{Embedded Real}}-{{Time Systems Based}} on {{Execution Time Measurement}}},
-  booktitle = {2016 {{VI Brazilian Symposium}} on {{Computing Systems Engineering}} ({{SBESC}})},
-  author = {Dias, D. and Lima, G. and Barros, E.},
-  date = {2016-11},
-  pages = {168--173},
-  doi = {10.1109/SBESC.2016.033},
-  abstract = {Due to the increasing complexity of embedded systems, simulation is of paramount importance during design phase. Often such systems must obey real-time constraints, calling for worst-case execution time assessment mechanisms. Although there is a wide range of simulation tools in the embedded systems domain, mechanisms for performing high abstraction level estimates for task execution times within a controlled environment are still needed. Non-determinism introduced by cache, multi-core and operating systems, for example, makes timing analysis highly complex or even impossible. We address this problem by presenting a RISC-V Instruction Set Simulation platform equipped with a task profiling mechanism for cache aware execution time measurements. The generated SystemC processor simulation model is integrated within a high abstraction level simulation platform with main memory and cache. Experimental results show that by making use of this kind of platform, designers can easily monitor task execution time as a function of measured code portion, cache sizes or cache policies employed helping in their decisions.},
-  eventtitle = {2016 {{VI Brazilian Symposium}} on {{Computing Systems Engineering}} ({{SBESC}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\KGCF2H6C\\Dias et al. - 2016 - A Cache Design Assessment Approach for Embedded Re.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\HJDA4WHW\\7828301.html},
-  keywords = {Estimation,Hardware,Modeling,real-time systems,Registers,Timing}
 }
 
 @inproceedings{djordjalianMinimallyskewedassociativeCaches2002,
@@ -1272,22 +1198,6 @@
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\VV9J789A\\Donghee Lee et al. - 2001 - LRFU a spectrum of policies that subsumes the lea.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\K8TTHISS\\970573.html},
   keywords = {Bridges,Databases,File systems,Frequency,Hard disks,History},
   number = {12}
-}
-
-@incollection{doughertyOptimizingIntegratedApplication2011,
-  title = {Optimizing {{Integrated Application Performance}} with {{Cache}}-{{Aware Metascheduling}}},
-  booktitle = {On the {{Move}} to {{Meaningful Internet Systems}}: {{OTM}} 2011},
-  author = {Dougherty, Brian and White, Jules and Kegley, Russell and Preston, Jonathan and Schmidt, Douglas C. and Gokhale, Aniruddha},
-  editor = {Meersman, Robert and Dillon, Tharam and Herrero, Pilar and Kumar, Akhil and Reichert, Manfred and Qing, Li and Ooi, Beng-Chin and Damiani, Ernesto and Schmidt, Douglas C. and White, Jules and Hauswirth, Manfred and Hitzler, Pascal and Mohania, Mukesh},
-  date = {2011},
-  volume = {7045},
-  pages = {432--450},
-  publisher = {{Springer Berlin Heidelberg}},
-  location = {{Berlin, Heidelberg}},
-  url = {http://link.springer.com/10.1007/978-3-642-25106-1_2},
-  urldate = {2019-09-12},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\YZHPCD67\\Dougherty et al. - 2011 - Optimizing Integrated Application Performance with.pdf},
-  isbn = {978-3-642-25105-4 978-3-642-25106-1}
 }
 
 @article{duongSCOREScoreBasedMemory2010,
@@ -1369,16 +1279,6 @@
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2AABA5YD\\Emma et al. - 2005 - Exploring the limits of prefetching.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\328ACD4Y\\5388854.html},
   note = {Conference Name: IBM Journal of Research and Development},
   number = {1}
-}
-
-@thesis{faizalbinmohdsharifCacheReplacementAlgorithm2015,
-  title = {Cache {{Replacement Algorithm Using Hierarchical Allocation Scheduling}}},
-  author = {Faizal Bin Mohd Sharif, Mohammad},
-  date = {2015-05},
-  institution = {{Universiti Putra Malaysia}},
-  location = {{Malaysia}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\HTBWDYPP\\153824461.pdf},
-  type = {Master of Science}
 }
 
 @inproceedings{fanApplyingVictimCache2016,
@@ -1638,20 +1538,6 @@ to improve the worst-case execution time of a running task.},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ZGVD7Y55\\Gornish and Veidenbaum - 1994 - An Integrated HardwareSoftware Data Prefetching S.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\38JY4SQR\\5727800.html}
 }
 
-@article{gortFormalanalysisbasedTraceComputation2012,
-  title = {Formal-Analysis-Based Trace Computation for Post-Silicon Debug},
-  author = {Gort, M. and De, Paula and Kuan, J.J.W. and Aamodt, T.M. and Hu, A.J. and Wilton, S.J.E. and Yang, J.},
-  date = {2012},
-  journaltitle = {IEEE Transactions on Very Large Scale Integration (VLSI) Systems},
-  volume = {20},
-  pages = {1997--2010},
-  doi = {10.1109/TVLSI.2011.2166416},
-  abstract = {This paper presents a post-silicon debug methodology that provides a means to rewind, or backspace, a chip from a known crash state using a combination of on-chip real-time data collection and off-chip formal analysis methods. A complete debug flow is presented that considers practical considerations such as area, on-chip non-determinism and signal propagation delay. This flow, along with a low-overhead breakpoint circuit, allows for state-accurate breakpointing capabilities without the need to monitor the entire state of the chip. The flow and associated hardware was tested using a hardware prototype, which consists of an OpenRISC processor instrumented with the debug hardware connected to a PC running the formal verification algorithms. Traces hundreds of cycles long were obtained using the methodology presented in this paper. © 2011 IEEE.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\EUFIZGBK\\display.html},
-  keywords = {Formal analysis,hardware breakpoint,post-silicon debug,silicon debug,validation},
-  number = {11}
-}
-
 @incollection{gramacyAdaptiveCachingRefetching2003,
   title = {Adaptive {{Caching}} by {{Refetching}}},
   booktitle = {Advances in {{Neural Information Processing Systems}} 15},
@@ -1663,30 +1549,6 @@ to improve the worst-case execution time of a running task.},
   url = {http://papers.nips.cc/paper/2296-adaptive-caching-by-refetching.pdf},
   urldate = {2020-03-08},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\RQLA4MCZ\\Gramacy et al. - 2003 - Adaptive Caching by Refetching.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\KBZ9XU4J\\2296-adaptive-caching-by-refetching.html}
-}
-
-@inproceedings{guptaBundledExecutionRecurring2011,
-  title = {Bundled Execution of Recurring Traces for Energy-Efficient General Purpose Processing},
-  booktitle = {2011 44th {{Annual IEEE}}/{{ACM International Symposium}} on {{Microarchitecture}} ({{MICRO}})},
-  author = {Gupta, S. and Feng, S. and Ansari, A. and Mahlke, S. and August, D.},
-  date = {2011-12},
-  pages = {12--23},
-  abstract = {Technology scaling has delivered on its promises of increasing device density on a single chip. However, the voltage scaling trend has failed to keep up, introducing tight power constraints on manufactured parts. In such a scenario, there is a need to incorporate energy-efficient processing resources that can enable more computation within the same power budget. Energy efficiency solutions in the past have typically relied on application specific hardware and accelerators. Unfortunately, these approaches do not extend to general purpose applications due to their irregular and diverse code base. Towards this end, we propose BERET, an energy-efficient co-processor that can be configured to benefit a wide range of applications. Our approach identifies recurring instruction sequences as phases of “temporal regularity” in a program's execution, and maps suitable ones to the BERET hardware, a three-stage pipeline with a bundled execution model. This judicious off-loading of program execution to a reduced-complexity hardware demonstrates significant savings on instruction fetch, decode and register file accesses energy. On average, BERET reduces energy consumption by a factor of 3-4X for the program regions selected across a range of general-purpose and media applications. The average energy savings for the entire application run was 35\% over a single-issue in-order processor.},
-  eventtitle = {2011 44th {{Annual IEEE}}/{{ACM International Symposium}} on {{Microarchitecture}} ({{MICRO}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\XKG54E3V\\Gupta et al. - 2011 - Bundled execution of recurring traces for energy-e.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\H4J9785B\\7851455.html},
-  keywords = {Batteries,BERET hardware,Bridges,bundled execution model,Co-processor,Computer science,Coprocessors,Efficiency,Energy Saving,energy-efficient coprocessor,energy-efficient general purpose processing,Latches,Market research,Microarchitecture,Pipelines,power aware computing,program execution,Program processors,recurring instruction sequence,technology scaling,temporal regularity}
-}
-
-@article{guptaManagingBufferCache2012,
-  title = {Managing {{Buffer Cache}} by {{Block Access Pattern}}},
-  author = {Gupta, Reetu and Shrawankar, Urmila},
-  date = {2012},
-  volume = {9},
-  pages = {7},
-  abstract = {As buffer cache is used to overcome the speed gap between processor and storage devices, performance of buffer cache is a deciding factor in verifying the system performance. Need of improved buffer cache hit ratio and inabilities of the Least Recent Used replacement algorithm inspire the development of the proposed algorithm. Data reuse and program locality are the basis for determining the cache performance. The proposed algorithm determines the temporal locality by detecting the access patterns in the program context from which the I/O request are issued, identified by the program counter signature, and the files to which the I/O request are addressed. For accurate pattern detection and enhanced cache performance re-reference behavior exploited in the cache block are associated with unique signature. Use of multiple caching policies is supported by the proposed algorithm so that the cache under that pattern can be best utilized.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\F4ESVHUJ\\Gupta and Shrawankar - 2012 - Managing Buffer Cache by Block Access Pattern.pdf},
-  langid = {english},
-  number = {6}
 }
 
 @inproceedings{guptaPreeminentPairReplacement2009,
@@ -1827,20 +1689,6 @@ to improve the worst-case execution time of a running task.},
   keywords = {alternative off-chip memory solution,Data transfer,DDR DRAM,Delays,double data rate dynamic random access memories,DRAM,DRAM chips,Latency Analysis,Memory,multicore real-time systems,multiprocessing systems,off-chip memory latency,pessimistic latency bounds,Predictability,predictable execution time,predictable memory controller,Protocols,Random access memory,real-time systems,Real-time systems,Real-Time Systems,reduced latency DRAM protocol,RLDRAM protocol,state-of-the-art predictable DDR controllers,Task analysis,tight timing constraints,variable access latencies}
 }
 
-@inproceedings{hasslingerOptimumCachingLRU2018,
-  title = {Optimum Caching versus {{LRU}} and {{LFU}}: {{Comparison}} and Combined Limited Look-Ahead Strategies},
-  shorttitle = {Optimum Caching versus {{LRU}} and {{LFU}}},
-  booktitle = {2018 16th {{International Symposium}} on {{Modeling}} and {{Optimization}} in {{Mobile}}, {{Ad Hoc}}, and {{Wireless Networks}} ({{WiOpt}})},
-  author = {Hasslinger, G. and Heikkinen, J. and Ntougias, K. and Hasslinger, F. and Hohlfeld, O.},
-  date = {2018-05},
-  pages = {1--6},
-  doi = {10.23919/WIOPT.2018.8362880},
-  abstract = {We compare web caching strategies based on the least recently used (LRU) and the least frequently used (LFU) replacement principles with optimum caching according to Belady's algorithm. The achievable hit rates of the strategies are shown to improve with the exploited knowledge about the request pattern while the computation effort is also increasing. The results give an overview of performance tradeoffs in the whole relevant range for web caching with Zipf request pattern. In a second part, we study a combined approach of the optimum strategy for a limited look-ahead with LRU, LFU or other non-predictive methods. We evaluate the hit rate gain depending on the extent of the look-ahead for request traces and for the independent reference model (IRM) via simulation and derive an analytic confirmation of the observed behaviour. It is shown that caching for video streaming can benefit from the proposed look-ahead technique, when replacement decisions can be partly revised due to new requests being encountered during long lasting content updates.},
-  eventtitle = {2018 16th {{International Symposium}} on {{Modeling}} and {{Optimization}} in {{Mobile}}, {{Ad Hoc}}, and {{Wireless Networks}} ({{WiOpt}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\Y9PCC3ME\\Hasslinger et al. - 2018 - Optimum caching versus LRU and LFU Comparison and.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ACDTG5HE\\8362880.html},
-  keywords = {achievable hit rates,Analytical models,Belady algorithm,Belady's algorithm,Benchmark testing,cache storage,computation effort,Delays,exploited knowledge,hit rate,hit rate gain,Indexes,Internet,least frequently used (LFU),least frequently used replacement principles,least recently used (LRU),least recently used replacement principles,LFU,look-ahead strategies,look-ahead technique,LRU,Markov processes,optimum caching,optimum strategy,request traces,Shape,simulation,Streaming media,Web cache strategies,web caching strategies,Zipf distributed requests,Zipf request pattern}
-}
-
 @book{hennessyComputerArchitectureQuantitative2019,
   title = {Computer {{Architecture}}: A {{Quantitative Approach}}},
   shorttitle = {Computer Architecture},
@@ -1853,19 +1701,6 @@ to improve the worst-case execution time of a running task.},
   isbn = {978-0-12-811905-1},
   keywords = {Computer architecture},
   pagetotal = {1}
-}
-
-@inproceedings{hochbergerAcquiringExhaustiveContinuous2008,
-  title = {Acquiring an Exhaustive, Continuous and Real-Time Trace from {{SoCs}}},
-  booktitle = {2008 {{IEEE International Conference}} on {{Computer Design}}},
-  author = {Hochberger, C. and Weiss, A.},
-  date = {2008-10},
-  pages = {356--362},
-  doi = {10.1109/ICCD.2008.4751885},
-  abstract = {The amount of time and resources that have to be spent on debugging of embedded cores continuously increases. Approaches valid 10 years ago can no longer be used due to the variety and complexity of peripheral components of SoC solutions that even might consist of multiple heterogeneous cores. Although there are some initiatives to standardize and leverage the embedded debugging capabilities, current debugging solutions only cover a fraction of the problems present in that area. In this contribution we show a new approach for debugging and tracing SoCs. The new approach, called hidICE (hidden ICE), delivers an exhaustive, continuous and real-time trace with much lower system interference compared to state-of-the-art solutions.},
-  eventtitle = {2008 {{IEEE International Conference}} on {{Computer Design}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\GSGD5DGN\\Hochberger and Weiss - 2008 - Acquiring an exhaustive, continuous and real-time .pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\WF3RSJRU\\4751885.html},
-  keywords = {Central Processing Unit,continuous trace,debugging,embedded cores debugging,embedded debugging capabilities,Embedded software,embedded systems,exhaustive trace,hidden ICE,hidICE,Ice,IEC standards,integrated circuit testing,Interference,ISO standards,multiple heterogeneous cores,peripheral components,Railway safety,Real time systems,real-time trace,Registers,SoC,System-on-Chip}
 }
 
 @inproceedings{hongAVICAAccesstimeVariation2013,
@@ -1925,19 +1760,6 @@ to improve the worst-case execution time of a running task.},
   keywords = {Application software,Concurrent computing,debugging embedded processor,Distributed computing,embedded system,Embedded system,embedded systems,Hardware,microprocessor chips,multicore SoC,Network-on-a-chip,on-chip trace system,performance evaluation,Real time systems,Software debugging,software reliability,Software tools,System-on-a-chip,TraceDo}
 }
 
-@inproceedings{huImplementationOnChipDynamic2006,
-  title = {Implementation of {{On}}-{{Chip Dynamic Trace}} for {{Microprocessors}}},
-  booktitle = {2006 8th {{International Conference}} on {{Solid}}-{{State}} and {{Integrated Circuit Technology Proceedings}}},
-  author = {Hu, Y. and Xiong, B.},
-  date = {2006-10},
-  pages = {1429--1431},
-  doi = {10.1109/ICSICT.2006.306226},
-  abstract = {This paper presents an on-chip dynamic trace design method which is very useful for the real-time dynamic trace of the program executing process of embedded microprocessors. We introduce an on-chip tracer (OCT) module to fulfill this dynamic tracing task by setting watchpoints at some locations of user program in order to trace and output the information on these spots. As a result, debugger can find out program errors and monitor or reconstruct the executing route of user program. This OCT module needs only a few registers rather than a special on-chip trace buffer (OCTB) which is an essential component for traditional trace methods. Finally, the results of simulation prove that the on-chip dynamic trace debugging is accomplishable with the help of this OCT module},
-  eventtitle = {2006 8th {{International Conference}} on {{Solid}}-{{State}} and {{Integrated Circuit Technology Proceedings}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\9FIZJEG8\\Hu and Xiong - 2006 - Implementation of On-Chip Dynamic Trace for Microp.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\6QI364PK\\4098430.html},
-  keywords = {Debugging,Design methodology,dynamic tracing,embedded microprocessors,embedded systems,Information analysis,Laboratories,microprocessor chips,Microprocessors,Monitoring,on-chip trace buffer,on-chip tracer,Power generation,program debugging,Registers,Signal processing,System-on-a-chip,user program}
-}
-
 @inproceedings{jainBackFutureLeveraging2016,
   title = {Back to the {{Future}}: {{Leveraging Belady}}'s {{Algorithm}} for {{Improved Cache Replacement}}},
   shorttitle = {Back to the {{Future}}},
@@ -1965,19 +1787,6 @@ to improve the worst-case execution time of a running task.},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\VSPKXH5W\\Jain et al. - 2001 - Software-assisted cache replacement mechanisms for.pdf},
   isbn = {978-0-7803-7247-4},
   langid = {english}
-}
-
-@inproceedings{jainSoftwareassistedCacheReplacement2001a,
-  title = {Software-Assisted Cache Replacement Mechanisms for Embedded Systems},
-  booktitle = {{{IEEE}}/{{ACM International Conference}} on {{Computer Aided Design}}. {{ICCAD}} 2001. {{IEEE}}/{{ACM Digest}} of {{Technical Papers}} ({{Cat}}. {{No}}.{{01CH37281}})},
-  author = {Jain, P. and Devadas, S. and Engels, D. and Rudolph, L.},
-  date = {2001-11},
-  pages = {119--126},
-  doi = {10.1109/ICCAD.2001.968607},
-  abstract = {We address the problem of improving cache predictability and performance in embedded systems through the use of software-assisted replacement mechanisms. These mechanisms require additional software controlled state information that affects the cache replacement decision. Software instructions allow a program to kill a particular cache element, i.e. effectively make the element the least recently used element, or keep that cache element, i.e. the element will never be evicted. We prove basic theorems that provide conditions under which kill and keep instructions can be inserted into program code, such that the resulting performance is guaranteed to be as good as or better than the original program run using the standard LRU policy. We developed a compiler algorithm based on the theoretical results that, given an arbitrary program, determines when to perform software-assisted replacement, i.e., when to insert either a kill or keep instruction. Empirical evidence is provided that shows that performance and predictability (worst-case performance) can be improved for many programs.},
-  eventtitle = {{{IEEE}}/{{ACM International Conference}} on {{Computer Aided Design}}. {{ICCAD}} 2001. {{IEEE}}/{{ACM Digest}} of {{Technical Papers}} ({{Cat}}. {{No}}.{{01CH37281}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\9WPFYKQR\\Jain et al. - 2001 - Software-assisted cache replacement mechanisms for.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\X9AT93S3\\968607.html},
-  keywords = {cache element,cache element keep instructions,cache element kill instructions,cache performance,cache predictability,cache replacement decision,cache storage,Code standards,compiler algorithm,Computer science,Embedded software,Embedded system,embedded systems,Hardware,Laboratories,LRU policy,program code,program compilers,Program processors,Random access memory,software controlled state information,software instructions,Software performance,software-assisted cache replacement mechanisms,software-assisted replacement,software-assisted replacement mechanisms,storage management,System-on-a-chip,worst-case performance}
 }
 
 @inproceedings{jaleelHighPerformanceCache2010,
@@ -2166,23 +1975,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   eventtitle = {2012 11th {{International Symposium}} on {{Distributed Computing}} and {{Applications}} to {{Business}}, {{Engineering Science}}},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\88TYZ4JD\\Juan and Chengyan - 2012 - An Improved Multi-core Shared Cache Replacement Al.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\GPBN84E6\\6385229.html},
   keywords = {access information,cache storage,Computers,dynamic insertion-promotion policy,Educational institutions,FLRU,frequency based LRU replacement algorithm,frequency information,last-level cache,LLC,memory-intensive workloads,multi-core,Multicore processing,multicore processors,multicore shared cache replacement algorithm,multicore shared L2 cache,multiprocessing systems,partition information,Partitioning algorithms,Radiation detectors,replacement,Runtime,shared cache,USA Councils,victim selection strategy}
-}
-
-@article{jungCacheReplacementPolicy2013,
-  title = {Cache Replacement Policy Based on Dynamic Counter for High Performance Processor},
-  author = {Jung, Do Young and Lee, Yong Surk},
-  date = {2013},
-  journaltitle = {Journal of the Institute of Electronics and Information Engineers},
-  volume = {50},
-  pages = {52--58},
-  issn = {2287-5026},
-  doi = {10.5573/ieek.2013.50.4.052},
-  url = {http://www.koreascience.or.kr/article/JAKO201315463253488.page},
-  urldate = {2019-09-12},
-  abstract = {Cache Replacement Policy Based on Dynamic Counter for High Performance Processor Cache memory;Cache replacement policy;LRU;Zero reuse line;Counter based policy; Replacement policy is one of the key factors determining the effectiveness of a cache. The LRU replacement policy has remained the standard for caches for many years. However, the traditional LRU has ineffective performance in zero-reuse line intensive workloads, although it performs well in high temporal locality workloads. To address this problem, We propose a new replacement policy; DCR(Dynamic Counter based Replacement) policy. A temporal locality of workload dynamically changes across time and DCR policy is based on the detection of these changing. DCR policy improves cache miss rate over a traditional LRU policy, by as much as 2.7\% at maximum and 0.47\% at average.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\B8DYCACE\\Jung and Lee - 2013 - Cache Replacement Policy Based on Dynamic Counter .pdf},
-  langid = {kor},
-  number = {4}
 }
 
 @inproceedings{kampeSelfCorrectingLRUReplacement2004,
@@ -2426,7 +2218,7 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   title = {Lookahead {{Scheduling Requests}} for {{Eﬃcient Paging}}},
   author = {Kiniwa, Jun and Kameda, Tiko},
   date = {1998-04},
-  journaltitle = {数理解析研究所講究録},
+  journaltitle = {RIMS Kôkyûroku},
   volume = {1041},
   pages = {27--34},
   url = {http://hdl.handle.net/2433/62076},
@@ -2488,6 +2280,20 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {associative cache,benchmark testing,cache memory,Cache memory,Cache Performance,cache replacement policy,cache storage,Clocks,Conferences,current generation processors,design parameter,energy consumption,FIFO,hard disk,Hardware,hit rate,Hit rate,LFU,LRU,memory architecture,memory hierarchy,microprocessor chips,Miss rate,Multicore processing,Organizations,performance analysis,performance evaluation,performance improvement,processor performance,RANDOM,registers,Registers,Replacement Policy,virtual memory,virtual storage}
 }
 
+@inproceedings{laiDeadblockPredictionDeadblock2001,
+  title = {Dead-Block Prediction Dead-Block Correlating Prefetchers},
+  booktitle = {Proceedings 28th {{Annual International Symposium}} on {{Computer Architecture}}},
+  author = {Lai, An-Chow and Fide, C. and Falsafi, B.},
+  date = {2001-06},
+  pages = {144--154},
+  issn = {1063-6897},
+  doi = {10.1109/ISCA.2001.937443},
+  abstract = {Effective data prefetching requires accurate mechanisms to predict both "which" cache blocks to prefetch and "when" to prefetch them. This paper proposes the Dead-Block Predictors (DBPs), trace-based predictors that accurately identify "when" an Ll data cache block becomes evictable or "dead". Predicting a dead block significantly enhances prefetching lookahead and opportunity, and enables placing data directly into Ll, obviating the need for auxiliary prefetch buffers. This paper also proposes Dead-Block Correlating Prefetchers (DBCPs), that use address correlation to predict "which" subsequent block to prefetch when a block becomes evictable. A DBCP enables effective data prefetching in a wide spectrum of pointer-intensive, integer, and floating-point applications. We use cycle-accurate simulation of an out-of-order superscalar processor and memory-intensive benchmarks to show that: (1) dead-block prediction enhances prefetching lookahead at least by an order of magnitude as compared to previous techniques, (2) a DBP can predict dead blocks on average with a coverage of 90\% only mispredicting 4\% of the time, (3) a DBCP offers an address prediction coverage of 86\% only mispredicting 3\% of the time, and (4) DBCPs improve performance by 62\% on average and 282\% at best in the benchmarks we studied.},
+  eventtitle = {Proceedings 28th {{Annual International Symposium}} on {{Computer Architecture}}},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\X4KKEDCV\\An-Chow Lai et al. - 2001 - Dead-block prediction dead-block correlating prefe.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\58454CRN\\937443.html},
+  keywords = {address correlation,auxiliary prefetch buffers,benchmarks,cycle-accurate simulation,Data engineering,data prefetching,data structures,Data structures,dead-block correlating prefetchers,dead-block prediction,Delay,Engines,floating-point applications,Hardware,History,memory-intensive benchmarks,Out of order,out-of-order superscalar processor,parallel processing,performance evaluation,Prefetching,prefetching lookahead,Proposals,storage management,Sun}
+}
+
 @inproceedings{lamichhaneNonintrusiveProgramTracing2018,
   title = {Non-Intrusive Program Tracing of Non-Preemptive Multitasking Systems Using Power Consumption},
   booktitle = {2018 {{Design}}, {{Automation Test}} in {{Europe Conference Exhibition}} ({{DATE}})},
@@ -2497,7 +2303,7 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   doi = {10.23919/DATE.2018.8342184},
   abstract = {System tracing, runtime monitoring, execution reconstruction are useful techniques for protecting the safety and integrity of systems. Furthermore, with time-aware or overhead-aware techniques being available, these techniques can also be used to monitor and secure production systems. As operating systems gain in popularity, even in deeply embedded systems, these techniques face the challenge to support multitasking. In this paper, we propose a novel non-intrusive technique, which efficiently reconstructs the execution trace of non-preemptive multitasking system by observing power consumption characteristics. Our technique uses the control-flow graph (CFG) of the application program to identify the most likely block of code that the system is executing at any given point in time. For the purpose of the experimental evaluation, we first instrument the source code to obtain power consumption information for each basic block, which is used as the training data for our Dynamic Time Warping and k-Nearest Neighbours (k-NN) classifier. Once the system is trained, this technique is used to identify live code-block execution (LCBE). We show that the technique can reconstruct the execution flow of programs in a multi-tasking environment with high accuracy.},
   eventtitle = {2018 {{Design}}, {{Automation Test}} in {{Europe Conference Exhibition}} ({{DATE}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\LL32ETJ8\\Lamichhane et al. - 2018 - Non-intrusive program tracing of non-preemptive mu.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\YKAJ3DWV\\8342184.html},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\8MPWP7I5\\08342184.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\YKAJ3DWV\\8342184.html},
   keywords = {CFG,control-flow graph,Debugging,deeply embedded systems,Dynamic Time Warping,Embedded software,embedded systems,execution reconstruction,execution trace,Instruments,k-Nearest Neighbours classifier,k-NN,LCBE,live code-block execution,Monitoring,multi-tasking environment,multiprogramming,Multitasking,nearest neighbour methods,nonintrusive program tracing,nonpreemptive multitasking system,novel nonintrusive technique,Operating system,operating systems,operating systems (computers),overhead-aware techniques,pattern classification,power consumption,power consumption characteristics,power consumption information,Power demand,Power tracing,production systems,program debugging,program diagnostics,Runtime,runtime monitoring,Runtime monitoring,safety,Scheduling,security of data,source code (software),System tracing,Time series analysis,useful techniques}
 }
 
@@ -2578,19 +2384,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {Bandwidth,channel bandwidth utilization,DRAM chip,DRAM chips,DRAM power consumption,DRAM-level prefetching,dual in-line memory module,dynamic random access memory,Energy consumption,fully-buffered DIMM,idle memory latency,interconnect structure,Joining processes,L2 cache block,memory block,memory controller,Merging,Multicore processing,multicore processor,Performance gain,power saving,Prefetching,Process design,Random access memory,redundant bandwidth,software cache prefetching,Software performance,SPEC2000 program,storage management,storage management chips}
 }
 
-@inproceedings{linExtractingMemorylevelParallelism2013,
-  title = {Extracting Memory-Level Parallelism through Reconfigurable Hardware Traces},
-  booktitle = {2013 {{International Conference}} on {{Reconfigurable Computing}} and {{FPGAs}} ({{ReConFig}})},
-  author = {Lin, M. and Cheng, S. and Wawrzynek, J.},
-  date = {2013-12},
-  pages = {1--8},
-  doi = {10.1109/ReConFig.2013.6732290},
-  abstract = {This paper proposes a new FPGA-based embedded computer architecture, which focuses on how to construct an application-specific memory access network capable of extracting the maximum amount of memory-level parallelism on a per-application basis. Specifically, through performing dynamic memory analysis and utilizing the capabilities of modern FPGA devices: abundant distributed block RAMs and programmability, the proposed reconfigurable architecture synthesizes highly efficient accelerators that enable parallelized memory accesses, and therefore accomplish effective data orchestration by maximally extracting the target application's instruction, loop and memory-level parallelism. To validate our proposed architecture, we implemented a baseline embedded processor platform, a conventional CPU +accelerator with a centralized single memory, and a prototype based on Xilinx MicroBlaze technology. Our experimental results have shown that on average for 5 benchmark applications from SPEC2006 and MiBench [1], our proposed architecture achieves 8.6 times speedup compared to the baseline embedded processor platform and 1.7 times speedup compared to a conventional CPU+accelcrator platform. More interestingly, the proposed platform achieves more than 40\% reduction in energy-delay product compared to a conventional CPU+accelerator with a centralized memory.},
-  eventtitle = {2013 {{International Conference}} on {{Reconfigurable Computing}} and {{FPGAs}} ({{ReConFig}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\EN68BP3W\\Lin et al. - 2013 - Extracting memory-level parallelism through reconf.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\86XMHZG2\\6732290.html},
-  keywords = {Acceleration,application-specific memory access network,baseline embedded processor platform,centralized memory,centralized single memory,Coherence,Computer architecture,conventional CPU +accelerator,data orchestration,distributed block RAM,dynamic memory analysis,embedded systems,energy-delay product,field programmable gate arrays,Field programmable gate arrays,FPGA devices,FPGA-based embedded computer architecture,Hardware,memory architecture,memory-level parallelism,MiBench,microprocessor chips,Parallel processing,parallelized memory accesses,Performance evaluation,programmability,random-access storage,reconfigurable architecture,reconfigurable architectures,reconfigurable hardware traces,SPEC2006,Xilinx MicroBlaze technology}
-}
-
 @report{linPredictingLastTouchReferences2002,
   title = {Predicting {{Last}}-{{Touch References}} under {{Optimal Replacement}}},
   author = {Lin, Wei-Fen and Reinhardt, Steven K},
@@ -2602,6 +2395,20 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   langid = {english},
   number = {CSE-TR-447-02},
   type = {Technical Report}
+}
+
+@inproceedings{linReducingDRAMLatencies2001,
+  title = {Reducing {{DRAM}} Latencies with an Integrated Memory Hierarchy Design},
+  booktitle = {Proceedings {{HPCA Seventh International Symposium}} on {{High}}-{{Performance Computer Architecture}}},
+  author = {Lin, Wei-Fen and Reinhardt, S.K. and Burger, D.},
+  date = {2001-01},
+  pages = {301--312},
+  issn = {1530-0897},
+  doi = {10.1109/HPCA.2001.903272},
+  abstract = {In this paper we address the severe performance gap caused by high processor clock rates and slow DRAM accesses. We show that even with an aggressive, next-generation memory system using four Direct Rambus channels and an integrated one-megabyte level-two cache, a processor still spends over half of its time stalling for L2 misses. Large cache blocks can improve performance, but only when coupled with wide memory channels. DRAM address mappings also affect performance significantly. We evaluate an aggressive prefetch unit integrated with the L2 cache and memory, controllers. By issuing prefetches only when the Rambus channels are idle, prioritizing them to maximize DRAM row buffer hits, and giving them low replacement priority, we achieve a 43\% speedup across 10 of the 26 SPEC2000 benchmarks, without degrading performance an the others. With eight Rambus channels, these ten benchmarks improve to within 10\% of the performance of a perfect L2 cache.},
+  eventtitle = {Proceedings {{HPCA Seventh International Symposium}} on {{High}}-{{Performance Computer Architecture}}},
+  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2585M6ZA\\Wei-Fen Lin et al. - 2001 - Reducing DRAM latencies with an integrated memory .pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\E5QI2WYI\\903272.html},
+  keywords = {Banking,benchmarks,cache blocks,cache storage,Clocks,Computer science,Degradation,Delay,DRAM accesses,Dynamic scheduling,Frequency,High performance computing,integrated memory hierarchy,memory architecture,next-generation memory system,performance,performance evaluation,performance gap,Prefetching,Rambus channels,Random access memory}
 }
 
 @inproceedings{lipastiSPAIDSoftwarePrefetching1995,
@@ -2752,21 +2559,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {Bandwidth,Constraint optimization,data mining,DDR2,DDR2 SDRAM chips,Delay,Design optimization,DRAM chips,first-ready first-come first-serve scheduling,FR-FCFS scheduling strategy,genetic algorithm,genetic algorithm (GA),genetic algorithms,Genetic algorithms,memory access controller,memory access latency,memory access scheduling,memory controller,multiprocessing systems,multiprocessors,optimized memory access scheduler,processor scheduling,Processor scheduling,Random access memory,rule based algorithm,Scheduling algorithm,scheduling commands,SDRAM,timing,Timing}
 }
 
-@inproceedings{luSoftOLPImprovingHardware2009,
-  title = {Soft-{{OLP}}: {{Improving Hardware Cache Performance}} through {{Software}}-{{Controlled Object}}-{{Level Partitioning}}},
-  shorttitle = {Soft-{{OLP}}},
-  booktitle = {2009 18th {{International Conference}} on {{Parallel Architectures}} and {{Compilation Techniques}}},
-  author = {Lu, Qingda and Lin, Jiang and Ding, Xiaoning and Zhang, Zhao and Zhang, Xiaodong and Sadayappan, P.},
-  date = {2009-09},
-  pages = {246--257},
-  issn = {1089-795X},
-  doi = {10.1109/PACT.2009.35},
-  abstract = {Performance degradation of memory-intensive programs caused by the LRU policy's inability to handle weak-locality data accesses in the last level cache is increasingly serious for two reasons. First, the last-level cache remains in the CPU's critical path, where only simple management mechanisms, such as LRU, can be used, precluding some sophisticated hardware mechanisms to address the problem. Second, the commonly used shared cache structure of multi-core processors has made this critical path even more performance-sensitive due to intensive inter-thread contention for shared cache resources. Researchers have recently made efforts to address the problem with the LRU policy by partitioning the cache using hardware or OS facilities guided by run-time locality information. Such approaches often rely on special hardware support or lack enough accuracy. In contrast, for a large class of programs, the locality information can be accurately predicted if access patterns are recognized through small training runs at the data object level. To achieve this goal, we present a system-software framework referred to as Soft-OLP (Software-based Object-Level cache Partitioning). We first collect per-object reuse distance histograms and inter-object interference histograms via memory-trace sampling. With several low-cost training runs, we are able to determine the locality patterns of data objects. For the actual runs, we categorize data objects into different locality types and partition the cache space among data objects with a heuristic algorithm, in order to reduce cache misses through segregation of contending objects. The object-level cache partitioning framework has been implemented with a modified Linux kernel, and tested on a commodity multi-core processor. Experimental results show that in comparison with a standard L2 cache managed by LRU, Soft-OLP significantly reduces the execution time by reducing L2 cache misses across inputs for a set of single- and multi-threaded programs from the SPEC CPU2000 benchmark suite, NAS benchmarks and a computational kernel set.},
-  eventtitle = {2009 18th {{International Conference}} on {{Parallel Architectures}} and {{Compilation Techniques}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\W2E6JDZL\\Lu et al. - 2009 - Soft-OLP Improving Hardware Cache Performance thr.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\8IT29ZRP\\5260543.html},
-  keywords = {Benchmark testing,Cache Partitioning,cache storage,data access,Degradation,Hardware,hardware cache performance,heuristic algorithm,Histograms,Interference,Kernel,Linux,memory-intensive programs,Multicore processing,multicore processors,multiprocessing programs,object-oriented programming,Page Coloring,Pattern recognition,Reuse Distance,Runtime,Sampling methods,soft-OLP,software performance evaluation,software-based object-level cache partitioning,Software-Controlled Caching,software-controlled object-level partitioning}
-}
-
 @article{malamy1994methods,
   title = {Methods and Apparatus for Implementing a Pseudo-Lru Cache Memory Replacement Scheme with a Locking Feature},
   author = {Malamy, Adam and Patel, Rajiv N and Hayes, Norman M},
@@ -2912,21 +2704,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   number = {6}
 }
 
-@article{milenkovicCachesPredictorsRealTime2011,
-  title = {Caches and {{Predictors}} for {{Real}}-{{Time}}, {{Unobtrusive}}, and {{Cost}}-{{Effective Program Tracing}} in {{Embedded Systems}}},
-  author = {Milenkovic, A. and Uzelac, V. and Milenkovic, M. and Burtscher, M.},
-  date = {2011-07},
-  journaltitle = {IEEE Transactions on Computers},
-  volume = {60},
-  pages = {992--1005},
-  issn = {0018-9340},
-  doi = {10.1109/TC.2010.146},
-  abstract = {The increasing complexity of modern embedded computer systems makes software development and system verification the most critical steps in system development. To expedite verification and program debugging, chip manufacturers increasingly consider hardware infrastructure for program debugging and tracing, including logic to capture and filter traces, buffers to store traces, and a trace port through which the trace is read by the debug tools. In this paper, we introduce a new approach to capture and compress program execution traces in hardware. The proposed trace compressor encompasses two cost-effective structures, a stream descriptor cache, and a last stream predictor. Information about the program flow is translated into a sequence of hit and miss events in these structures, thus dramatically reducing the number of bits that need to be sent out of the chip. We evaluate the efficiency of the proposed mechanism by measuring the trace port bandwidth on a set of benchmark programs. Our mechanism requires only 0.15 bits/instruction/CPU on average on the trace port, which is a sixfold improvement over state-of-the-art commercial solutions. The trace compressor requires an on-chip area that is equivalent to one third of a 1 kilobyte cache and it allows for continual and unobtrusive program tracing in real time.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\SAFXJA9L\\Milenkovic et al. - 2011 - Caches and Predictors for Real-Time, Unobtrusive, .pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\FGLE5U6P\\5487509.html},
-  keywords = {Bandwidth,buffers,cache storage,chip manufacturer,Complexity theory,Compression technologies,cost-effective program tracing,data compression,debug tools,Debugging,Detectors,embedded systems,Hardware,hardware infrastructure,last stream predictor,on-chip area,program debugging,program diagnostics,program execution trace capture,program execution trace compression,program flow information,Program processors,program verification,real time and embedded systems,real-time program tracing,Silicon,software development,stream descriptor cache,system development,system verification,system-on-chip,testing and debugging,trace port bandwidth,tracing.,unobtrusive program tracing},
-  number = {7}
-}
-
 @inproceedings{milenkovicPerformanceEvaluationMemory2003,
   title = {A Performance Evaluation of Memory Hierarchy in Embedded Systems},
   booktitle = {Proceedings of the 35th {{Southeastern Symposium}} on {{System Theory}}, 2003.},
@@ -2938,17 +2715,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   eventtitle = {Proceedings of the 35th {{Southeastern Symposium}} on {{System Theory}}, 2003.},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\WI5X4Q2N\\Milenkovic et al. - 2003 - A performance evaluation of memory hierarchy in em.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\KF8Q7DSM\\1194606.html},
   keywords = {ARM instruction set,block size,cache memories,Cache memory,cache misses,cache organization,cache size,cache storage,Clocks,Computer architecture,Computer industry,Costs,Design engineering,dynamic behavior,Embedded computing,Embedded system,embedded systems,handheld multimedia devices,memory architecture,memory hierarchy,MiBench benchmark suite,Monitoring,performance evaluation,Performance gain,replacement policy,simulation tools}
-}
-
-@thesis{minUSINGRUNTIMEINFORMATION2005,
-  title = {{{USING RUNTIME INFORMATION TO IMPROVE MEMORY SYSTEM PERFORMANCE}}},
-  author = {Min, Rui},
-  date = {2005},
-  institution = {{University of Cincinnati}},
-  url = {https://etd.ohiolink.edu/pg_10?0::NO:10:P10_ACCESSION_NUM:ucin1134043707},
-  urldate = {2019-09-16},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\M47J8S5T\\Min - 2005 - USING RUNTIME INFORMATION TO IMPROVE MEMORY SYSTEM.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\VYC68M47\\pg_10.html},
-  langid = {english}
 }
 
 @inproceedings{miuraMemoryControllerThat2005,
@@ -2975,24 +2741,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   eventtitle = {2018 {{Second International Conference}} on {{Electronics}}, {{Communication}} and {{Aerospace Technology}} ({{ICECA}})},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\YNRWI8GF\\Modgil and Sehgal - 2018 - Improving the Performance of Chip Multiprocessor b.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2AHCGKDF\\8474846.html},
   keywords = {Aerospace electronics,cache prefetching technique,cache storage,chip multiprocessor system,CMP,Conferences,constant stride prefetcher,delayed write drain,delaying switching,DRAM,DRAM chips,energy consumption,Energy consumption,Global History Buffer,History,idle memory cycles,Memory Access Scheduler,memory command,Memory management,memory request,memory traffic,multiprocessing systems,Performance,precharge commands,Prefetcher,prefetcher based memory scheduler,Prefetching,Random access memory,scheduling,scheduling policy,systems performance,write drain mode}
-}
-
-@inproceedings{morenoNonintrusiveProgramTracing2013,
-  title = {Non-Intrusive {{Program Tracing}} and {{Debugging}} of {{Deployed Embedded Systems Through Side}}-Channel {{Analysis}}},
-  booktitle = {Proceedings of the 14th {{ACM SIGPLAN}}/{{SIGBED Conference}} on {{Languages}}, {{Compilers}} and {{Tools}} for {{Embedded Systems}}},
-  author = {Moreno, Carlos and Fischmeister, Sebastian and Hasan, M. Anwar},
-  date = {2013},
-  pages = {77--88},
-  publisher = {{ACM}},
-  location = {{New York, NY, USA}},
-  doi = {10.1145/2491899.2465570},
-  url = {http://doi.acm.org/10.1145/2491899.2465570},
-  urldate = {2019-01-30},
-  abstract = {One of the hardest aspects of embedded software development is that of debugging, especially when faulty behavior is observed at the production or deployment stage. Non-intrusive observation of the system's behavior is often insufficient to infer the cause of the problem and identify and fix the bug. In this work, we present a novel approach for non-intrusive program tracing aimed at assisting developers in the task of debugging embedded systems at deployment or production stage, where standard debugging tools are usually no longer available. The technique is rooted in cryptography, in particular the area of side-channel attacks. Our proposed technique expands the scope of these cryptographic techniques so that we recover the sequence of operations from power consumption observations (power traces). To this end, we use digital signal processing techniques (in particular, spectral analysis) combined with pattern recognition techniques to determine blocks of source code being executed given the observed power trace. One of the important highlights of our contribution is the fact that the system works on a standard PC, capturing the power traces through the recording input of the sound card. Experimental results are presented and confirm that the approach is viable.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\XVYA3LR2\\Moreno et al. - 2013 - Non-intrusive Program Tracing and Debugging of Dep.pdf},
-  isbn = {978-1-4503-2085-6},
-  keywords = {debugging,embedded systems,side-channel analysis,simple power analysis,tracing},
-  series = {{{LCTES}} '13}
 }
 
 @inproceedings{mowryDesignEvaluationCompiler1992,
@@ -3328,23 +3076,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {2D SRAM L2 cache,3D DRAM,3D DRAM L2 cache,3D DRAM stacking,cache storage,Computer architecture,Delay,Digital signal processing,DRAM chips,DSP,Embedded computing,embedded VLIW computing system,instruction sets,low-latency buses,memory architecture,multiprocessing systems,parallel architectures,parallel machines,Parallel processing,Random access memory,SRAM chips,Stacking,System performance,USA Councils,VLIW}
 }
 
-@article{parkWWCLOCKPageReplacement2009,
-  title = {WWCLOCK: Page Replacement Algorithm Considering Asymmetric I/O Cost of Flash Memory},
-  shorttitle = {WWCLOCK},
-  author = {Park, Jun-Seok and Lee, Eun-Ji and Seo, Hyun-Min and Koh, Kern},
-  date = {2009},
-  journaltitle = {Journal of KIISE:Computing Practices and Letters},
-  volume = {15},
-  pages = {913--917},
-  issn = {1229-7712},
-  url = {http://www.koreascience.or.kr/article/JAKO200909659865050.page},
-  urldate = {2019-09-16},
-  abstract = {WWCLOCK: Page Replacement Algorithm Considering Asymmetric I/O Cost of Flash Memory Buffer Cache Replacement Algorithm;Cost-aware;Heterogeneous storage; Flash memories have asymmetric I/O costs for read and write in terms of latency and energy consumption. However, the ratio of these costs is dependent on the type of storage. Moreover, it is becoming more common to use two flash memories on a system as an internal memory and an external memory card. For this reason, buffer cache replacement algorithms should consider I/O costs of device as well as possibility of reference. This paper presents WWCLOCK(Write-Weighted CLOCK) algorithm which directly uses I/O costs of devices along with recency and frequency of cache blocks to selecting a victim to evict from the buffer cache. WWCLOCK can be used for wide range of storage devices with different I/O cost and for systems that are using two or more memory devices at the same time. In addition to this, it has low time and space complexity comparable to CLOCK algorithm. Trace-driven simulations show that the proposed algorithm reduces the total I/O time compared with LRU by 36.2\% on average.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\HQRBRVH6\\Park et al. - 2009 - WWCLOCK Page Replacement Algorithm Considering As.pdf},
-  langid = {kor},
-  number = {12}
-}
-
 @article{pattersonCaseIntelligentRAM1997,
   title = {A Case for Intelligent {{RAM}}},
   author = {Patterson, D. and Anderson, T. and Cardwell, N. and Fromm, R. and Keeton, K. and Kozyrakis, C. and Thomas, R. and Yelick, K.},
@@ -3404,19 +3135,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {Cache memory,cache storage,content-addressable storage,Degradation,Delay,Disk drives,Floods,fully associative disk cache,hard discs,Hard disks,LRU block replacement algorithm,Microprocessors,miss rates,priority scheme,Random access memory,Throughput,victim cache,victim tracer}
 }
 
-@inproceedings{penttinenRunTimeDebuggingMonitoring2006,
-  title = {Run-{{Time Debugging}} and {{Monitoring}} of {{FPGA Circuits Using Embedded Microprocessor}}},
-  booktitle = {2006 {{IEEE Design}} and {{Diagnostics}} of {{Electronic Circuits}} and Systems},
-  author = {Penttinen, A. and Jastrzebski, R. and Pollanen, R. and Pyrhonen, O.},
-  date = {2006-04},
-  pages = {147--148},
-  doi = {10.1109/DDECS.2006.1649598},
-  abstract = {Field programmable gate arrays (FPGAs) provide a fast and flexible hardware for embedded control systems and signal processing. Despite this, tracing and monitoring of internal signals is awkward. FPGA vendors provide their own tools to solve the debugging problems but they are not sufficient for real time monitoring. Instead, these signal tracing tools are good especially for tracing timing issues. This paper presents a method to monitor the internal signals of FPGA circuits by using an embedded microprocessor. The efficiency of this method is demonstrated with an FPGA-based active magnetic bearing control hardware},
-  eventtitle = {2006 {{IEEE Design}} and {{Diagnostics}} of {{Electronic Circuits}} and Systems},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\QLPTTALE\\Penttinen et al. - 2006 - Run-Time Debugging and Monitoring of FPGA Circuits.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\5TAWRU5B\\1649598.html},
-  keywords = {Array signal processing,automatic test equipment,Circuits,Control systems,Debugging,embedded control systems,embedded microprocessor,field programmable gate arrays,Field programmable gate arrays,FPGA circuits,Hardware,logic testing,microprocessor chips,Microprocessors,Monitoring,run-time debugging,run-time monitoring,Runtime,signal processing,Timing}
-}
-
 @inproceedings{pitkowSimpleRobustCaching1994,
   title = {A {{Simple Yet Robust Caching Algorithm Based}} on {{Dynamic Access Patterns}}},
   booktitle = {Proceedings of the {{Second International WWW Conference}}},
@@ -3460,32 +3178,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\4E6A5JFS\\Ponugoti and Milenkovic - 2019 - Enabling On-the-Fly Hardware Tracing of Data Reads.pdf},
   langid = {english},
   number = {4}
-}
-
-@inproceedings{ponugotiExploitingCacheCoherence2016,
-  title = {Exploiting Cache Coherence for Effective On-the-Fly Data Tracing in Multicores},
-  booktitle = {2016 {{IEEE}} 34th {{International Conference}} on {{Computer Design}} ({{ICCD}})},
-  author = {Ponugoti, M. and Milenković, A.},
-  date = {2016-10},
-  pages = {312--319},
-  doi = {10.1109/ICCD.2016.7753295},
-  abstract = {Software testing and debugging of modern embedded computer systems become increasingly a challenging task due to growing hardware and software complexity, increased integration and miniaturization, and ever tightening time-to-market. To find software bugs faster, developers often rely on on-chip trace and debug resources. However, these resources offer limited visibility of the system, increase the system cost, and do not scale well with a growing number of processor cores. This paper introduces a new hardware/software mechanism for capturing and filtering load data value traces in multicores that enables a complete reconstruction of a parallel program execution. The proposed mechanism exploits data caches and cache coherence protocol states to minimize the number of trace events that are necessary to stream out of the target platform to the software debugger. The mechanism relies on a single trace bit per data cache block, thus minimizing the cost of hardware implementation. Our experimental evaluation explores the effectiveness of the proposed technique by measuring the trace port bandwidth as a function of the cache size and the number of processor cores. The results show that the proposed mechanism significantly reduces the required trace port bandwidth when compared to the Nexus-like load data value tracing. Depending on data cache size, the improvements range from 9.9 to 23.5 times for single cores and from 18.6 to 37.3 times for octa cores.},
-  eventtitle = {2016 {{IEEE}} 34th {{International Conference}} on {{Computer Design}} ({{ICCD}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\SJ2T9ZVS\\Ponugoti and Milenković - 2016 - Exploiting cache coherence for effective on-the-fl.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ZWPU8FQ3\\7753295.html},
-  keywords = {Bandwidth,Benchmark testing,cache coherence protocol,cache size,Clocks,Complexity theory,Compression,data cache size,data handling,debug resources,Debugging,Debugging aids,hardware implementation cost minimization,hardware-software mechanism,minimisation,Multicore processing,Nexus-like load data value tracing,on-chip trace,on-the-fly data tracing,processor cores,program debugging,program testing,Real-time embedded systems,Software,software bugs,software complexity,software debugging,software developers,software testing,trace event number minimization,trace port bandwidth,Tracing}
-}
-
-@inproceedings{ponugotiOntheflyLoadData2016,
-  title = {On-the-Fly Load Data Value Tracing in Multicores},
-  booktitle = {2016 {{International Conference}} on {{Compliers}}, {{Architectures}}, and {{Sythesis}} of {{Embedded Systems}} ({{CASES}})},
-  author = {Ponugoti, M. and Tewar, A. K. and Milenković, A.},
-  date = {2016-10},
-  pages = {1--10},
-  doi = {10.1145/2968455.2968507},
-  abstract = {Software testing and debugging of modern multicore-based embedded systems is a challenging proposition because of growing hardware and software complexity, increased integration, and tightening time-to-market. To find more bugs faster, software developers of real-time embedded systems increasingly rely on on-chip trace and debug resources, including hefty on-chip buffers and wide trace ports. However, these resources often offer limited visibility of the system, increase the system cost, and do not scale well with a growing number of cores. This paper introduces mlvCFiat, a hardware/software mechanism for capturing and filtering load data value traces in multicores. It relies on first-access tracking in data caches and equivalent modules in the software debugger to significantly reduce the number of trace events streamed out of the target platform. Our experimental evaluation explores the effectiveness of the proposed technique as a function of cache sizes, encoding mechanism, and the number of cores. The results show that mlvCFiat significantly reduces the total trace port bandwidth. The improvements relative to the existing Nexus-like load data value tracing range from 15 to 33 times for a single core and from 14 to 20 times for an octa core.},
-  eventtitle = {2016 {{International Conference}} on {{Compliers}}, {{Architectures}}, and {{Sythesis}} of {{Embedded Systems}} ({{CASES}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\F68ISMJX\\Ponugoti et al. - 2016 - On-the-fly load data value tracing in multicores.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\QJ892MH7\\7745281.html},
-  keywords = {Bandwidth,Benchmark testing,debugging,embedded systems,hardware complexity,hardware-software codesign,load data value tracing,mlvCFiat mechanism,Multicore processing,multicore-based embedded systems,Multicores,Multiprocessing systems,Nexus-like load data value tracing,on-chip trace,Program processors,program testing,Program tracing,Real-time embedded systems,software complexity,Software debugging,software testing,Software testing and debugging,trace ports}
 }
 
 @book{przybylskiCacheMemoryHierarchy1990,
@@ -3860,19 +3552,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   eventtitle = {2010 43rd {{Annual IEEE}}/{{ACM International Symposium}} on {{Microarchitecture}}},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\M68IJEBI\\Sanchez and Kozyrakis - 2010 - The ZCache Decoupling Ways and Associativity.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\XTWFL2TU\\5695536.html},
   keywords = {Arrays,associativity,Bandwidth,cache,cache storage,chip multiprocessor,content-addressable storage,cuckoo hashing,decoupling way,Delay,energy efficiency,Indexes,main memory latency,multi-core,multi-threading,multiprocessing systems,multiprogramming,multithreading,performance,probability,probability distribution,Process control,Program processors,Radiation detectors,set associative cache,skew associative cache,ZCache}
-}
-
-@inproceedings{santhanakrishnanGoalorientedSelftuningCaching2004,
-  title = {A Goal-Oriented Self-Tuning Caching Algorithm},
-  booktitle = {{{IEEE International Conference}} on {{Performance}}, {{Computing}}, and {{Communications}}, 2004},
-  author = {Santhanakrishnan, G. and Amer, A. and Chrysanthis, P. K.},
-  date = {2004-04},
-  pages = {311--312},
-  doi = {10.1109/PCCC.2004.1395012},
-  abstract = {The contribution of this paper is a novel approach to adaptivity that combines alternatives rather than selecting one among alternatives. Using only three, homogenous, cache replacement algorithms, GD-GhOST were able to provide a cache replacement policy that requires no tuning or user-intervention beyond the initial selection of the performance criteria to be optimized. Overall, at its worst observed performance GD-GhOST was within approximately 1\% of the best policy's miss ratio, and at its best, GD-GhOST reduced byte miss rates by well over 50\%.},
-  eventtitle = {{{IEEE International Conference}} on {{Performance}}, {{Computing}}, and {{Communications}}, 2004},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\GHAILCAJ\\Santhanakrishnan et al. - 2004 - A goal-oriented self-tuning caching algorithm.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\AJ5ZVYBU\\1395012.html},
-  keywords = {Adaptive algorithm,Automation,cache replacement policy,cache storage,Computer science,Frequency,goal-oriented self-tuning caching algorithm,greedy dual size caching algorithm,Internet,Measurement,Performance evaluation,Testing,Tuning}
 }
 
 @article{sawantMemoryHierarchiesBasicDesign,
@@ -4356,25 +4035,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {3D bonding technology,3D DDR controller,3D DRAM chip,3D IC technology,3D memory stacking,3D SoC,3D stacking system-on-chip architecture,access latency,Bandwidth,Computer architecture,customized 3D double-data-rate,customized design,data bandwidth,DRAM chips,DRAM layers,logic design,logic layers,memory wall challenge,on-chip 3D DRAM stacking,on-chip memory stacking,parallel access policy,Random access memory,Registers,SDRAM controller design,SoC architecture,Stacking,stacking memory,System-on-a-chip,system-on-chip,Three dimensional displays,through-silicon-vias,TSV}
 }
 
-@article{tewarMcfTRaptorUnobtrusiveOnthefly2015,
-  title = {{{mcfTRaptor}}: {{Toward}} Unobtrusive on-the-Fly Control-Flow Tracing in Multicores},
-  shorttitle = {{{mcfTRaptor}}},
-  author = {Tewar, Amrish K. and Myers, Albert R. and Milenković, Aleksandar},
-  date = {2015-11},
-  journaltitle = {Journal of Systems Architecture},
-  shortjournal = {Journal of Systems Architecture},
-  volume = {61},
-  pages = {601--614},
-  issn = {1383-7621},
-  doi = {10.1016/j.sysarc.2015.07.005},
-  url = {http://www.sciencedirect.com/science/article/pii/S1383762115000752},
-  abstract = {Software testing and debugging has become the most critical aspect of the development of modern embedded systems, mainly driven by growing software and hardware complexity, increasing integration, and tightening time-to-market deadlines. Software developers increasingly rely on on-chip trace and debug infrastructure to locate software bugs faster. However, the existing infrastructure offers limited visibility or relies on hefty on-chip buffers and wide trace ports that significantly increase system cost. This paper introduces a new technique called mcfTRaptor for capturing and compressing functional and time-stamped control-flow traces on-the-fly in modern multicore systems. It relies on private on-chip predictor structures and corresponding software modules in the debugger to significantly reduce the number of events that needs to be streamed out of the target platform. Our experimental evaluation explores the effectiveness of mcfTRaptor as a function of the number of cores, encoding mechanisms, and predictor configurations. When compared to the Nexus-like control-flow tracing, mcfTRaptor reduces the trace port bandwidth in the range from 14 to 23.8 times for functional traces and 10.8–18.6 times for time-stamped traces.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\7QVAVNQZ\\Tewar et al. - 2015 - mcfTRaptor Toward unobtrusive on-the-fly control-.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\63TKITWW\\S1383762115000752.html},
-  keywords = {Multicores,Program tracing,Real-time embedded systems,Software testing and debugging},
-  number = {10},
-  series = {Special Section on {{Architecture}} of {{Computing Systems}} Edited by {{Editors}}: {{Wolfgang Karl}}, {{Erik Maehle}}, {{Kay Römer}}, {{Eduardo Tovar}}, {{Martin DanekSpecial}} Section on {{Testing}}, {{Prototyping}}, and {{Debugging}} of {{Multi}}-{{Core Architectures}} Edited by {{Editors}}: {{Frank Hannig}} \& {{Andreas HerkersdorfSpecial}} Section on {{Embedded Vision Architectures}} and {{Applications}} Edited by {{Editors}}: {{Christophe Bobda}}, {{Walter Stechele}}, {{Ali Ahmadinia}} and {{Miaoqing Huang}}}
-}
-
 @inproceedings{thakkar3DWizNovelHigh2014,
   title = {{{3D}}-{{Wiz}}: {{A}} Novel High Bandwidth, Optically Interfaced {{3D DRAM}} Architecture with Reduced Random Access Time},
   shorttitle = {{{3D}}-{{Wiz}}},
@@ -4509,21 +4169,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {Debugging,load value filtering,program tracing,software debugger,trace compression,trace module,variable encoding}
 }
 
-@article{uzelacUsingBranchPredictors2014,
-  title = {Using {{Branch Predictors}} and {{Variable Encoding}} for {{On}}-the-{{Fly Program Tracing}}},
-  author = {Uzelac, V. and Milenković, A. and Milenković, M. and Burtscher, M.},
-  date = {2014-04},
-  journaltitle = {IEEE Transactions on Computers},
-  volume = {63},
-  pages = {1008--1020},
-  issn = {0018-9340},
-  doi = {10.1109/TC.2012.267},
-  abstract = {Unobtrusive capturing of program execution traces in real-time is crucial for debugging many embedded systems. However, tracing even limited program segments is often cost-prohibitive, requiring wide trace ports and large on-chip trace buffers. This paper introduces a new cost-effective technique for capturing and compressing program execution traces on-the-fly. It relies on branch predictor-like structures in the trace module and corresponding software modules in the debugger to significantly reduce the number of events that need to be streamed out of the target system. Coupled with an effective variable encoding scheme that adapts to changing program patterns, our technique requires merely 0.029 bits per instruction of trace port bandwidth, providing a 34-fold improvement over the commercial state-of-the-art and a five-fold improvement over academic proposals, at the low cost of under 5,000 logic gates.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\ZW8AG3D4\\Uzelac et al. - 2014 - Using Branch Predictors and Variable Encoding for .pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\R2PAJVVR\\6342940.html},
-  keywords = {Bandwidth,branch predictor-like structures,Compression technologies,cost-effective technique,Debugging,embedded systems,Hardware,logic gates,on-the-fly program tracing,program debugging,program diagnostics,program execution traces,program patterns,Program processors,Radiation detectors,real time and embedded systems,Real-time systems,software modules,testing and debugging,tracing,variable encoding},
-  number = {4}
-}
-
 @inproceedings{vakaliLRUbasedAlgorithmsWeb2000,
   title = {{{LRU}}-Based Algorithms for {{Web Cache Replacement}}},
   booktitle = {Electronic {{Commerce}} and {{Web Technologies}}},
@@ -4602,39 +4247,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   eventtitle = {Proceedings {{Innovative Architecture}} for {{Future Generation High}}-{{Performance Processors}} and {{Systems}}},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\NA2WU962\\00670415.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\XGK3SY5D\\670415.html},
   keywords = {access processor,Access protocols,Bandwidth,chip I/O bandwidth,Circuit noise,Circuit synthesis,Clocks,Computer architecture,Computer science,decoupled access-execute processor,Delay,DRAM caching,execute processor,memory architecture,multi-level branch prediction,multiple DRAM,parallel architectures,Random access memory,reducing memory latency,single chip DRAM,Very large scale integration}
-}
-
-@article{vergeHardwareassistedSoftwareEvent2017,
-  title = {Hardware-Assisted Software Event Tracing},
-  author = {Vergé, Adrien and Ezzati-Jivan, Naser and Dagenais, Michel R.},
-  date = {2017-05-25},
-  journaltitle = {Concurrency and Computation: Practice and Experience},
-  shortjournal = {Concurrency Computat.: Pract. Exper.},
-  volume = {29},
-  pages = {n/a-n/a},
-  issn = {1532-0634},
-  doi = {10.1002/cpe.4069},
-  url = {http://onlinelibrary.wiley.com/doi/10.1002/cpe.4069/abstract},
-  urldate = {2017-06-01},
-  abstract = {Event tracing is a reliable and a low-intrusiveness method to debug and optimize systems and processes. Low overhead is particularly important in embedded systems where resources and energy consumption is critical. The most advanced tracing infrastructures achieve a very low footprint on the traced software, bringing each tracepoint overhead to less than a microsecond. To reduce this still non-negligible impact, the use of dedicated hardware resources is promising. In this paper, we propose complementary methods for tracing that rely on hardware modules to assist software tracing. We designed solutions to take advantage of CoreSight STM, CoreSight ETM, and Intel BTS, which are present on most newer ARM-based systems-on-chip and Intel x86 processors. Our results show that the time overhead for tracing can be reduced by up to 10 times when assisted by hardware, as compared to software tracing with LTTng, a high-performance tracer for Linux. We also propose a modification to the Perf tool to speed BTS execution tracing up to 65\%.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\JN9T57JI\\Vergé et al. - 2017 - Hardware-assisted software event tracing.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\QSZ8MBB3\\abstract.html},
-  keywords = {ARM CoreSight,debugging,dedicated hardware,event tracing,Intel BTS,LTTng},
-  langid = {english},
-  number = {10}
-}
-
-@inproceedings{wahabARMHExFrameworkEfficient2017,
-  title = {{{ARMHEx}}: {{A}} Framework for Efficient {{DIFT}} in Real-World {{SoCs}}},
-  shorttitle = {{{ARMHEx}}},
-  booktitle = {2017 27th {{International Conference}} on {{Field Programmable Logic}} and {{Applications}} ({{FPL}})},
-  author = {Wahab, M. A. and Cotret, P. and Allah, M. N. and Hiet, G. and Lapôtre, V. and Gogniat, G.},
-  date = {2017-09},
-  pages = {1--1},
-  doi = {10.23919/FPL.2017.8056799},
-  abstract = {Security in embedded systems remains a major concern. Untrustworthy authorities use a wide range of software attacks. This demo introduces ARMHEx, a practical solution targeting DIFT (Dynamic Information Flow Tracking) implementations on ARM-based SoCs. DIFT is a solution that consists in tracking the dissemination of data inside the system and allows to enforce some security properties. In this demo, we show an implementation of ARMHEx on Xilinx Zynq SoC. Especially, we show how the required information for DIFT is recovered with the help of traces produced by CoreSight components, static analysis and instrumentation.},
-  eventtitle = {2017 27th {{International Conference}} on {{Field Programmable Logic}} and {{Applications}} ({{FPL}})},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\8SD64AUF\\Wahab et al. - 2017 - ARMHEx A framework for efficient DIFT in real-wor.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\TZ8FU35B\\8056799.html},
-  keywords = {Coprocessors,Instruments,Monitoring,Runtime,security,Software,Target tracking}
 }
 
 @inproceedings{wangBuildingLowLatency2016,
@@ -4744,20 +4356,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {Algorithm design and analysis,Benchmark testing,cache capacity,cache replacement policies,cache storage,Complexity theory,data cache replacement algorithm,embedded systems,Embedded systems,embedded systems power consumption,embedded systems processor,least recently used algorithm,low-overhead cache replacement algorithm,LRU algorithm,management logic,miss rates,Multicore processing,Program processors,protected round-robin,pseudoLRU,random algorithm,Round robin,round-robin replacement algorithm}
 }
 
-@inproceedings{wei-fenlinReducingDRAMLatencies2001a,
-  title = {Reducing {{DRAM}} Latencies with an Integrated Memory Hierarchy Design},
-  booktitle = {Proceedings {{HPCA Seventh International Symposium}} on {{High}}-{{Performance Computer Architecture}}},
-  author = {Wei-Fen Lin and Reinhardt, S.K. and Burger, D.},
-  date = {2001-01},
-  pages = {301--312},
-  issn = {1530-0897},
-  doi = {10.1109/HPCA.2001.903272},
-  abstract = {In this paper we address the severe performance gap caused by high processor clock rates and slow DRAM accesses. We show that even with an aggressive, next-generation memory system using four Direct Rambus channels and an integrated one-megabyte level-two cache, a processor still spends over half of its time stalling for L2 misses. Large cache blocks can improve performance, but only when coupled with wide memory channels. DRAM address mappings also affect performance significantly. We evaluate an aggressive prefetch unit integrated with the L2 cache and memory, controllers. By issuing prefetches only when the Rambus channels are idle, prioritizing them to maximize DRAM row buffer hits, and giving them low replacement priority, we achieve a 43\% speedup across 10 of the 26 SPEC2000 benchmarks, without degrading performance an the others. With eight Rambus channels, these ten benchmarks improve to within 10\% of the performance of a perfect L2 cache.},
-  eventtitle = {Proceedings {{HPCA Seventh International Symposium}} on {{High}}-{{Performance Computer Architecture}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2585M6ZA\\Wei-Fen Lin et al. - 2001 - Reducing DRAM latencies with an integrated memory .pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\E5QI2WYI\\903272.html},
-  keywords = {Banking,benchmarks,cache blocks,cache storage,Clocks,Computer science,Degradation,Delay,DRAM accesses,Dynamic scheduling,Frequency,High performance computing,integrated memory hierarchy,memory architecture,next-generation memory system,performance,performance evaluation,performance gap,Prefetching,Rambus channels,Random access memory}
-}
-
 @inproceedings{weiExploitingProgramSemantics2015,
   title = {Exploiting {{Program Semantics}} to {{Place Data}} in {{Hybrid Memory}}},
   booktitle = {2015 {{International Conference}} on {{Parallel Architecture}} and {{Compilation}} ({{PACT}})},
@@ -4847,26 +4445,6 @@ Together, victim caches and stream buffers reduce the miss rate of the first lev
   keywords = {Bandwidth,Buffer storage,cache design,cache storage,Clocks,Delay,dual-ported multicycle pipelined SRAM cache,Frequency,high bandwidth cache,line buffer,memory architecture,Microprocessors,Operating systems,performance,pipelined cache,Random access memory,System-on-a-chip,Time measurement},
   note = {Conference Name: IEEE Transactions on Computers},
   number = {4}
-}
-
-@inproceedings{wolfLargeEventTraces2006,
-  title = {Large Event Traces in Parallel Performance Analysis.},
-  author = {Wolf, Felix and Freitag, Fèlix and Mohr, Bernd and Moore, Shirley and Wylie, Brian J. N.},
-  date = {2006},
-  publisher = {{Springer Verlag}},
-  url = {http://upcommons.upc.edu/handle/2117/2281},
-  urldate = {2017-02-03},
-  abstract = {A powerful and widely-used method for analyzing the performance behavior of
-parallel programs is event tracing. When an application is traced, performancerelevant
-events, such as entering functions or sending messages, are recorded at runtime
-and analyzed post-mortem to identify and potentially remove performance problems.
-While event tracing enables the detection of performance problems at a high
-level of detail, growing trace-file size often constrains its scalability on large-scale
-systems and complicates management, analysis, and visualization of trace data. In this
-article, we survey current approaches to handle large traces and classify them according
-to the primary issues they address and the primary benefits they offer.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\CMRQSNVM\\Wolf et al. - 2006 - Large event traces in parallel performance analysi.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\HNZ7JA8S\\2281.html},
-  langid = {english}
 }
 
 @inproceedings{wongModifiedLRUPolicies2000,
@@ -5088,20 +4666,6 @@ to the primary issues they address and the primary benefits they offer.},
   series = {{{ICS}} '09}
 }
 
-@inproceedings{zhangPACPLRUCacheReplacement2011,
-  title = {{{PAC}}-{{PLRU}}: {{A Cache Replacement Policy}} to {{Salvage Discarded Predictions}} from {{Hardware Prefetchers}}},
-  shorttitle = {{{PAC}}-{{PLRU}}},
-  booktitle = {2011 11th {{IEEE}}/{{ACM International Symposium}} on {{Cluster}}, {{Cloud}} and {{Grid Computing}}},
-  author = {Zhang, K. and Wang, Z. and Chen, Y. and Zhu, H. and Sun, X.},
-  date = {2011-05},
-  pages = {265--274},
-  doi = {10.1109/CCGrid.2011.27},
-  abstract = {Cache replacement policy plays an important role in guaranteeing the availability of cache blocks, reducing miss rates, and improving applications' overall performance. However, recent research efforts on improving replacement policies require either significant additional hardware or major modifications to the organization of the existing cache. In this study, we propose the PAC-PLRU cache replacement policy. PAC-PLRU not only utilizes but also judiciously salvages the prediction information discarded from a widely-adopted stride prefetcher. The main idea behind PAC-PLRU is utilizing the prediction results generated by the existing stride prefetcher and preventing these predicted cache blocks from being replaced in the near future. Experimental results show that leveraging the PAC-PLRU with a stride prefetcher reduces the average L2 cache miss rate by 91\% over a baseline system with only PLRU policy, and by 22\% over a system using PLRU with an unconnected stride prefetcher. Most importantly, PAC-PLRU only requires minor modifications to existing cache architecture to get these benefits. The proposed PAC-PLRU policy is promising in fostering the connection between prefetching and replacement policies, and have a lasting impact on improving the overall cache performance.},
-  eventtitle = {2011 11th {{IEEE}}/{{ACM International Symposium}} on {{Cluster}}, {{Cloud}} and {{Grid Computing}}},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\2FSSUDHL\\Zhang et al. - 2011 - PAC-PLRU A Cache Replacement Policy to Salvage Di.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\LI5DFS7J\\5948617.html},
-  keywords = {Binary trees,cache architecture,cache blocks,cache replacement policy,cache storage,computer architecture,Filtering,Hardware,hardware prefetchers,high-performance processors,L2 cache miss rate,Mathematical model,memory architecture,memory wall,Microarchitecture,PAC-PLRU,Prefetching,salvage discarded predictions,stride prefetcher}
-}
-
 @inproceedings{zhangSpeedingIrregularApplications1995,
   title = {Speeding up Irregular Applications in Shared-Memory Multiprocessors: Memory Binding and Group Prefetching},
   shorttitle = {Speeding up Irregular Applications in Shared-Memory Multiprocessors},
@@ -5214,21 +4778,6 @@ to the primary issues they address and the primary benefits they offer.},
   eventtitle = {2003 {{International Conference}} on {{Parallel Processing}}, 2003. {{Proceedings}}.},
   file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\S42F45C9\\Zhuang and Lee - 2003 - A hardware-based cache pollution filtering mechani.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\XTM9RY6F\\1240591.html},
   keywords = {aggressive prefetch,Bandwidth,Bridges,cache storage,Degradation,Delay,Filtering,Filters,Hardware,hardware based cache pollution filtering mechanism,instruction sets,memory access latency,memory bandwidth,memory processor,memory subsystem,peraddress scheme,Pollution,Prefetching,Process design,program counter scheme,storage allocation,submicron processor design}
-}
-
-@article{zhuRACERobustAdaptive2008,
-  title = {{{RACE}}: {{A Robust Adaptive Caching Strategy}} for {{Buffer Cache}}},
-  shorttitle = {{{RACE}}},
-  author = {Zhu, Y. and Jiang, H.},
-  date = {2008-01},
-  journaltitle = {IEEE Transactions on Computers},
-  volume = {57},
-  pages = {25--40},
-  doi = {10.1109/TC.2007.70788},
-  abstract = {Although many block replacement algorithms for buffer caches have been proposed to address the well-known drawbacks of the LRU algorithm, they are not robust and cannot maintain a consistent performance improvement over all workloads. This paper proposes a novel and simple replacement scheme, called the Robust Adaptive buffer Cache management schemE (RACE), which differentiates the locality of I/O streams by actively detecting access patterns that are inherently exhibited in two correlated spaces, that is, the discrete block space of program contexts from which I/O requests are issued and the continuous block space within files to which I/O requests are addressed. This scheme combines the global I/O regularities of an application and the local I/O regularities of individual files that are accessed in that application to accurately estimate the locality strength, which is crucial in deciding which blocks are to be replaced upon a cache miss. Through comprehensive simulations on 10 real-application traces, RACE is shown to have higher hit ratios than LRU and all other state-of-the-art cache management schemes studied in this paper.},
-  file = {C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\S3PBXCYC\\Zhu and Jiang - 2008 - RACE A Robust Adaptive Caching Strategy for Buffe.pdf;C\:\\Users\\jr776\\AppData\\Roaming\\Zotero\\Zotero\\Profiles\\g2vl74k3.default\\zotero\\storage\\AZR2W7Y4\\4358240.html},
-  keywords = {access pattern detection,Accuracy,Algorithm design and analysis,block replacement algorithm,Buffering,cache storage,Classification algorithms,correlated space,discrete block space,file system,File systems,Input/output,Main memory,Memory management,RACE,robust adaptive buffer cache management scheme,Robustness,Stability analysis,Training},
-  number = {1}
 }
 
 @inproceedings{zhuSurveyComputerSystem,
