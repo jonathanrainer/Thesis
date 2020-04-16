@@ -1,0 +1,36 @@
+Process: 
+- Work down the call stack of papers to see if the general ones have any pointers to papers in this specific section
+- Read through papers and work out if they need to be discarded or noted (note any good phrases), any additional papers identified add into the search
+- Group the papers by type
+- Write up section
+
+Todo List:
+
+Frequency
+Aimtongkham 2016
+
+Recency Papers
+LIRS & Choo2006
+Zhou & Philbin, 2001, multi-queue replacement
+Wen-Tzer, Chen, Liu, 2006
+Random LRU, Das, Shirshendu, 2013 
+Kharbutli, Solihin, 2005
+Jaleel et al. 2010
+A Cache Replacement Policy Using Adaptive Insertion and Re-Reference Prediction
+LRUWarlock - Midorikawa 2008
+
+Recency + Frequency
+Samiee & Rad, 2008 
+
+Fusion
+A Novel Methodology, 1993 Altman
+Re-examining cache replacement polciies, 2008 Zebchuk
+SSARC - 2009 Chen
+
+Multi-Level Caches
+SkipCache, Warrier 2015
+
+Code Transformation
+Exploting Program Semantics, Wei 2015
+
+Optimal
