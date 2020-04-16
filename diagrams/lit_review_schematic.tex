@@ -1,0 +1,17 @@
+\begin{tikzpicture}[
+  maintopic/.style={rectangle,draw,fill=blue!20},
+  subtopic/.style={rectangle,draw,fill=red!20,rounded corners=.8ex},
+  grandchild/.style={grow=down,xshift=1em,anchor=west,
+    edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}},
+  first/.style={level distance=6ex},
+  second/.style={level distance=12ex},
+  third/.style={level distance=18ex},
+  level 1/.style={sibling distance=5em}]
+    % Parents
+    \coordinate
+      child{node[maintopic]{Memory Latency Reduction}}
+    [edge from parent fork down]
+    % Children and grandchildren
+    child{node[subtopic] {Cache Intrinsic Techniques}
+      child[grandchild,first] {node[subtopic]{Joe}}};
+\end{tikzpicture}
