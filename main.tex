@@ -1,4 +1,4 @@
-\documentclass[fontsize=11pt,a4paper,twoside,numbers=noenddot,BCOR=13mm,DIV=calc,toc=chapterentrydotfill, parskip=half*, titlepage=true, usegeometry]{scrbook}
+\documentclass[fontsize=11pt,a4paper,twoside,numbers=noenddot,DIV=13, BCOR=26mm, toc=chapterentrydotfill, parskip=half*, titlepage=true]{scrbook}
 
 \usepackage[T1]{fontenc} % prevents < in text mode turning into
 \usepackage{textcomp}    % ?', etc
@@ -7,22 +7,28 @@
 %\usepackage{nimbusmononarrow} % nicer typewriter-style fonts
 %\usepackage{cmbright} % nice san serif fonts
 \usepackage{microtype} % micro-typographical extensions for
-% pdf(e)(la)tex
 \usepackage[british]{babel} % British hyphenation patterns, etc.
 \usepackage[backend=biber, style=numeric, citestyle=numeric-comp, natbib]{biblatex}
 \bibliography{bibtex/bibliography.bib}
 \usepackage{titling}
-\usepackage{hyperref}
+\usepackage[hypertexnames=false]{hyperref}
 \usepackage{csquotes}
 \usepackage{amsmath}
 \usepackage[acronym, toc, nomain, xindy]{glossaries}
 \usepackage{mathtools}
 \usepackage[texindy]{imakeidx}
 \usepackage{tikz}
-\usetikzlibrary{trees}
+\usepackage{forest}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+% Debugging Purposes 
+%\usepackage{showframe}
+%\usepackage{layout}
+%\makeatletter
+%\renewcommand*{\lay@value}[2]{%
+%	\strip@pt\dimexpr0.351459\dimexpr\csname#2\endcsname\relax\relax mm%
+%}
+%\makeatother
 
-\usepackage[top=20mm, bottom=40mm, left=37mm, right=20mm]{geometry}
 \pagestyle{headings}
 \makeglossaries
 \include{extra-tex/glossaries}
