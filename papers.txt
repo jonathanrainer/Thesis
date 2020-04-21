@@ -1,3 +1,7 @@
+Question:
+- How do we reduce the latency of a call to memory in our system?
+
+
 Process: 
 - Work down the call stack of papers to see if the general ones have any pointers to papers in this specific section
 - Read through papers and work out if they need to be discarded or noted (note any good phrases), any additional papers identified add into the search
@@ -5,9 +9,6 @@ Process:
 - Write up section
 
 Todo List:
-
-Frequency
-Aimtongkham 2016
 
 Recency Papers
 LIRS & Choo2006
@@ -32,5 +33,3 @@ SkipCache, Warrier 2015
 
 Code Transformation
 Exploting Program Semantics, Wei 2015
-
-Optimal
