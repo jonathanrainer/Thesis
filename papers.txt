@@ -10,22 +10,8 @@ Process:
 
 Todo List:
 
-Recency Papers
-LIRS & Choo2006
-Zhou & Philbin, 2001, multi-queue replacement
-Wen-Tzer, Chen, Liu, 2006
-Random LRU, Das, Shirshendu, 2013 
-Kharbutli, Solihin, 2005
-Jaleel et al. 2010
-A Cache Replacement Policy Using Adaptive Insertion and Re-Reference Prediction
-LRUWarlock - Midorikawa 2008
-
-Recency + Frequency
-Samiee & Rad, 2008 
-
 Fusion
-A Novel Methodology, 1993 Altman
-Re-examining cache replacement polciies, 2008 Zebchuk
+Re-examining cache replacement polcies, 2008 Zebchuk
 SSARC - 2009 Chen
 
 Multi-Level Caches
