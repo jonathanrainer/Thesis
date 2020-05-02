@@ -1,25 +1,23 @@
-
 \chapter{Literature Review}
 
-This chapter presents a review of the literature surrounding memory latency reduction. It first focuses on more traditional methods, considering caching and then other methods of controlling latency, such as prefetching or scheduling. In the second section the focus moves to newer techniques that involve tracing and then finishes with a summary and evaluation of the position the literature presents. This structure is presented below in Figure \ref{fig:lit-review-schematic}:
+This chapter presents a review of the literature surrounding memory latency reduction. It first focuses on more traditional methods, considering caching and then other methods of controlling latency, such as prefetching or scheduling. In the second section the focus moves to newer techniques that involve tracing and then finishes with a summary and evaluation of the position the literature presents. This structure is presented in Figure \ref{fig:lit-review-schematic}. To place this review in context consider program running on a CPU with a Von Neumann architecture. This CPU has a single on-chip direct-mapped cache and connects to a memory system by way of an interconnect with other peripherals. This can be seen below:
 
-%TODO: Fix Diagram
-
-\begin{figure}[h]
-		\centering
+\begin{sidewaysfigure}
 		\input{diagrams/lit_review_schematic.tex}
+		\caption[Literature Review Structure]{The structure of the Literature Review showing the topics and subtopics covered, organised into sections. The review is conducted via a depth-first search of these topics.}
 		\label{fig:lit-review-schematic}
-		\caption[Literature Review Structure]{The structure of the Literature Review showing the topics and subtopics covered}
+\end{sidewaysfigure}
+
+
+Based on Figure \ref{fig:journey-memory-transaction}, if we consider a memory transaction from the processor that misses in the cache then where are the sources of latency and how large are they? The processor itself provides negligible latency, there is of course usually a delay between the instruction being fetched and decoded, but this would be incurred by any instruction so is not relevant to this discussion. Following that, there will be a cache miss in the internal cache so this will add latency, and then the control signals will cross into the system interconnect en-route to the memory controller and external memory, adding further latency. Once the control signals reach the memory controller main memory can be accessed, by far the biggest source of latency in this process. The data fetch can then be fed back up the system, is stored in the cache and is accessible to the processor adding further latency as it makes the return trip. 
+
+%TODO Fix Up Text In Caption and Description
+
+\begin{figure}[h!]
+	\input{diagrams/journey_of_memory_transaction.tex}
+	\caption[The Journey of a Memory Transaction]{A transaction begins in the CPU where it is decoded from an instruction. This decoding causes control signals to be sent to the CPU's cache which discovers the element is not present. This causes control signals to be sent over the interconnect to main memory where the data is fetched. The data is then communicated back up to the CPU where action can be taken.}
+	\label{fig:journey-memory-transaction}
 \end{figure}
-
-
-To place this review in context consider program running on a CPU with a Von Neumann architecture. This CPU has a single on-chip direct-mapped cache and connects to a memory system by way of an interconnect with other peripherals. This can be seen below:
-
-%TODO: Include diagram of standard model
-
-Based on Figure [??], if we consider a memory transaction from the processor that misses in the cache then where are the sources of latency and how large are they? The processor itself provides negligible latency, there is of course usually a delay between the instruction being fetched and decoded, but this would be incurred by any instruction so is not relevant to this discussion. Following that, there will be a cache miss in the internal cache so this will add latency, and then the control signals will cross into the system interconnect en-route to the memory controller and external memory, adding further latency. Once the control signals reach the memory controller main memory can be accessed, by far the biggest source of latency in this process. The data fetch can then be fed back up the system, is stored in the cache and is accessible to the processor adding further latency as it makes the return trip. This can be seen diagrammatically in Figure [??]. 
-
-%TODO: Create diagram to illustrate second point
 
 Having seen the journey of a memory transaction we have 3 sites that could be focussed on to reduce latency: the cache, the memory controller or the memory hardware. In this review we will not consider the memory hardware, despite it being the largest source of latency. This is because, as \citet{pattersonComputerOrganizationDesign2018} describe, choosing a memory technology is a trade-off between speed and cost, with the general principle being that faster memory is more expensive per unit. In my review of the literature I have found no papers that are proposing to have resolved this trade-off. All are proposing improvements to existing technologies, or new ones that fit into the existing cost/speed model. If we want to make a real difference to latency, we have to look elsewhere, accepting that main memory will always be slow relative to the processor, no matter how much we improve on its design.
 
@@ -35,8 +33,6 @@ After their first introduction to super-computers in the 1960's \cite{pattersonC
 In its simplest form a cache replacement policy is simply a way of deciding which cache line is replaced when a cache reaches capacity. For direct-mapped caches they are not important, but in set-associative caches the choice of replacement policy is absolutely crucial \cite{hennessyComputerArchitectureQuantitative2019}, and there has been much research into which policies yield the best outcomes across a variety of metrics\footnote{In this discussion of cache policies reducing miss rate and reducing latency can be thought of as synonymous, due to cache misses being the main source of latency.}.
 
 When discussing various policies that are useful in reducing latency it's good to have in mind two policies that are often referred to in the literature but are not actually implemented. The first of these is known as \texttt{OPT} or \texttt{MIN} \cite{jeongOptimalReplacementsCaches1999} a theoretical optimal replacement policy, which can perfectly predict which cache block will be needed furthest in the future. This means \texttt{OPT} will provably suffer the lowest number of cache misses of any cache policy. The second theoretical replacement policy is that of random replacement or \texttt{RAND}. Under this scheme when a decision on replacement has to be made, the choice is made completely at random without reference to any other information \cite{beladyStudyReplacementAlgorithms1966}. Again this method is not usually implemented by cache designers when optimising for latency reduction \cite{karedlaCachingStrategiesImprove1994} but its utility is as the lower extreme of a continuum, bounded by \texttt{OPT} at the other extreme. allowing policy designers to empirically assess new policies in relation to \texttt{OPT} and \texttt{RAND}.
-
-%TODO Add diagram of continuum here
 
 \subsubsection{Arrival-Time Based Techniques}
 
@@ -181,8 +177,6 @@ There are three general approaches to solving this problem, the first is to acce
 
 \paragraph{Fast Searching}
 
- %TODO Add an example here
-
 \citet{kesslerInexpensiveImplementationsSetAssociativity1989} is one of the first to attempt this approach and formulated a scheme whereby the tags for elements in the cache are stored in associative sets but are ordered by \gls{mru}. This arrangement could allow some searches to be ended early, if \gls{mru} is a proxy for most likely to be accessed, and thus saving time on average. As an alternative he also introduces partial comparison for tags, so you only need consider the first $k = \left\lfloor\frac{t}{a}\right\rfloor$ bits where $t$ is the length of the tag in bits and $a$ is the level of associativity. This means you can easily throw out tags that are definitely not in the cache and so, on average, decrease the access time as a search is avoided. Overall though this approach gives associativity for a relatively low cost there are many factors that govern its performance that are outside its control, including the design of the program itself and various cache design parameters including the length of tags, so it fails to be a good candidate for latency reduction. \citet{calderPredictiveSequentialAssociative1996} take a similar approach but use a steering bit to direct the search towards one or the other bank within the cache. When this is correct it negates the need for a second costly search and so reduces the average case access time. The approach taken by \citeauthor{calderPredictiveSequentialAssociative1996} is described by 
 \citet{zhangMulticolumnImplementationsCache1997} as optimal for a 2-way set associative cache.  
 
@@ -206,9 +200,7 @@ Multi-banked caches focus on architecting the cache into multiple portions that 
 
 \subsubsection{Multi-Level Caches}
 \label{sec:multi-level}
-One of the larger areas of research in increasing cache performance has been the use of multi-level caches. Their development follows a roughly chronological progression and is the pre-eminent mechanism for increasing cache effectiveness used in modern processors. The technique works by having multiple caches that increase in size and `distance' from the processor. These are usually arranged into levels (with the level closest to the processor being the Level 1 or L1 cache, the next being L2 etc.) 
-
-%TODO Cache Hierarchy Diagram
+One of the larger areas of research in increasing cache performance has been the use of multi-level caches. Their development follows a roughly chronological progression and is the pre-eminent mechanism for increasing cache effectiveness used in modern processors. The technique works by having multiple caches that increase in size and `distance' from the processor. These are usually arranged into numbered levels (L1, L2 etc.), where the number increases as the distance and access time do. 
 
 \paragraph{Early Work}
 
@@ -333,9 +325,13 @@ What is necessary to improve a lot of these techniques is the ability to conside
 
 \label{sec:tracing}
 
-In the third portion of this literature review we consider tracing. Tracing is very simply a way of producing an ordered list of all the instructions a program has performed during its operation. This may not immediately seem useful but the huge benefit of traces is that they include dynamic information about memory accesses that would not normally be accessible. For example, say there are two memory accesses to two addresses, one is stored in register \texttt{R3} and the other in register \texttt{R4}. If we see, in a program listing, that we store to the address in \texttt{R3} and read from the address in \texttt{R4}, is it impossible, statically, to know if they are the same address. This prevents a lot of optimisations and insights that would be possible if this information was available.
+In the third portion of this literature review we consider tracing. Tracing is very simply a way of producing an ordered list of all the instructions a program has performed during its operation. This may not immediately seem useful but the huge benefit of traces is that they include dynamic information about memory accesses that would not normally be accessible. For example, say there are two memory accesses to two addresses, one is stored in register \texttt{t3} and the other in register \texttt{t4}. If we see, in a program listing, that we store to the address in \texttt{t3} and read from the address in \texttt{R4}, is it impossible, statically, to know if they are the same address. This prevents a lot of optimisations and insights that would be possible if this information was available as Figure \ref{fig:static-analysis-problem} demonstrates.
 
-%TODO Add diagram of lack of surity as to what address is accessed
+\begin{figure}[h]
+	\input{diagrams/static_analysis_problem.tex}
+	\label{fig:static-analysis-problem}
+	\caption[The Limitations of Static Analysis]{This shows a programming code fragment of RISC-V assembly code and two registers \texttt{t3} and \texttt{t4}. Without conducting extensive simulation of all register accesses it would be impossible for a static analysis tool to know that at this point in the program \texttt{t3} and \texttt{t4} refer to the same memory address. Consequently re-ordering these instructions, though it might look safe could lead to the program not functioning as the programmer intended.}
+\end{figure}
 
 There has been very little work in online trace processing, i.e. processing and reacting to the trace while the program is running, and even less work on applying those ideas to the problem of latency reduction, which we'll explore in the conclusion and future sections. However some work has been done to utilise tracing in various offline processes, some of which are detailed in the next few sections. To bring this consideration of the literature to a close we'll also consider some examples of work done on using tracing as a method of on-chip debugging as this forms the basis for the implementation that will be presented in future chapters.
 

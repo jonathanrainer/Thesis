@@ -1,0 +1,31 @@
+\tikzstyle{block} = [draw, rectangle, text width=2cm, text centered, minimum height=1.2cm, node distance=2.7cm,fill=blue!30]
+\tikzstyle{container} = [draw, rectangle, inner sep=0.3cm, fill=orange!50,minimum height=3cm, minimum width=3cm]
+\def\bottom#1#2{\hbox{\vbox to #1{\vfill\hbox{#2}}}}
+\tikzset{
+	mybackground/.style={execute at end picture={
+			\begin{scope}[on background layer]
+				\node[] at (current bounding box.north){\bottom{1cm} #1};
+			\end{scope}
+	}},
+}
+\begin{center}
+	\begin{tikzpicture}
+	
+	    \node [block] (CPU) {CPU};
+	    \node [block, below of=CPU] (cache) {L1 Cache};
+	    \node [block, below of=cache, minimum width=5cm] (interconnect) {Interconnect};
+	    \node [block, below of=interconnect,  minimum width=7cm, text width=7cm] (main) {Main Memory};
+	    \begin{scope}[on background layer]
+	    \node [container,fit=(CPU) (cache),label=above:CPU Die] (container) {};
+		\end{scope}
+	    \draw [thick] [->] ([xshift=2em]CPU.south)-- node[left] {\circled{1}} ([xshift=2em]cache.north);
+	    \draw [thick] [->] ([xshift=-2em]cache.north)-- node[left] {\circled{6}} ([xshift=-2em]CPU.south);
+	    \draw [thick] [->] ([xshift=2em]cache.south) -- node[left] {\circled{2}} ([xshift=2em]interconnect.north);
+	    \draw [thick] [->] ([xshift=-2em]interconnect.north) -- node[left] {\circled{5}} ([xshift=-2em]cache.south);
+	    \draw [thick] [->] ([xshift=2em]interconnect.south) -- node[left] {\circled{3}} ([xshift=2em]main.north);
+	    \draw [thick] [->] ([xshift=-2em]main.north) -- node[left] {\circled{4}} ([xshift=-2em]interconnect.south);
+	    
+	    
+	
+	\end{tikzpicture}
+\end{center}

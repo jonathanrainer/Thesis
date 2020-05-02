@@ -1,18 +1,50 @@
 \begin{forest}
-[{Memory Latency Reduction Techniques}
-		[{Cache Intrinsic Techniques}
-			[{Replacement Policy}
-				[{Arrival Time Based}]
-				[{Frequency Based}]
-				[{Recency Based}] 
-				[{Combined Recency \& Frequency}]
-				[Fusion]
+	styleA/.style={top color=green!20, bottom color=green!50},
+	styleB/.style={top color=blue!20, bottom color=blue!50},
+	styleC/.style={top color=red!20, bottom color=red!50},
+	styleD/.style={top color=orange!20, bottom color=orange!50},
+	forked edges,
+	for tree={
+		child anchor=west,
+		parent anchor=east,
+		grow'=east,
+		text width=5cm,%
+		draw,
+		anchor=west,
+		tier/.pgfmath=level(),
+		text centered,
+		edge path={
+			\noexpand\path[\forestoption{edge}]
+			(.child anchor) -| +(-10pt,0) -- +(-10pt,0) |-
+			(!u.parent anchor)\forestoption{edge label};
+		},
+	}
+[{Memory Latency Reduction Techniques},styleD
+		[{Cache Intrinsic Techniques}, styleA
+			[{Replacement Policy}, styleA
+				[{Arrival Time Based}, styleA]
+				[{Frequency Based}, styleA]
+				[{Recency Based}, styleA] 
+				[{Combined Recency \& Frequency}, styleA]
+				[Fusion, styleA]
 			]
-			[{Cache Architectures}
-				[{Increased Associativity}] 
+			[{Cache Architectures}, styleA
+				[{Increased Associativity}, styleA]
+				[{Multi-Banked Caches}, styleA]
+				[{Multi-Level Caches}, styleA]
+				[{Non-Blocking Caches}, styleA]
+				[{Pipelined Caches}, styleA]
+				[{Victim Caches}, styleA]
 			]
 		]	
-		[{Cache Extrinsic}]
-		[Tracing]
+		[{Cache Extrinsic},styleB
+			[{Prefetching},styleB]
+			[{Scheduling},styleB]
+			[{Program Transformation \& Data Layout},styleB]
+		]
+		[Tracing, ,styleC
+			[{As a Control Loop},styleC]
+			[{In-Silicon Debug},styleC]
+		]
 ]  
 \end{forest}

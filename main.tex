@@ -18,7 +18,11 @@
 \usepackage{mathtools}
 \usepackage[texindy]{imakeidx}
 \usepackage{tikz}
-\usepackage{forest}
+\usetikzlibrary{intersections,shapes,arrows,fit,backgrounds,positioning}
+\usepackage[edges]{forest}
+\usepackage{rotating}
+\usepackage{varwidth}
+
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \RedeclareSectionCommand[runin=false,afterskip=0.5ex,beforeskip=0pt,afterindent=false]{paragraph}
 \setkomafont{paragraph}{\normalfont\itshape\bfseries}
