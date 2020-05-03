@@ -1,25 +1,24 @@
 \chapter{Literature Review}
 
-This chapter presents a review of the literature surrounding memory latency reduction. It first focuses on more traditional methods, considering caching and then other methods of controlling latency, such as prefetching or scheduling. In the second section the focus moves to newer techniques that involve tracing and then finishes with a summary and evaluation of the position the literature presents. This structure is presented in Figure \ref{fig:lit-review-schematic}. To place this review in context consider program running on a CPU with a Von Neumann architecture. This CPU has a single on-chip direct-mapped cache and connects to a memory system by way of an interconnect with other peripherals. This can be seen below:
-
-\begin{sidewaysfigure}
-		\input{diagrams/lit_review_schematic.tex}
-		\caption[Literature Review Structure]{The structure of the Literature Review showing the topics and subtopics covered, organised into sections. The review is conducted via a depth-first search of these topics.}
-		\label{fig:lit-review-schematic}
-\end{sidewaysfigure}
-
+This chapter presents a review of the literature surrounding memory latency reduction. It first focuses on more traditional methods, considering caching and then other methods of controlling latency, such as prefetching or scheduling. In the second section the focus moves to newer techniques that involve tracing and then finishes with a summary and evaluation of the position the literature presents. To place this review in context consider program running on a CPU with a Von Neumann architecture. This CPU has a single on-chip direct-mapped cache and connects to a memory system by way of an interconnect with other peripherals. This can be seen in Figure \ref{fig:journey-memory-transaction}.
 
 Based on Figure \ref{fig:journey-memory-transaction}, if we consider a memory transaction from the processor that misses in the cache then where are the sources of latency and how large are they? The processor itself provides negligible latency, there is of course usually a delay between the instruction being fetched and decoded, but this would be incurred by any instruction so is not relevant to this discussion. Following that, there will be a cache miss in the internal cache so this will add latency, and then the control signals will cross into the system interconnect en-route to the memory controller and external memory, adding further latency. Once the control signals reach the memory controller main memory can be accessed, by far the biggest source of latency in this process. The data fetch can then be fed back up the system, is stored in the cache and is accessible to the processor adding further latency as it makes the return trip. 
 
-%TODO Fix Up Text In Caption and Description
-
-\begin{figure}[h!]
+\begin{figure}[ht]
 	\input{diagrams/journey_of_memory_transaction.tex}
-	\caption[The Journey of a Memory Transaction]{A transaction begins in the CPU where it is decoded from an instruction. This decoding causes control signals to be sent to the CPU's cache which discovers the element is not present. This causes control signals to be sent over the interconnect to main memory where the data is fetched. The data is then communicated back up to the CPU where action can be taken.}
+	\caption[The Journey of a Memory Transaction]{A memory transaction follows a number of steps to satisfy a \gls{cpu} memory request. First in Step \circled{1} the \gls{cpu} issues a request to L1 cache to check for the presence of the memory element required. Suppose there is a cache miss then in Step \circled{2} the cache signals to the \gls{cpu} that there has been a cache miss and so the \gls{cpu} sends a signal via the interconnect, which then in Step \circled{3} signals main memory to get the data required. In Step \circled{4} and \circled{5} this data is passed back to the L1 Cache which stores it and then passes it to the \gls{cpu} in Step \circled{6}.}
 	\label{fig:journey-memory-transaction}
 \end{figure}
 
 Having seen the journey of a memory transaction we have 3 sites that could be focussed on to reduce latency: the cache, the memory controller or the memory hardware. In this review we will not consider the memory hardware, despite it being the largest source of latency. This is because, as \citet{pattersonComputerOrganizationDesign2018} describe, choosing a memory technology is a trade-off between speed and cost, with the general principle being that faster memory is more expensive per unit. In my review of the literature I have found no papers that are proposing to have resolved this trade-off. All are proposing improvements to existing technologies, or new ones that fit into the existing cost/speed model. If we want to make a real difference to latency, we have to look elsewhere, accepting that main memory will always be slow relative to the processor, no matter how much we improve on its design.
+
+On a final note before we begin, due to this literature review covering a broad range of topics, and most to quite a high depth, the digram presented in Figure \ref{fig:lit-review-schematic} maps out the various topics and their relationship to each other. Reading the review in concert with this diagram can help to locate yourself within the research presented and see the relationships between the topics included as they are presented.
+
+\begin{sidewaysfigure}
+	\input{diagrams/lit_review_schematic.tex}
+	\caption[Literature Review Structure]{The structure of the Literature Review showing the topics and subtopics covered, organised into sections. The review is conducted via a depth-first search of these topics.}
+	\label{fig:lit-review-schematic}
+\end{sidewaysfigure}
 
 \section{Cache Intrinsic Techniques}
 
@@ -71,9 +70,13 @@ Due to these shortcomings the important aspects of \gls{lru} from our point of v
 
 \paragraph{Overcoming Flooding}
 
-%TODO Add flooding diagram
+\begin{figure}[ht]
+	\input{diagrams/flooding.tex}
+	\caption[Flooding Example]{Flooding usually occurs in large loops, where the working set of the program exceeds the size of the cache. The example above demonstrates this. On the first three loads of the first iteration everything proceeds as usual. Once Line 10 is hit however the element from address \texttt{0x2000} is evicted under the \gls{lru} policy leading to the situation we see in the second example cache above. Then when Line 7 executes in the second iteration we are forced to evict the element from address \texttt{0x2004}. Consequently the cache is useless in this situation as it every memory access will be a miss, this is flooding.}
+	\label{fig:flooding}
+\end{figure}
 
-Flooding is a phenomenon particularly associated with \gls{lru} which happens when applications try to access a large address space in a sequential fashion. As more addresses are accessed and the cache capacity is exhausted, old elements (those at the beginning of the space) are evicted from the cache, and then when the loop begins again old elements are pushed out. This means that the cache policy has no positive impact on the execution at all. To address this \citet{glassAdaptivePageReplacement1997} propose the \texttt{SEQ} algorithm which records long sequences of requests for sequential pages and applies \gls{mru} replacement to those sequences. Otherwise it defaults to simple \gls{lru}. This has a high overhead to implement compared to \gls{lru} and only considers one cause of flooding. 
+Flooding is a phenomenon particularly associated with \gls{lru} which happens when applications try to access a large address space in a sequential fashion. As more addresses are accessed and the cache capacity is exhausted, old elements (those at the beginning of the space) are evicted from the cache, and then when the loop begins again old elements are pushed out, this is shown in Figure \ref{fig:flooding}. This means that the cache policy has no positive impact on the execution at all. To address this \citet{glassAdaptivePageReplacement1997} propose the \texttt{SEQ} algorithm which records long sequences of requests for sequential pages and applies \gls{mru} replacement to those sequences. Otherwise it defaults to simple \gls{lru}. This has a high overhead to implement compared to \gls{lru} and only considers one cause of flooding. 
 
 \citet{smaragdakisEELRUSimpleEffective1999} further develop these ideas to create the \gls{eelru} algorithm. Here the definition of 'sequential' is weakened to make the algorithm more amenable to data structures that are not contiguous in memory. It does this via an adaptive feature where the behaviour of the algorithm changes between standard \gls{lru} and what \citeauthor{smaragdakisEELRUSimpleEffective1999} refer to as the \gls{wfl} algorithm, which can evict pages before they become the \gls{lru} page. \gls{eelru} merges these together by calculating probabilistically whether \gls{wfl} will have more hits than measured from \gls{lru} over multiple sets of parameters for \gls{wfl}. \citet{midorikawaAdaptiveReplacementBased2008} builds on these ideas further by proposing \gls{lru-war} which switches between \gls{lru} and \gls{mru} when sequential sections are detected.
 
