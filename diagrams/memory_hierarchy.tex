@@ -5,7 +5,17 @@
 \coordinate (C) at (0,8) {};
 \draw[name path=AC] (A) -- (C);
 \draw[name path=BC] (B) -- (C);
-\foreach \y/\A [count=\xi starting from 0, evaluate=\y as \nexty using (\y+1.5, evaluate=\xi as \grad using int(\xi*15)] in {0/Network Storage,1/Disk Storage,2/Main Memory (\gls{dram}),3/\gls{llc},4/Level 2 Cache,5/Level 1 Cache,6/Registers} {
+\foreach \y/\A [count=\xi starting from 0, evaluate=\y as \nexty using (\y+1.5, evaluate=\xi as \grad using int(\xi*15)] in 
+{
+	0/Network Storage,
+	1/Disk-based Storage,
+	2/Main Memory 
+	(\gls{dram}),
+	3/\gls{llc},
+	4/Level 2 Cache (\gls{sram}),
+	5/Level 1 Cache (\gls{sram}),
+	6/\gls{cpu} Registers
+} {
 	\begin{scope}[on background layer]
 	\clip[preaction={draw}] (-7,0) -- (7,0) -- (0,8) -- cycle;
 	\fill[white!\grad!cyan] (-7,\y) rectangle (7,\nexty);
