@@ -1,7 +1,17 @@
 \chapter{Trace Assisted Caching}
 \label{chap:trace-assisted-caching}
 
+Having seen the literature now we have a very good idea of the position research is in regarding latency reduction and it would appear somewhat of an impasse has been reached. If our aim is to maximally reduce latency we cannot rely on cache policies because they're bounded above by \texttt{OPT}. We cannot rely on cache architecture changes because they are highly workload dependant and there seems to be a ceiling on their performance increase. We cannot rely on improved memory hardware because of the size of the processor memory gap (see Figure \ref{fig:proc-mem-gap}) and we cannot rely on other methods like prefetching because they do not have enough information to make the right decisions. Our only choice now is to consider the assumptions that many of these techniques are based upon and see if they are reasonable or could be changed. If so then we may be able to progress latency reduction beyond the its present state with new techniques. 
+	
+The key assumption that must be challenged is that a cache can only be reactive as opposed to being pro-active and the second is that its impossible to know dynamic behaviour before it happens with any certainty at all. These two assumptions can be countered via the use of tracing and this approach will allow latency reductions that prior to this were never possible.
+
 \section{Motivation}
+
+We know that within programs there is more potential to re-order instructions than is utilised, even by the best \gls{ooo} processors. This is because, as Figure \ref{fig:static-analysis-problem} demonstrates, for certain processor addressing modes it's impossible to know whether registers refer to the same address or not statically. The solution that most processors take is to simply ignore these instructions as candidates for re-ordering but because of that a huge opportunity to reduce latency is missed. 
+
+Despite the potential for sophisticated addressing modes, once all the abstractions are boiled down, the \gls{cpu} is going to have to send a fully resolved address to the memory controller so it can be actioned. Under normal circumstances this is simply an implementation detail but this is supremely valuable information. If the cache had access to this information it could fetch this data before the \gls{cpu} had requested it, turning a reactive process into a proactive one. This would mean the memory operations of the cache would be become disconnected from the operation of the \gls{cpu} but the latency, and therefore runtime reductions could be very large. 
+
+So the question becomes how to access this information and tracing is the best way to do so. However the tracing would have to be very fine grained. Most tracing systems produce events relative to the assembly instruction being run, particularly true in the case of ARM Coresight but this is not enough. What is required is a comprehensive trace of each pipeline stage of the processors execution particularly focussed on the stages that request access and receive results from memory. Only then will the effective addresses be captured, associated with the correct instruction invocation and can then be utilised in future runs of the program to provide better caching.
 
 \section{A Schematic Design}
 
