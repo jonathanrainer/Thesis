@@ -1,18 +1,34 @@
 \chapter{Trace Assisted Caching}
 \label{chap:trace-assisted-caching}
 
-Having seen the literature now we have a very good idea of the position research is in regarding latency reduction and it would appear somewhat of an impasse has been reached. If our aim is to maximally reduce latency we cannot rely on cache policies because they're bounded above by \texttt{OPT}. We cannot rely on cache architecture changes because they are highly workload dependant and there seems to be a ceiling on their performance increase. We cannot rely on improved memory hardware because of the size of the processor memory gap (see Figure \ref{fig:proc-mem-gap}) and we cannot rely on other methods like prefetching because they do not have enough information to make the right decisions. Our only choice now is to consider the assumptions that many of these techniques are based upon and see if they are reasonable or could be changed. If so then we may be able to progress latency reduction beyond the its present state with new techniques. 
-	
-The key assumption that must be challenged is that a cache can only be reactive as opposed to being pro-active and the second is that its impossible to know dynamic behaviour before it happens with any certainty at all. These two assumptions can be countered via the use of tracing and this approach will allow latency reductions that prior to this were never possible.
+Having now considered the literature we move on to a theoretical explanation of the new technique this thesis proposes. We will start by exploring the motivation for this new technique; give a theoretical, processor agnostic, description of how to works; and follow that with a section that explains how this technique will bring benefit to hardware that implements this system.
 
 \section{Motivation}
 
-We know that within programs there is more potential to re-order instructions than is utilised, even by the best \gls{ooo} processors. This is because, as Figure \ref{fig:static-analysis-problem} demonstrates, for certain processor addressing modes it's impossible to know whether registers refer to the same address or not statically. The solution that most processors take is to simply ignore these instructions as candidates for re-ordering but because of that a huge opportunity to reduce latency is missed. 
+If we return to the central question of this thesis, we are trying to understand how memory latency can be reduced to reduce overall program runtime. However the results of the literature review in the previous chapter appear to show that we are blocked along all the avenues considered as a route to this goal. For example, cache policies definitely show some ability to reduce latency by making smarter decisions about which elements should be replaced and when that should happen. However there is an upper limit on their ability to reduce latency, namely the \texttt{OPT} ceiling, and much of this gap has been closed with the research we've seen. As a result more work in this area is going to follow the law of diminishing returns, leading a lot of researchers to abandon work on cache policies because they are 'good enough` \cite{podlipnigSurveyWebCache2003}. Moreover, \texttt{OPT} cannot be implemented because perfect clairvoyance is impossible in general and even if it could be the effectiveness of \texttt{OPT} is still not 100\%. So even if we could implement a version of \texttt{OPT} that worked there are serious questions as to whether we'd want to or whether there were more effective ways to reduce latency in other areas.
 
-Despite the potential for sophisticated addressing modes, once all the abstractions are boiled down, the \gls{cpu} is going to have to send a fully resolved address to the memory controller so it can be actioned. Under normal circumstances this is simply an implementation detail but this is supremely valuable information. If the cache had access to this information it could fetch this data before the \gls{cpu} had requested it, turning a reactive process into a proactive one. This would mean the memory operations of the cache would be become disconnected from the operation of the \gls{cpu} but the latency, and therefore runtime reductions could be very large. 
+\subsection{Defining the Key Problem}
 
-So the question becomes how to access this information and tracing is the best way to do so. However the tracing would have to be very fine grained. Most tracing systems produce events relative to the assembly instruction being run, particularly true in the case of ARM Coresight but this is not enough. What is required is a comprehensive trace of each pipeline stage of the processors execution particularly focussed on the stages that request access and receive results from memory. Only then will the effective addresses be captured, associated with the correct instruction invocation and can then be utilised in future runs of the program to provide better caching.
+If we look at the other key areas of the literature we see the same story over and over again. Either the economics of the decision don't balance, i.e. we need a very large hardware budget to achieve a comparatively small drop in latency; or techniques don't have enough information available to them to make good decisions. So if we boil down these problems what is the recurring theme? 
+
+% % % Rework this section so we talk about a lack of information and then a belief in synchronicity. Then talk about what information would actually be useful if we broke the assumption. Then where it could come from. Finally what harnessing it would look like
+
+I believe the reason these techniques are not as performant as they might be is that they are making decisions based upon an incomplete model of the world as it exists which leads them to either make wrong decisions or to not react quickly enough to change. Caches for example are designed deliberately to be relatively simple. This gives the benefit that they take up very little silicon on a processor die but also that they will be fast due to a short critical path. Because of these two constraints any attempts to give them more information are difficult and so their decisions will always be based on the stimulus they are given (cache misses) rather than other more indicative behaviour. Pre-fetching too is very similar, because most prefetching units do not have a level of introspection into the program as it's executing they cannot utilise dynamic information to make better decisions. As a result they are left either use the past as an indicator of the future or to assume the future follows a pre-defined pattern. Neither of these is ideal and it's clear that with more information much better decisions could be made.
+
+If we wanted to solve this problem and give more information to these techniques so they could make better decisions, what information would they need? The most useful thing that could be given to them 
+
+\subsection{What Information Would Be Useful?}
+
+If we side step this key problem slightly and move to think about tracing as a technique. What does tracing give us?
+
+\subsection{Tracing: A Solution}
+
+\subsection{A Vision of our Destination}
 
 \section{A Schematic Design}
 
-\section{Theoretical Justification for Success}
+\subsection{Trace Recorder}
+
+\subsection{Intelligent Cache \& Memory System}
+
+\section{Justification of Success}
