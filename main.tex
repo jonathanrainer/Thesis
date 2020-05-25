@@ -25,10 +25,23 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
 \usepackage{pgfplotstable}
+\usepackage{enumitem}
+\usepackage{scrhack}
 
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \RedeclareSectionCommand[runin=false,afterskip=0.5ex,beforeskip=0pt,afterindent=false]{paragraph}
 \setkomafont{paragraph}{\normalfont\itshape\bfseries}
+\lstdefinelanguage{risc-v} {
+	morekeywords=[7]{addi, lw, add, and, sub, mul, bne, blt}, 
+	sensitive=false,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]", }
+\lstdefinestyle{printing}{
+	xleftmargin=5.0ex,
+	basicstyle=\ttfamily, 
+	numbers=left
+}
 % Debugging Purposes 
 %\usepackage{showframe}
 %\usepackage{layout}
@@ -51,6 +64,7 @@
 	\include{chapters/abstract}
 	\include{chapters/contents}
 	\listoffigures
+	\lstlistoflistings
 	\include{chapters/acknowledgements}
 	\include{chapters/declaration}
 	\mainmatter
