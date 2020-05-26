@@ -5,7 +5,7 @@ This chapter presents a review of the literature surrounding memory latency redu
 Based on Figure \ref{fig:journey-memory-transaction}, if we consider a memory transaction from the processor that misses in the cache then where are the sources of latency and how large are they? The processor itself provides negligible latency, there is of course usually a delay between the instruction being fetched and decoded, but this would be incurred by any instruction so is not relevant to this discussion. Following that, there will be a cache miss in the internal cache so this will add latency, and then the control signals will cross into the system interconnect en-route to the memory controller and external memory, adding further latency. Once the control signals reach the memory controller main memory can be accessed, by far the biggest source of latency in this process. The data fetch can then be fed back up the system, is stored in the cache and is accessible to the processor adding further latency as it makes the return trip. 
 
 \begin{figure}[ht]
-	\input{diagrams/journey_of_memory_transaction.tex}
+	\input{diagrams/literature_review/journey_of_memory_transaction.tex}
 	\caption[The Journey of a Memory Transaction]{A memory transaction follows a number of steps to satisfy a \gls{cpu} memory request. First in Step \circled{1} the \gls{cpu} issues a request to L1 cache to check for the presence of the memory element required. Suppose there is a cache miss then in Step \circled{2} the cache signals to the \gls{cpu} that there has been a cache miss and so the \gls{cpu} sends a signal via the interconnect, which then in Step \circled{3} signals main memory to get the data required. In Step \circled{4} and \circled{5} this data is passed back to the L1 Cache which stores it and then passes it to the \gls{cpu} in Step \circled{6}.}
 	\label{fig:journey-memory-transaction}
 \end{figure}
@@ -15,7 +15,7 @@ Having seen the journey of a memory transaction we have 3 sites that could be fo
 On a final note before we begin, due to this literature review covering a broad range of topics, and most to quite a high depth, the digram presented in Figure \ref{fig:lit-review-schematic} maps out the various topics and their relationship to each other. Reading the review in concert with this diagram can help to locate yourself within the research presented and see the relationships between the topics included as they are presented.
 
 \begin{sidewaysfigure}
-	\input{diagrams/lit_review_schematic.tex}
+	\input{diagrams/literature_review/lit_review_schematic.tex}
 	\caption[Literature Review Structure]{The structure of the Literature Review showing the topics and subtopics covered, organised into sections. The review is conducted via a depth-first search of these topics.}
 	\label{fig:lit-review-schematic}
 \end{sidewaysfigure}
@@ -71,7 +71,7 @@ Due to these shortcomings the important aspects of \gls{lru} from our point of v
 \paragraph{Overcoming Flooding}
 
 \begin{figure}[ht]
-	\input{diagrams/flooding.tex}
+	\input{diagrams/literature_review/flooding.tex}
 	\caption[Flooding Example]{Flooding usually occurs in large loops, where the working set of the program exceeds the size of the cache. The example above demonstrates this. On the first three loads of the first iteration everything proceeds as usual. Once Line 10 is hit however the element from address \texttt{0x2000} is evicted under the \gls{lru} policy leading to the situation we see in the second example cache above. Then when Line 7 executes in the second iteration we are forced to evict the element from address \texttt{0x2004}. Consequently the cache is useless in this situation as it every memory access will be a miss, this is flooding.}
 	\label{fig:flooding}
 \end{figure}
@@ -331,7 +331,7 @@ What is necessary to improve a lot of these techniques is the ability to conside
 In the third portion of this literature review we consider tracing. Tracing is very simply a way of producing an ordered list of all the instructions a program has performed during its operation. This may not immediately seem useful but the huge benefit of traces is that they include dynamic information about memory accesses that would not normally be accessible. For example, say there are two memory accesses to two addresses, one is stored in register \texttt{t3} and the other in register \texttt{t4}. If we see, in a program listing, that we store to the address in \texttt{t3} and read from the address in \texttt{R4}, is it impossible, statically, to know if they are the same address. This prevents a lot of optimisations and insights that would be possible if this information was available as Figure \ref{fig:static-analysis-problem} demonstrates.
 
 \begin{figure}[h]
-	\input{diagrams/static_analysis_problem.tex}
+	\input{diagrams/literature_review/static_analysis_problem.tex}
 	\label{fig:static-analysis-problem}
 	\caption[The Limitations of Static Analysis]{This shows a programming code fragment of RISC-V assembly code and two registers \texttt{t3} and \texttt{t4}. Without conducting extensive simulation of all register accesses it would be impossible for a static analysis tool to know that at this point in the program \texttt{t3} and \texttt{t4} refer to the same memory address. Consequently re-ordering these instructions, though it might look safe could lead to the program not functioning as the programmer intended.}
 \end{figure}

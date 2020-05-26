@@ -27,12 +27,14 @@
 \usepackage{pgfplotstable}
 \usepackage{enumitem}
 \usepackage{scrhack}
+\usepackage{xintbinhex}
+\usepackage{calc}
 
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \RedeclareSectionCommand[runin=false,afterskip=0.5ex,beforeskip=0pt,afterindent=false]{paragraph}
 \setkomafont{paragraph}{\normalfont\itshape\bfseries}
 \lstdefinelanguage{risc-v} {
-	morekeywords=[7]{addi, lw, add, and, sub, mul, bne, blt}, 
+	morekeywords=[7]{addi, lw, add, and, sub, mul, bne, blt, sw, li, j, jal, mv, ble, ret}, 
 	sensitive=false,
 	morecomment=[l]{//},
 	morecomment=[s]{/*}{*/},

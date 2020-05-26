@@ -1,0 +1,18 @@
+\tikzset{
+	print/.style={ % requires library shapes.symbols
+		draw,
+		tape,
+		tape bend top=none
+	}
+}
+
+\begin{tikzpicture}
+
+	{
+		\renewcommand*\thelstnumber{\ifnum\value{lstnumber}<8 0\fi \xintDecToHex{\the\value{lstnumber}*4}}
+		\node [print, fill=yellow!30] (assembly-code) {\lstinputlisting[language=risc-v, basicstyle=\ttfamily, numbers=left, firstnumber=149, stepnumber=2, numberstyle=\ttfamily, ]{diagrams/trace_assisted_caching/fac_excerpt.S}};
+	}
+
+	
+	
+\end{tikzpicture}

@@ -24,8 +24,8 @@ So we know what data we need but how might we access it? A central objection com
 Now we have seen a theoretical description of how trace assisted caching works let us consider a schematic design for the system. Chapter \ref{chap:experimental-design} will focus on the implementation but let us consider, at a conceptual level, the key pieces of an implementation and their function before being bogged down in the exact details of how a system like this is implemented. So first let us imagine a single-core \gls{cpu} with a Harvard Architecture, with an L1 data cache. This cache can be direct-mapped or set-associative and implements a replacement policy of some kind. This can be seen in the diagram below:
 
 \begin{figure}
-	\input{diagrams/base_architecture.tex}
-	\caption{This basic architecture consists of a Harvard Architecture with an L1 Data Cache. The instruction might also have a cache architecture associated with it but this is not important for our purposes, any reduction in instruction fetch represents a speed up by a constant factor.}
+	\input{diagrams/trace_assisted_caching/base_architecture.tex}
+	\caption{The basic design begins with a processor with a Harvard Architecture. This is so that the effect of any caching on the data side can be isolated and quantified more easily.}
 \end{figure}
 
 As was alluded to in the previous section there are two key pieces that form the architecture for Trace Assisted Caching: the trace recorder and the intelligent cache. Each will be described in turn. We'll also describe any changes that would need to be made to the processor to support these new pieces of hardware.
@@ -35,15 +35,19 @@ As was alluded to in the previous section there are two key pieces that form the
 The trace recorder would sit attached to the processor and would monitor the internal control signals emitted by the processor. These control signals would not only be those that manipulated memory but would initially be every pipeline phase of every instruction the processor executed. This would require changes to the processor, exposing previously enclosed signals, but because we have to perform this recording asynchronously from the processor, so as not to block its execution unnecessarily, this is the only option available to us.
 
 \begin{figure}
-	\input{diagrams/base_architecture_with_recorder.tex}
+	\input{diagrams/trace_assisted_caching/base_architecture_with_recorder.tex}
 	\caption{The trace recorder takes in information from both the instruction stream and the data stream to produce a stream of pipeline stages bundled into instructions. This is stored in the trace repository after filtering to remove all non-memory instructions.}
 \end{figure}
 
 The amount of data a trace like this would generate is potentially gargantuan, multiplying the amount which already exists in instruction traces by the length of the pipeline, but there are several reasons why this level of detail is required. The first is that the goal of this recording is to link together instructions in the program with effective addresses they generate. If you record at a more granular level, it can be very difficult to associate memory accesses with the instructions that generated them. Recording at the level of pipeline stages and aggregating to instructions later means there is no ambiguity. This does also mean that we have to take into account branching behaviour and stalls in our recorder, and this will be explored further in Chapter \ref{chap:experimental-design}, but this would give us a complete trace, at the level of pipeline stages, for any program that runs on the processor. In addition tracing at the level of pipeline stages means that you are recording a serialised data stream, meaning there is no need to do any de-multiplexing or complex analysis to associate actions with instructions, at the level of pipeline stages there can only be one instruction per stage at a time. 
 
-Now we have this potentially gargantuan amount of data we have to filter it down in some way. Even for a small processor running a short program this could lead to gigabytes of data being generated and this is simply not viable to store or query. The first thing we can do is to throw away the details of each individual pipeline stage, these are not needed to instruct the memory system directly, we simply use them as a way to ensure the correct ordering of the memory instructions. The second piece of filtering is to remove any memory instructions that do not have memory implications, this could be as much as 60\% of the instructions captured. By filtering and aggregating using these two criteria we can produce a trace that is an ordered list of instructions linked to effective memory addresses. An example of which is shown below:
+Now we have this potentially gargantuan amount of data we have to filter it down in some way. Even for a small processor running a short program this could lead to gigabytes of data being generated and this is simply not viable to store or query. The first thing we can do is to throw away the details of each individual pipeline stage, these are not needed to instruct the memory system directly, we simply use them as a way to ensure the correct ordering of the memory instructions. The second piece of filtering is to remove any instructions that do not have memory implications, this could be as much as 60\% of the instructions captured. By filtering and aggregating using these two criteria we can produce a trace that is an ordered list of instructions linked to effective memory addresses. An example of which is shown below:
 
-%TODO Show example trace
+\begin{figure}
+	\input{diagrams/trace_assisted_caching/trace_with_original.tex}
+	\caption{On the left can be seen a fragment of the disassembled version of the benchmark \texttt{fac.c} which is part of the Mälardalen Benchmark Suite \cite{gustafssonMalardalenWCETBenchmarks2010}. On the right can be seen the trace that relates to this part of the file, with effective addresses next to each memory instruction. The notes associated also explore how the program executes as the trace progresses.}
+\end{figure}
+
 
 We now need to turn our attention to a second problem which is how should this be stored? We cannot use up data memory for this because it could affect the retrieval of actual program data, so we need a separate memory store to keep these traces accessible to the intelligent cache. This takes the form of a trace repository that is stored in memory so it can be queried by the cache on each clock cycle when the program is run for a second time. It's also possible to seed this trace repository with data from a previous run if you didn't want to have to run the program once in a `training phase'. Issues such as where this repository is to be stored, how it might be fetched from efficiently and how it might be built up iteratively over multiple runs will be dealt with in future sections. 
 
@@ -82,7 +86,7 @@ Now we understand how trace assisted caching works at a high level we need to di
 
 Let us imagine a processor with a 4-stage pipeline, namely Fetch (IF), Decode (ID), Execute (EX) and Write-back (WB). Let us further suppose that there are no data forwarding mechanisms and for the sake of argument let us assume that fetches from main memory take 10 clock cycles from the submission of the request to the data being available. Now if that processor is executing the listing fragment below:
 
-\lstinputlisting[language=risc-v, style=printing, caption={This code simply checks a loop condition based on some previous computations, a very common pattern.}, captionpos=b]{diagrams/justification.S}
+\lstinputlisting[language=risc-v, style=printing, caption={This code simply checks a loop condition based on some previous computations, a very common pattern.}, captionpos=b]{diagrams/trace_assisted_caching/justification.S}
 
 Then we can consider what the pipeline might look like at each clock cycle, starting from the execution of the \texttt{ADDI} line.
 

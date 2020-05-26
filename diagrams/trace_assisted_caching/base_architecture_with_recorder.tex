@@ -9,17 +9,13 @@
 	
 	 \node [computation-block] (CPU) {CPU};
 	 \node [memory-block, left=of CPU] (Imem) {Instruction Memory};
-	 \node [cache-block, right=of CPU] (DCache) {L1 Data Cache};
-	 \node [tac-block, above=of DCache] (TRecord) {Trace Recorder};
+	 \node [tac-block, above=of CPU] (TRecord) {Trace Recorder};
 	 \node [tac-block, right=of TRecord] (TRepo) {Trace Repository};
-	 \node [memory-block, right=of DCache] (Dmem) {Data Memory};
+	 \node [memory-block, right=of CPU] (Dmem) {Data Memory};
 	
-	\draw [thick] [->] ([yshift=1em]CPU.east)-- ([yshift=1em]DCache.west);
-	\draw [thick] [->] ([yshift=1em, xshift=1em]CPU.east) |- ([yshift=-1em]TRecord.west);
-	\draw [thick] [<-] ([yshift=-1em]CPU.east)-- ([yshift=-1em]DCache.west);
-	
-	\draw [thick] [->] ([yshift=1em]DCache.east)-- ([yshift=1em]Dmem.west);
-	\draw [thick] [<-] ([yshift=-1em]DCache.east)-- ([yshift=-1em]Dmem.west);
+	\draw [thick] [->] ([yshift=1em]CPU.east)-- ([yshift=1em]Dmem.west);
+	\draw [thick] [->] ([yshift=1em, xshift=1em]CPU.east) |- ($(TRecord.south) - (0,5mm)$) -| (TRecord.south);
+	\draw [thick] [<-] ([yshift=-1em]CPU.east)-- ([yshift=-1em]Dmem.west);
 	
 	\draw [thick] [->] ([yshift=1em]CPU.west)-- ([yshift=1em]Imem.east);
 	\draw [thick] [->] ([yshift=1em, xshift=-1em]CPU.west) |- ([yshift=1em]TRecord.west);

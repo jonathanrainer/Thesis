@@ -8,14 +8,10 @@
 	
 	 \node [computation-block] (CPU) {CPU};
 	 \node [memory-block, left of=CPU] (Imem) {Instruction Memory};
-	 \node [cache-block, right of=CPU] (DCache) {L1 Data Cache};
-	 \node [memory-block, right of=DCache] (Dmem) {Data Memory};
+	 \node [memory-block, right of=CPU] (Dmem) {Data Memory};
 	
-	\draw [thick] [->] ([yshift=1em]CPU.east)-- ([yshift=1em]DCache.west);
-	\draw [thick] [<-] ([yshift=-1em]CPU.east)-- ([yshift=-1em]DCache.west);
-	
-	\draw [thick] [->] ([yshift=1em]DCache.east)-- ([yshift=1em]Dmem.west);
-	\draw [thick] [<-] ([yshift=-1em]DCache.east)-- ([yshift=-1em]Dmem.west);
+	\draw [thick] [->] ([yshift=1em]CPU.east)-- ([yshift=1em]Dmem.west);
+	\draw [thick] [<-] ([yshift=-1em]CPU.east)-- ([yshift=-1em]Dmem.west);
 	
 	\draw [thick] [->] ([yshift=1em]CPU.west)-- ([yshift=1em]Imem.east);
 	\draw [thick] [<-] ([yshift=-1em]CPU.west)-- ([yshift=-1em]Imem.east);
