@@ -1,0 +1,25 @@
+\begin{tikzpicture}
+     	\node [rectangle, draw, fill=blue!30, minimum height=2cm] (trace-repo) {Trace Repository};
+     	\node [rectangle, draw, fill=blue!30, left=of trace-repo, label=below:{Latest Trace Entry}] (tr-output) {\texttt{fe442783}, \texttt{fee4}};
+     	\matrix [
+     	left=of tr-output, space, 
+     	column 1/.style={minimum width=3em,nodes={cell,minimum width=2em}},
+     	column 2/.style={minimum width=3em,nodes={cell,minimum width=2em}},
+     	column 3/.style={nodes={cell,minimum width=3.5em}}
+     	] 
+     	(cache)
+     	{
+     		0  & 1 & \texttt{0x12345678} \\   
+     		0  & 1 & \textbf{\texttt{0xAABBCCDD}} \\   
+     		0  & 1 & \texttt{0xFEDCBA98} \\   
+     	};
+     	\node [yshift=-2em, above= of cache-1-1] {R};
+     	\node [yshift=-2em, above= of cache-1-2] {O};
+     	\node [yshift=-2em, above= of cache-1-3] {D};
+     	\node [rectangle, draw, fill=green!30, below= of cache, minimum width=5cm] (main-memory) {Main Memory};
+     	
+     	\draw [thick] [->] (trace-repo.west) -- (tr-output.east);
+     	\draw [thick] [->] (tr-output.west) -- (cache.east);
+     	\draw [thick] [->] ([xshift=-1em]cache.south) -- ([xshift=-1em]main-memory.north) node[midway, left] {\textbf{\texttt{0x2524FF6A}}};
+     	\draw [thick] [->] ([xshift=1em]main-memory.north) -- ([xshift=1em]cache.south) node[midway, right] {\textbf{\texttt{0xAABBCCDD}}};
+\end{tikzpicture}

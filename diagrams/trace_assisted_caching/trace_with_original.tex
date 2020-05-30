@@ -10,9 +10,53 @@
 
 	{
 		\renewcommand*\thelstnumber{\ifnum\value{lstnumber}<8 0\fi \xintDecToHex{\the\value{lstnumber}*4}}
-		\node [print, fill=yellow!30] (assembly-code) {\lstinputlisting[language=risc-v, basicstyle=\ttfamily, numbers=left, firstnumber=149, stepnumber=2, numberstyle=\ttfamily, ]{diagrams/trace_assisted_caching/fac_excerpt.S}};
+		
+		\node [print, fill=yellow!30] (assembly-code) {
+			\begin{minipage}{.48\textwidth}
+				\lstset{
+				language=risc-v, 
+				basicstyle=\ttfamily, 
+				numbers=left,  
+				numberstyle=\ttfamily,
+				firstnumber=149,
+				aboveskip=0pt,belowskip=0pt
+				}
+				\lstinputlisting[lastline=1, stepnumber=2]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=2,lastline=2,backgroundcolor=\color{red!60}, firstnumber=150]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=3,lastline=3,backgroundcolor=\color{blue!50}, stepnumber=2]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=4, lastline=4, firstnumber=152]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=5,lastline=5,backgroundcolor=\color{olive!50}, stepnumber=2]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=6, lastline=6, firstnumber=154]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=7,lastline=7,backgroundcolor=\color{violet!50}, stepnumber=2]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=8,lastline=8,backgroundcolor=\color{brown!50},firstnumber=156]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=9, lastline=9, stepnumber=2]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=10,lastline=10,backgroundcolor=\color{pink!50},firstnumber=158]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=11,lastline=18, stepnumber=2, ,firstnumber=159]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=19, lastline=19, backgroundcolor=\color{orange!50},stepnumber=2]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=20, lastline=20, backgroundcolor=\color{teal!50}, firstnumber=168]{diagrams/trace_assisted_caching/fac_excerpt.S}
+				\lstinputlisting[firstline=21, stepnumber=2, firstnumber=169]{diagrams/trace_assisted_caching/fac_excerpt.S}
+			\end{minipage}
+			};
 	}
-
+	\node [right= of assembly-code] (trace) {
+		\pgfplotstabletypeset[
+			col sep=comma, 
+			columns={Effective Address, Instruction}, 
+			columns/Effective Address/.style={column type={|c|},string type},
+			columns/Instruction/.style={column type={c|},string type},
+			every head row/.style={after row=\hline, before row=\hline},
+			every last row/.style={after row=\hline},
+			assign column name/.style={/pgfplots/table/column name={\textbf{#1}}},
+			every row no 0/.style={before row={\rowcolor{red!50}}},
+			every row no 1/.style={before row={\rowcolor{blue!50}}},
+			every row no 2/.style={before row={\rowcolor{olive!50}}},
+			every row no 3/.style={before row={\rowcolor{violet!50}}},
+			every row no 4/.style={before row={\rowcolor{brown!50}}},
+			every row no 5/.style={before row={\rowcolor{orange!50}}},
+			every row no 6/.style={before row={\rowcolor{teal!50}}},
+			every row no 7/.style={before row={\rowcolor{pink!50}}}
+		] {diagrams/trace_assisted_caching/trace.csv}
+	};
 	
 	
 \end{tikzpicture}

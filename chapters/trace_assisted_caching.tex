@@ -45,7 +45,7 @@ Now we have this potentially gargantuan amount of data we have to filter it down
 
 \begin{figure}
 	\input{diagrams/trace_assisted_caching/trace_with_original.tex}
-	\caption{On the left can be seen a fragment of the disassembled version of the benchmark \texttt{fac.c} which is part of the Mälardalen Benchmark Suite \cite{gustafssonMalardalenWCETBenchmarks2010}. On the right can be seen the trace that relates to this part of the file, with effective addresses next to each memory instruction. The notes associated also explore how the program executes as the trace progresses.}
+	\caption{On the left can be seen a fragment of the disassembled version of the benchmark \texttt{fac.c} which is part of the Mälardalen Benchmark Suite \cite{gustafssonMalardalenWCETBenchmarks2010}. On the right can be seen the trace that relates to this part of the file, with effective addresses next to each memory instruction. The colours indicate which trace element maps to each instruction in the disassembled file and it can be seen that the trace follows the execution of the program, following jumps and branches as they arise.}
 \end{figure}
 
 
@@ -66,13 +66,57 @@ If there is no on-demand request the cache seeks to service the pre-emptive and 
 	\item If it's a store and there's no space again perform the write-back and then reserve the space.
 \end{enumerate}
 
-% TODO Add diagram of each scenario
+These 4 scenarios are illustrated in Figure \ref{fig:scenarios}
+
+\tikzstyle{cell} = [rectangle,draw=black, fill=green!30]
+\tikzstyle{space} = [minimum height=1.5em,matrix of nodes,row sep=-\pgflinewidth,column sep=-\pgflinewidth,text depth=0.5ex,text height=2ex,nodes in empty cells]
+
+\begin{figure}[htbp]
+	\begin{center}
+		\begin{subfigure}[b]{\textwidth}
+			\begin{center}
+				\input{diagrams/trace_assisted_caching/scenario_1.tex}
+				\caption{Scenario 1 - A load where the cache has capacity, the load is simply executed by the cache and stored in the correct location.}
+			\end{center}
+		\end{subfigure}
+		\begin{subfigure}[b]{\textwidth}
+			\begin{center}
+				\input{diagrams/trace_assisted_caching/scenario_2.tex}
+				\caption{Scenario 2 - A store where the cache has capacity, the store cannot be actioned because the data to store is not known in advance but the cache element is reserved.}
+			\end{center}
+		\end{subfigure}
+		\begin{subfigure}[b]{\textwidth}
+			\begin{center}
+				\input{diagrams/trace_assisted_caching/scenario_3.tex}
+				\caption{Scenario 3 - If the cache doesn't have capacity for a load then perform the write-back to memory first and then act in accordance with Scenario 1}
+			\end{center}
+		\end{subfigure}
+	\caption{Illustrations of the four scenarios described. The R, O and D columns above the cache in each diagram stand for Reserved, Occupied and Data respectively. The bold text indicates elements that change throughout the scenario. The cache may also have other elements, such as validity bits, but these are omitted for the sake of clarity and are mostly implementation details. Scenario 4 is printed on the next page}
+	\label{fig:scenarios}
+	\end{center}
+\end{figure}
+\begin{figure}\ContinuedFloat
+	\begin{center}
+    	\begin{subfigure}[b]{\textwidth}
+    		\begin{center}
+    			\input{diagrams/trace_assisted_caching/scenario_4.tex}
+    			\caption{Scenario 4 - If the cache doesn't have capacity for a store then again perform a write-back and proceed as Scenario 2}
+    		\end{center}
+    	\end{subfigure}
+	\end{center}
+\end{figure}
 
 All this means that when the processor catches up to the pre-emptive action it will either, have the data already in the case of scenario 1 or 3 or will be guaranteed to not have to perform a write-back in the case of scenario's 2 or 4. As a result latency will decrease because all these operations will have been done ahead of time. 
 
-There are some limitations to this approach of course, most of which relate to how far ahead of the processor the memory system can go. For one thing no attempt is made to re-order the memory operations in the way that an \gls{ooo} processor would. This is mostly to simplify the implementation and to avoid the complex problems of ensuring consistency over multiple interleavings of the instructions. As a result of this there are situations where no more pre-emptive actions can be taken until the processor has performed some critical action. For example should a processor issue pre-emptive instructions such that it tries to perform a \texttt{LOAD} to a location that is being reserved for a \texttt{STORE} then it will not take any action until the processor has completed the \texttt{STORE} because it cannot know in advance what data will be part of the \texttt{STORE} operation. In this situation the processor will keep polling to discover if the operation has happened and can then act accordingly. There is a potential for future work to consider continuing to execute independent instructions at this point but that was not considered in this work. 
+There are some limitations to this approach of course, most of which relate to how far ahead of the processor the memory system can go. For one thing no attempt is made to re-order the memory operations in the way that an \gls{ooo} processor would. This is mostly to simplify the implementation and to avoid the complex problems of ensuring consistency over multiple interleavings of the instructions. As a result of this there are situations where no more pre-emptive actions can be taken until the processor has performed some critical action. For example should a processor issue pre-emptive instructions such that it tries to perform a \texttt{LOAD} to a location that is being reserved for a \texttt{STORE} then it will not take any action until the processor has completed the \texttt{STORE} because it cannot know in advance what data will be part of the \texttt{STORE} operation. This is shown in Figure \ref{fig:problem-scenario}. In this situation the processor will keep polling to discover if the operation has happened and can then act accordingly. There is a potential for future work to consider continuing to execute independent instructions at this point but that was not considered in this work. 
 
-% TODO Add diagram of this problem
+\begin{figure} [htbp]
+	\begin{center}
+		\input{diagrams/trace_assisted_caching/problem_scenario.tex}
+		\caption{In this situation the latest trace entry is attempting a \texttt{LOAD} into a location that is reserved for a store. At this point the pre-emptive execution cannot continue because the \texttt{STORE} has not yet happened. The only option is for the pre-emptive instruction to poll the cache until the \texttt{STORE} has happened and then processing can continue.}
+		\label{fig:problem-scenario}
+	\end{center}
+\end{figure}
 
 A final point to address is that this scheme is agnostic to the details of the cache that is in the underlying hardware. In this thesis both an 8-way associative and a direct-mapped cache were used but there is nothing special about these choices. It would be very easy to implement higher associativity caches or larger caches with very few changes to the trace-assisted mechanism. This also brings up the possibility of varying the replacement policy for the cache to see if that, working in concert with this system had any benefit but again that was not considered in this work. 
 
