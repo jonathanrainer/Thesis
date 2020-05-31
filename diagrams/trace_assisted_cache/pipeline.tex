@@ -1,0 +1,14 @@
+\begin{tabular}{|*{15}{c|}}
+	\hline
+	\textbf{Instruction} & \multicolumn{14}{c|}{\textbf{Pipeline Stage}} \\
+	\hline
+	\texttt{ADDI} & \texttt{IF} & \texttt{ID} & \texttt{EX} & \texttt{WB} & & & & & & & & & & 	\\
+	\texttt{ADD} & & \texttt{IF} & \texttt{ID} & \texttt{EX} & \texttt{WB} & & & & & & & & & 	\\
+	\texttt{LW} & & & \texttt{IF} & \texttt{ID} & \texttt{EX} & \texttt{EX} & \texttt{EX} & \texttt{EX} & \texttt{EX} & \texttt{WB} & & & & \\
+	\texttt{MUL} & & & & \texttt{IF} & \texttt{ID} & {\color{red}\texttt{STALL}} & {\color{red}\texttt{STALL}} & {\color{red}\texttt{STALL}} & {\color{red}\texttt{STALL}} & {\color{red}\texttt{STALL}} & \texttt{EX} & \texttt{WB} & & \\
+	\texttt{MV} & & & & & \texttt{IF} & {\color{red}\texttt{STALL}} & {\color{red}\texttt{STALL}} & {\color{red}\texttt{STALL}} & {\color{red}\texttt{STALL}} & {\color{red}\texttt{STALL}} & \texttt{ID} & {\color{red}\texttt{STALL}} & \texttt{EX} & \texttt{WB} \\
+	\hline
+	\hline
+	\textbf{Clock Cycle} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 \\ 
+	\hline
+\end{tabular}

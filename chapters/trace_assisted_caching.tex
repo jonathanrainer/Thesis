@@ -25,7 +25,7 @@ Now we have seen a theoretical description of how trace assisted caching works l
 
 \begin{figure}
 	\input{diagrams/trace_assisted_caching/base_architecture.tex}
-	\caption{The basic design begins with a processor with a Harvard Architecture. This is so that the effect of any caching on the data side can be isolated and quantified more easily.}
+	\caption[Basic Processor Architecture]{The basic design begins with a processor with a Harvard Architecture. This is so that the effect of any caching on the data side can be isolated and quantified more easily.}
 \end{figure}
 
 As was alluded to in the previous section there are two key pieces that form the architecture for Trace Assisted Caching: the trace recorder and the intelligent cache. Each will be described in turn. We'll also describe any changes that would need to be made to the processor to support these new pieces of hardware.
@@ -36,7 +36,7 @@ The trace recorder would sit attached to the processor and would monitor the int
 
 \begin{figure}
 	\input{diagrams/trace_assisted_caching/base_architecture_with_recorder.tex}
-	\caption{The trace recorder takes in information from both the instruction stream and the data stream to produce a stream of pipeline stages bundled into instructions. This is stored in the trace repository after filtering to remove all non-memory instructions.}
+	\caption[Basic Architecture with Trace Recorder]{The trace recorder takes in information from both the instruction stream and the data stream to produce a stream of pipeline stages bundled into instructions. This is stored in the trace repository after filtering to remove all non-memory instructions.}
 \end{figure}
 
 The amount of data a trace like this would generate is potentially gargantuan, multiplying the amount which already exists in instruction traces by the length of the pipeline, but there are several reasons why this level of detail is required. The first is that the goal of this recording is to link together instructions in the program with effective addresses they generate. If you record at a more granular level, it can be very difficult to associate memory accesses with the instructions that generated them. Recording at the level of pipeline stages and aggregating to instructions later means there is no ambiguity. This does also mean that we have to take into account branching behaviour and stalls in our recorder, and this will be explored further in Chapter \ref{chap:experimental-design}, but this would give us a complete trace, at the level of pipeline stages, for any program that runs on the processor. In addition tracing at the level of pipeline stages means that you are recording a serialised data stream, meaning there is no need to do any de-multiplexing or complex analysis to associate actions with instructions, at the level of pipeline stages there can only be one instruction per stage at a time. 
@@ -45,7 +45,7 @@ Now we have this potentially gargantuan amount of data we have to filter it down
 
 \begin{figure}
 	\input{diagrams/trace_assisted_caching/trace_with_original.tex}
-	\caption{On the left can be seen a fragment of the disassembled version of the benchmark \texttt{fac.c} which is part of the Mälardalen Benchmark Suite \cite{gustafssonMalardalenWCETBenchmarks2010}. On the right can be seen the trace that relates to this part of the file, with effective addresses next to each memory instruction. The colours indicate which trace element maps to each instruction in the disassembled file and it can be seen that the trace follows the execution of the program, following jumps and branches as they arise.}
+	\caption[Program Fragment with Trace]{On the left can be seen a fragment of the disassembled version of the benchmark \texttt{fac.c} which is part of the Mälardalen Benchmark Suite \cite{gustafssonMalardalenWCETBenchmarks2010}. On the right can be seen the trace that relates to this part of the file, with effective addresses next to each memory instruction. The colours indicate which trace element maps to each instruction in the disassembled file and it can be seen that the trace follows the execution of the program, following jumps and branches as they arise.}
 \end{figure}
 
 
@@ -91,7 +91,7 @@ These 4 scenarios are illustrated in Figure \ref{fig:scenarios}
 				\caption{Scenario 3 - If the cache doesn't have capacity for a load then perform the write-back to memory first and then act in accordance with Scenario 1}
 			\end{center}
 		\end{subfigure}
-	\caption{Illustrations of the four scenarios described. The R, O and D columns above the cache in each diagram stand for Reserved, Occupied and Data respectively. The bold text indicates elements that change throughout the scenario. The cache may also have other elements, such as validity bits, but these are omitted for the sake of clarity and are mostly implementation details. Scenario 4 is printed on the next page}
+	\caption[Illustration of Pre-emptive Scenarios]{Illustrations of the four scenarios described. The R, O and D columns above the cache in each diagram stand for Reserved, Occupied and Data respectively. The bold text indicates elements that change throughout the scenario. The cache may also have other elements, such as validity bits, but these are omitted for the sake of clarity and are mostly implementation details. Scenario 4 is printed on the next page}
 	\label{fig:scenarios}
 	\end{center}
 \end{figure}
@@ -113,7 +113,7 @@ There are some limitations to this approach of course, most of which relate to h
 \begin{figure} [htbp]
 	\begin{center}
 		\input{diagrams/trace_assisted_caching/problem_scenario.tex}
-		\caption{In this situation the latest trace entry is attempting a \texttt{LOAD} into a location that is reserved for a store. At this point the pre-emptive execution cannot continue because the \texttt{STORE} has not yet happened. The only option is for the pre-emptive instruction to poll the cache until the \texttt{STORE} has happened and then processing can continue.}
+		\caption[Illustration of a Block on Pre-emptive Actions]{In this situation the latest trace entry is attempting a \texttt{LOAD} into a location that is reserved for a store. At this point the pre-emptive execution cannot continue because the \texttt{STORE} has not yet happened. The only option is for the pre-emptive instruction to poll the cache until the \texttt{STORE} has happened and then processing can continue.}
 		\label{fig:problem-scenario}
 	\end{center}
 \end{figure}
@@ -128,17 +128,30 @@ Now we understand how trace assisted caching works at a high level we need to di
 
 \subsection{Performance Increase}
 
-Let us imagine a processor with a 4-stage pipeline, namely Fetch (IF), Decode (ID), Execute (EX) and Write-back (WB). Let us further suppose that there are no data forwarding mechanisms and for the sake of argument let us assume that fetches from main memory take 10 clock cycles from the submission of the request to the data being available. Now if that processor is executing the listing fragment below:
+Let us imagine a processor with a 4-stage pipeline, namely Fetch (IF), Decode (ID), Execute (EX) and Write-back (WB). Let us further suppose that there are no data forwarding mechanisms and for the sake of argument let us assume that fetches from main memory take 5 clock cycles from the submission of the request to the data being available. Now if that processor is executing the listing fragment below:
 
-\lstinputlisting[language=risc-v, style=printing, caption={This code simply checks a loop condition based on some previous computations, a very common pattern.}, captionpos=b]{diagrams/trace_assisted_caching/justification.S}
+\lstinputlisting[label={listing:pipeline-test},language=risc-v, style=printing, caption={This code simply checks a loop condition based on some previous computations, a very common pattern.}, captionpos=b]{diagrams/trace_assisted_caching/justification.S}
 
-Then we can consider what the pipeline might look like at each clock cycle, starting from the execution of the \texttt{ADDI} line.
+Then we can consider what the pipeline might look like at each clock cycle, this can be seen in Figure \ref{fig:pipeline} starting from the execution of the \texttt{ADDI} line.
 
-% TODO Add diagram showing current situation, marking where the effective address appears
+\begin{sidewaysfigure}
+	\begin{center}
+		\input{diagrams/trace_assisted_cache/pipeline.tex}
+		\caption[Pipeline Diagram - No Trace Assisted Caching]{The pipeline execution continues as normal until clock cycle 4 where the \texttt{LW} instruction enters its Execution phase. Because loading a value from main memory takes 5 clock cycles this extra latency is added not only to the \texttt{LW} but also to the \texttt{MUL} and \texttt{MV} instructions. Overall this leads to a program runtime of 14 clock cycles when the optimal time, assuming no pipeline stalls would be 8.}
+		\label{fig:pipeline}
+	\end{center}
+\end{sidewaysfigure}
 
-We see in this diagram that the pipeline fills up to its maximum depth but then as soon as the load instruction reaches the \texttt{EX} phase the pipeline is forced to stall while the memory access is dealt with, not only adding latency to its own execution but also to all the other instructions blocked behind it. Using trace assisted caching however we enter into a new situation thus
+We see in this diagram that the pipeline fills up to its maximum depth but then as soon as the load instruction reaches the \texttt{EX} phase the pipeline is forced to stall while the memory access is dealt with, not only adding latency to its own execution but also to all the other instructions blocked behind it. Using trace assisted caching however we enter into a new situation as in Figure \ref{fig:ideal-pipeline}.
 
-% TODO Add diagram showing ideal situation 
+\begin{figure}
+	\begin{center}
+		\input{diagrams/trace_assisted_cache/ideal_pipeline.tex}
+		\caption[Pipeline Diagram - With Trace Assisted Caching]{In this example we see the power of trace assisted caching. If we assume the pre-emptive action to take is the one at line 3 in Listing \ref{listing:pipeline-test} then because the effective address can be known at clock cycle 0 the memory system can begin this load much earlier. As a consequence, the stalls associated with performing the memory operation are eliminated from the program's runtime reducing the overall runtime by 4 clock cycles. A decrease of nearly 30\%.}
+		\label{fig:ideal-pipeline}
+	\end{center}
+\end{figure}
+
 
 So we can see that because the processor has access to the effective address much earlier the cache miss can be pre-empted by the cache and dealt with much earlier. So when the processor actually executes the instruction the cache already has the data it requires and the latency is reduced by 10 cycles for the whole program. This benefit sweeps through the whole program because the program has been profiled based on the worst-case behaviour, any decrease in latency will not be invalidated by later actions the program may take. In addition this technique is additive to any other technique that might be utilised as all it's doing is making information available to the cache earlier so it can make better decisions. 
 
@@ -148,8 +161,8 @@ So this is how performance is to be increased, by overlapping the execution of t
 
 This hiding will happen by degrees as there are three situations that might arise in terms of how effective the prediction is:
 
-\begin{enumerate}[label=\textbf{Situation \arabic*}]
-	\item The memory instruction is predicted far enough ahead of time such that the data is ready in the cache before the processor requests it. This is the situation depicted in Figure [??]
+\begin{enumerate}[label=\textbf{Situation \arabic*}, align=left, leftmargin=*,labelindent=16pt]
+	\item The memory instruction is predicted far enough ahead of time such that the data is ready in the cache before the processor requests it. This is the situation depicted in Figure \ref{fig:ideal-pipeline}
 	\item The memory instruction is predicted ahead of its execution but not far enough to be ready when the processor requests it. In this situation there will still be some benefit but the pipeline will still stall
 	\item There is not time to perform the memory instruction ahead of it being needed so the processor reverts to the original behaviour. Here no benefit will be experienced.
 \end{enumerate}
