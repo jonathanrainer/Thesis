@@ -1,4 +1,4 @@
-\tikzstyle{block} = [draw, rectangle, text width=2cm, text centered, minimum height=1.2cm, node distance=1.5cm and 1cm]
+\tikzstyle{block} = [draw, rectangle, text width=2cm, text centered, minimum height=1.2cm, node distance=3cm and 0.5cm]
 \tikzstyle{computation-block} = [block, fill=blue!30]
 \tikzstyle{memory-block} = [block, fill=green!30]
 \tikzstyle{cache-block} = [block, fill=orange!30]
@@ -11,11 +11,15 @@
 	 \node [memory-block, left=of CPU] (Imem) {Instruction Memory};
 	 \node [tac-block, above=of CPU] (TRecord) {Trace Recorder};
 	 \node [tac-block, right=of TRecord] (TRepo) {Trace Repository};
-	 \node [memory-block, right=of CPU] (Dmem) {Data Memory};
+	 \node [cache-block, right of=CPU] (DCache) {L1 Data Cache};
+	 \node [memory-block, right=of DCache] (Dmem) {Data Memory};
 	
-	\draw [thick] [->] ([yshift=1em]CPU.east)-- ([yshift=1em]Dmem.west);
+	\draw [thick] [->] ([yshift=1em]CPU.east)-- ([yshift=1em]DCache.west);
 	\draw [thick] [->] ([yshift=1em, xshift=1em]CPU.east) |- ($(TRecord.south) - (0,5mm)$) -| (TRecord.south);
-	\draw [thick] [<-] ([yshift=-1em]CPU.east)-- ([yshift=-1em]Dmem.west);
+	\draw [thick] [<-] ([yshift=-1em]CPU.east)-- ([yshift=-1em]DCache.west);
+	
+	\draw [thick] [->] ([yshift=1em]DCache.east)-- ([yshift=1em]Dmem.west);
+	\draw [thick] [<-] ([yshift=-1em]DCache.east)-- ([yshift=-1em]Dmem.west);
 	
 	\draw [thick] [->] ([yshift=1em]CPU.west)-- ([yshift=1em]Imem.east);
 	\draw [thick] [->] ([yshift=1em, xshift=-1em]CPU.west) |- ([yshift=1em]TRecord.west);
