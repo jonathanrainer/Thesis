@@ -1,3 +1,8 @@
 \DeclareUnicodeCharacter{FB03}{ffi}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
 		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\newcommand\gtikzset[1]{%
+	\begingroup%
+	\globaldefs=1\relax%
+	\pgfqkeys{/tikz}{#1}%
+	\endgroup}
