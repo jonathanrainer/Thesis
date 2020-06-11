@@ -27,15 +27,18 @@ The memory protocol that is implemented by the \texttt{RI5CY} is documented in t
 
 \begin{figure}[htbp]
 	\renewcommand{\arraystretch}{1.4}
-	\begin{tabular}{lccp{8cm}}
+	\begin{tabular}{lccp{7cm}}
 		\hline
 		\textbf{Signal} & \textbf{Bit Width} &\textbf{Direction} & \textbf{Description} \\
 		\hline
-		\texttt{data\_req\_o}& 1 & Output & Request ready, must stay high until \texttt{data\_gnt\_i} is high for one cycle. \\
+		\texttt{data\_req\_o}
+& 1 & Output & Request ready, must stay high until \texttt{data\_gnt\_i} is high for one cycle. \\
 		\texttt{data\_addr\_o} & 32 & Output & Address \\
-	  	\texttt{data\_we\_o}& 1 & Output & Write Enable, high for writes, low for reads. Sent together with \texttt{data\_req\_o}. \\
+	  	\texttt{data\_we\_o}
+& 1 & Output & Write Enable, high for writes, low for reads. Sent together with \texttt{data\_req\_o}. \\
 	  	\texttt{data\_be\_o} & 4 & Output & Byte Enable. Is set for the bytes to write/read, sent together with \texttt{data\_req\_o}. \\
-	  	\texttt{data\_wdata\_o} & 32& Output & Data to be written to memory, sent together with \texttt{data\_req\_o}. \\
+	  	\texttt{data\_wdata\_o} & 32
+& Output & Data to be written to memory, sent together with \texttt{data\_req\_o}. \\
 	  	\texttt{data\_rdata\_i} & 32 & Input & Data read from memory. \\
 		\texttt{data\_rvalid\_i} & 1 & Input & \texttt{data\_rdata\_i} holds valid data when \texttt{data\_rvalid\_i} is high. This signal will be high for exactly one cycle per request. \\
 		\texttt{data\_gnt\_i} & 1 & Input & The other side accepted the request. \texttt{data\_addr\_o} may change in the next cycle. \\
@@ -45,73 +48,133 @@ The memory protocol that is implemented by the \texttt{RI5CY} is documented in t
 \label{fig:signal-table}
 \end{figure}
 
-The protocol then proceeds thus. When an instruction requires access to memory the \gls{lsu} sets \texttt{data\_req\_o} high, whilst at the same time placing the calculated address (\texttt{data\_addr\_o}, byte enable bits (\texttt{data\_be\_o}), any data to be written to memory (\texttt{data\_wdata\_o)} and selecting a read or a write with \texttt{data\_we\_o}. Then the processor waits for the memory system to respond by setting \texttt{data\_gnt\_i} high. Once this has happened the processor can change any of the 4 signals it set originally, assuming them to be cached in the memory controller now \texttt{data\_gnt\_i} is high. This may happen in the same cycle that \texttt{data\_req\_o} goes high or it may take several cycles with a slower memory technology. After the grant the memory system will execute the load or store as required and once it has completed it will set \texttt{data\_rvalid\_i} high. This will happen after at least 1 clock cycle from the setting of \texttt{data\_gnt\_i} to high. Once \texttt{data\_rvalid\_i} is high \texttt{data\_rdata\_i} will contain the fetched data from memory in the case of a \texttt{LOAD} or arbitrary data in the case of a \texttt{STORE}. If another memory request is queued, \texttt{data\_req\_o} will be set high at the same time that \texttt{data\_rvalid\_i} is and the processor continues. Several examples of timing diagrams are included below to illustrate how this protocol works.
+The protocol then proceeds thus. When an instruction requires access to memory the \gls{lsu} sets \texttt{data\_req\_o} high, whilst at the same time placing the calculated address (\texttt{data\_addr\_o}, byte enable bits (\texttt{data\_be\_o}), any data to be written to memory (\texttt{data\_wdata\_o)} and selecting a read or a write with \texttt{data\_we\_o}. Then the processor waits for the memory system to respond by setting \texttt{data\_gnt\_i} high. Once this has happened the processor can change any of the 4 signals it set originally, assuming them to be cached in the memory controller now \texttt{data\_gnt\_i} is high. This may happen in the same cycle that \texttt{data\_req\_o} goes high or it may take several cycles with a slower memory technology. After the grant the memory system will execute the load or store as required and once it has completed it will set \texttt{data\_rvalid\_i} high. This will happen after at least 1 clock cycle from the setting of \texttt{data\_gnt\_i} to high. Once \texttt{data\_rvalid\_i} is high \texttt{data\_rdata\_i} will contain the fetched data from memory in the case of a \texttt{LOAD} or arbitrary data in the case of a \texttt{STORE}. If another memory request is queued, \texttt{data\_req\_o} will be set high at the same time that \texttt{data\_rvalid\_i} is and the processor continues. Several examples of timing diagrams are included below in Figure \ref{fig:memory-protocol} to illustrate how this protocol works.
 	
-\begin{figure}
+\begin{figure}[htbp]
 	% LOAD
 	\begin{subfigure}{\textwidth}
-		\begin{tikztimingtable}[timing/xunit=20, timing/yunit=10]
-			clk        & 29{c}@{\gtikzset{timing/rowdist=3}}\\
-			data\_in   & @{\gtikzset{timing/rowdist=2}}[y=2\yunit]0.1l 
-			[[timing/slope=0.7]]hhhhllllllhhhhhlllll 0.4lhhhhlllll\\
-			error      & lllhhhhhhhhllhhhhhhh hllhhhhhh\\
-			error\_reg & lllllhhhhhhhhllhhhhh hhhllhhhh\\
-			data       & lhhhhhhllllhhhhhhlll lllhhhhll\\
-			data\_reg  & lllhhhhhhllllhhhhhhl lllllhhhh\\
-			early      & lllllllllllhhlllllll lllllllll\\
-			late       & llllllllllllllllllll lllhhllll\\
+		\begin{center}
+			\begin{tikztimingtable}[timing/xunit=30, timing/yunit=8]
+				clk        			& 19{c}@{\gtikzset{timing/rowdist=3}}\\
+				data\_req\_o       	& 5l3h11l\\
+				data\_addr\_o		& 5u3d{0xFEEC}11u\\
+				data\_be\_o			& 5u3d{0xF}11u\\
+				data\_gnt\_i		& 7lh11l\\
+				data\_rvalid\_i		& 11lh7l\\
+				data\_rdata\_i		& 11u5d{0xAABBCCDD}3u\\
+				\extracode \background
+				\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
+					\vertlines{0.5,...,\twidth}
+				\end{scope}
+				\endbackground
+			\end{tikztimingtable}
+			\caption{A \texttt{LOAD} instruction to retrieve the contents of address \texttt{0xFEEC} from memory.}
+		\end{center}
+	\end{subfigure}
+	% STORE
+	\begin{subfigure}{\textwidth}
+		\begin{center}
+			\begin{tikztimingtable}[timing/xunit=30, timing/yunit=8]
+				clk        			& 19{c}@{\gtikzset{timing/rowdist=3}}\\
+				data\_req\_o       	& 5l3h11l\\
+				data\_addr\_o		& 5u3d{0xFEEC}11u\\
+				data\_we\_o			& 5l3h11l\\
+				data\_be\_o			& 5u3d{0xF}11u\\
+				data\_wdata\_o		& 5u3d{0x4256FFCC}11u\\
+				data\_gnt\_i		& 7lh11l\\
+				data\_rvalid\_i		& 11lh7l\\
+				\extracode \background
+				\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
+					\vertlines{0.5,...,\twidth}
+				\end{scope}
+				\endbackground
+			\end{tikztimingtable}
+			\caption{A \texttt{STORE} instruction to \texttt{0xFEEC} from the processor.}
+		\end{center}
+	\end{subfigure}
+	% BACKTOBACK
+	\begin{subfigure}{\textwidth}
+	\begin{center}
+		\begin{tikztimingtable}[timing/xunit=30, timing/yunit=8]
+			clk        			& 19{c}@{\gtikzset{timing/rowdist=3}}\\
+			data\_req\_o       	& 5l3h3l3h5l\\
+			data\_addr\_o		& 5u3d{0xFEEC}3u3d{0xFFF8}5u\\
+			data\_be\_o			& 5u3d{0xF}3u3d{0xF}5u\\
+			data\_we\_o			& 11l3h5l\\
+			data\_wdata\_o		& 11u3d{0x778899AA}5u\\
+			data\_gnt\_i		& 7lh5lh5l\\
+			data\_rvalid\_i		& 11lh4lh2l\\
+			data\_rdata\_i		& 11u5d{0xAABBCCDD}3u\\
 			\extracode \background
 			\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
 				\vertlines{0.5,...,\twidth}
 			\end{scope}
 			\endbackground
 		\end{tikztimingtable}
-	\end{subfigure}
-	% STORE
-	\begin{subfigure}{\textwidth}
-%				\begin{tikztimingtable}
-%			clk        & 29{c}@{\gtikzset{timing/rowdist=3}}\\
-%			data\_in   & @{\gtikzset{timing/rowdist=2}}[y=2\yunit]0.1l 
-%			[[timing/slope=0.7]]hhhhllllllhhhhhlllll 0.4lhhhhlllll\\
-%			error      & lllhhhhhhhhllhhhhhhh hllhhhhhh\\
-%			error\_reg & lllllhhhhhhhhllhhhhh hhhllhhhh\\
-%			data       & lhhhhhhllllhhhhhhlll lllhhhhll\\
-%			data\_reg  & lllhhhhhhllllhhhhhhl lllllhhhh\\
-%			early      & lllllllllllhhlllllll lllllllll\\
-%			late       & llllllllllllllllllll lllhhllll\\
-%			\extracode \background
-%			\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
-%				\vertlines{0.5,...,\twidth}
-%				\draw (row2.high start) ++(0,-0.1) -- ++(16,0) node {Vrefp};
-%				\draw (row2.low start)  ++(0, 0.1) -- ++(16,0) node {Vrefn};
-%			\end{scope}
-%			\endbackground
-%		\end{tikztimingtable}
-	\end{subfigure}
-	% BACKTOBACK
-	\begin{subfigure}{\textwidth}
-%				\begin{tikztimingtable}
-%			clk        & 29{c}@{\gtikzset{timing/rowdist=3}}\\
-%			data\_in   & @{\gtikzset{timing/rowdist=2}}[y=2\yunit]0.1l 
-%			[[timing/slope=0.7]]hhhhllllllhhhhhlllll 0.4lhhhhlllll\\
-%			error      & lllhhhhhhhhllhhhhhhh hllhhhhhh\\
-%			error\_reg & lllllhhhhhhhhllhhhhh hhhllhhhh\\
-%			data       & lhhhhhhllllhhhhhhlll lllhhhhll\\
-%			data\_reg  & lllhhhhhhllllhhhhhhl lllllhhhh\\
-%			early      & lllllllllllhhlllllll lllllllll\\
-%			late       & llllllllllllllllllll lllhhllll\\
-%			\extracode \background
-%			\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
-%				\vertlines{0.5,...,\twidth}
-%				\draw (row2.high start) ++(0,-0.1) -- ++(16,0) node {Vrefp};
-%				\draw (row2.low start)  ++(0, 0.1) -- ++(16,0) node {Vrefn};
-%			\end{scope}
-%			\endbackground
-%		\end{tikztimingtable}
-	\end{subfigure}
+		\caption{A \texttt{LOAD} followed immediately by a \texttt{STORE}}
+	\end{center}
+\end{subfigure}
+\caption{Several examples of the signal transitions that occur when memory transactions happen. Further of these diagrams can be seen in the \texttt{RI5CY} instruction manual. It should be noted however that the diagram in the manual labelled ``back-to-back'' does not occur in our context because of the memory implementation used.}
+\label{fig:memory-protocol}
 \end{figure}
 
 It should be pointed out that this protocol works for the instruction memory as well but uses a reduced number of signals as the instruction memory cannot be written to. These signals are labelled \texttt{inst\_req\_o} etc.
+
+\subsection{Gouram - The \texttt{IF} Module}
+
+So now that we have the memory protocol in hand we can begin to construct sub-modules to record various parts of the execution of instructions. Looking at this generically the first thing that will happen is the instruction will be fetched from the instruction memory, as we can have no idea what the instruction is going to be until it has been fetched we have no choice but to track everything fetched by the processor and to then throw out the non-memory instructions later. This leads us to defining a module called the \texttt{IF} module which will follow a pre-defined state machine. The machine and its transitions can be seen below, and by example we'll work through each of the transitions to describe its function. The SystemVerilog code that was produced for this and subsequent hardware pieces can be seen on \href{URL} GitHub.
+
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/if_state_machine.tex}
+	\caption{The three state machines that make up the execution of the IF Module inside Gouram. These state machines all work concurrently as per the semantics of SystemVerilog.}
+	\label{fig:if-state-machine}
+\end{figure}
+
+\subsubsection{Instruction Fetch State Machine}
+
+Upon boot each of the state machines will be reset to the \texttt{IDLE} state and each clock cycle will check for the signals necessary to transition to the other states. So the first thing that will happen is the program counter will attempt to fetch the next instruction as pointed to by the program counter. This will cause the \texttt{instr\_req\_o} signal to be set high which will trigger the \texttt{IDLE} state to make a decision as to whether to take transition \texttt{A} or \texttt{B}. The RI5CY manual defines that \texttt{instr\_gnt\_i} could become high in the same clock cycle as \texttt{instr\_req\_o} so if that's the case we then need to transition to \texttt{TRACK\_RVALID} otherwise the \texttt{gnt} signal will be missed, so transition \texttt{B} is taken. Otherwise it is transition \texttt{A}. If transition \texttt{B} is taken then the instruction address and the value of monotonic counter are stored as they could change in the next clock cycle which means the information would be lost. This data is stored in a buffer that builds up the required information over time and then sets a flag to mark it as ready to be passed to the next phase.
+
+If transition \texttt{A} is taken the state machine then waits for \texttt{instr\_gnt\_i} to go high and then captures the same information as described previously. Now in either case once we arrive in state \texttt{TRACK\_RVALID} the state machine waits for \texttt{instr\_rvalid\_i} to be set high and when that happens the instruction data is captured into the buffer along with the time at which the \texttt{instr\_rvalid\_i} went high, again from the monotonic counter. After this either transition \texttt{D} is taken to bring us back to waiting for a new \texttt{req} signal or, because it's possible for \texttt{rvalid} and \texttt{req} signals to overlap it's also possible that we might have to transition back to \texttt{TRACK\_GNT} instead and this is covered by transition \texttt{E}. 
+
+\subsubsection{Branch Decision State Machine}
+
+It's easy to think at this point that our job is complete and we should simply output the data now it's been captured. However the problem with this is that the instructions that are fetched could very easily be jump or branch instructions and this is not resolved until the Decode phase. Furthermore because that takes a non-trivial amount of time it's often the case that the processor will fetch instructions that are never actually executed because they are invalidated once the branch or jump has been taken. Consequently before we decide if we can output the instruction we have just captured we have to wait for its decode phase to end and any branch conditions to be calculated. This is especially complicated by the fact that the instructions affected are the ones that occur in the window between the calculation of the jump or branch address and the successful fetch of the branch instruction. This is shown in Figure [??] below:
+
+% TODO Add diagram of weird branching situation
+
+When we want to track instructions that execute while a branch condition is being calculated we work in the following way. When the decode phase is complete for a potential branching instruction the code will extract it from the tracking buffer and also will test whether this instruction was granted after the last branch decision was made. For the sake of argument let us assume that is true so we are not at present in a branching state. The next operation will be to store the time at which the decode phase ended and then we will test what kind of instruction we are dealing with. This is important because there are 3 situations that here could arise:
+
+\begin{enumerate}
+	\item The instruction is not a branching or jump instruction and has not been output while the processor is in a branching state. In which case we can simply output this into the next module in the tracker.
+	\item The instruction is a jump instruction in which case it will be executed immediately because the calculation of the address is done in the Decode phase for optimisation reasons.
+	\item The instruction is a branching instruction so we have to wait for the end of the execution phase before we know if we have to jump.
+\end{enumerate}
+
+If we are in situation 3, we trigger the Branch Decision State Machine to take transition \texttt{G}, we also set the \texttt{branching} variable such that we now know that we're waiting for a branch decision to be made. This means that no more of the tracking buffer will be processed until we have reached a branch decision. Once that happens we store the time at which the branch decision was made, what it was and update the cut off time accordingly, we also mark the instruction as ready for output in the tracking buffer. After this transition \texttt{H} is taken to move us back to the \texttt{IDLE} state. If we had been in situation 2 something similar would have happened but it would have happened immediately after the end of the decode phase. 
+
+\subsubsection{The Output State Machine}
+
+As all the state machines are asynchronous except for where they explicitly synchronise the last state machine is comparatively simple. The \texttt{FIND\_DATA} state simply sits and scans through the tracking buffer to see if there are any pieces of data that can be output. If it finds one it checks to see if it's a \texttt{LOAD} or a \texttt{STORE} instruction and it also checks that it was not fetched during a period where a branch decision was pending and eventually taken. This stop the situation where the processor eagerly fetched the next seequential instruction but actually ended up branching and so executed a completely different instruction. At this point it takes transition \texttt{I} to the \texttt{OUTPUT\_DATA} state. Once in that state the data is transferred to the next module that makes up Gouram along with some other data to help find the length of the execution phase. The data is marked as having been output and then transition \texttt{J} is taken and the process begins again.
+
+\subsection{Examples}
+
+What is described is very complicated because tracking the behaviour of the processor as it calculates branches is highly non-trivial. The best way to explore how this works is by following two examples from end to end. The first example will be the instruction at address \texttt{0x258} in Figure \ref{fig:trace-with-original}, which is \texttt{0x00112e23}. The second will be a more complex branching example by following \texttt{0xfce7dae3} at address \texttt{0x2a4} which also appears in the same figure.
+
+\subsubsection{Simple Load Example}
+
+The diagram of the signals issued by the memory system can be seen in Figure [??]. We will also track the contents of the tracking buffer and the state machines so we can see how all of the aspects of this fit together. An empty entry in the tracking buffer and the state machines at the start of the execution can be seen in Figures [??] and [??] resp.I have abbreviated the names of the states in the machine down to acroynms of their original names for reasons of space but they are the same as the diagram in \ref{fig:if-state-machine}. 
+
+% TODO Add figure of memory signals with a counter at the top
+
+% TODO Add figure of the tracking buffer with nothing in it
+
+% TODO Add smaller figure to show the state machines 
+
+The first step is that the \texttt{instr\_req} signal will go high and this will cause the Instruction Fetch State Machine to take transition \texttt{A} to the \texttt{TRACK\_GNT} phase. In doing so the tracking buffer will have its entry cleared out, it's a circular buffer so there could be data left over from a previous instruction, and will then store counter value at the start of the \texttt{instr\_req}, this can be seen in Figure [??]. Then the grant phase will continue until [??] when the \texttt{instr\_gnt\_i} goes high. This will cause the tracking buffer to be updated with the instructions address and the time at which the \texttt{instr\_gnt\_i} went high and cause transition \texttt{C} to be taken. Then at [??] \texttt{TRACK\_RVALID} will store the final pieces in the tracking buffer and then return to \texttt{TRACK\_REQ} to track the next instruction. 
+
+% TODO Tidy up diagrams here
+
+
 
 % General Idea, 3 blocks to track each part of the execution
 % Explain the memory protocol from RI5CY

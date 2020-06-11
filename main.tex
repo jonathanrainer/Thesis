@@ -12,14 +12,13 @@
 \bibliography{bibtex/bibliography.bib}
 \usepackage{titling}
 \usepackage[hypertexnames=false]{hyperref}
-\usepackage{csquotes}
 \usepackage{amsmath}
 \usepackage[acronym, toc, nomain, xindy]{glossaries}
 \usepackage{mathtools}
 \usepackage[texindy]{imakeidx}
 \usepackage{tikz}
 \usepackage{tikz-timing}
-\usetikzlibrary{intersections,shapes,arrows,fit,backgrounds,positioning, shapes.symbols,matrix}
+\usetikzlibrary{intersections,shapes,arrows,fit,backgrounds,positioning, shapes.symbols,matrix,automata,decorations.markings}
 \usepackage[edges]{forest}
 \usepackage{rotating}
 \usepackage{listings}
@@ -27,12 +26,15 @@
 \pgfplotsset{compat=newest}
 \usepackage{pgfplotstable}
 \usepackage{enumitem}
-\usepackage{scrhack}
 \usepackage{xintbinhex}
 \usepackage{calc}
 \usepackage{colortbl}
 \usepackage{subcaption}
 \usepackage{tabulary}
+\usepackage[toc]{appendix}
+\usepackage{minted}
+\usepackage{csquotes}
+\usepackage{scrhack}
 
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \RedeclareSectionCommand[runin=false,afterskip=0.5ex,beforeskip=0pt,afterindent=false]{paragraph}
@@ -80,6 +82,7 @@
 	\include{chapters/experimental_design}
 	\include{chapters/results_analysis}
 	\include{chapters/conclusion}
+	
 	
 	\printglossaries
 	\printbibliography[heading=bibintoc]

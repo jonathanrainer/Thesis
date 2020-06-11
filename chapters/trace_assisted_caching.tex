@@ -137,7 +137,7 @@ Then we can consider what the pipeline might look like at each clock cycle, this
 
 \begin{sidewaysfigure}
 	\begin{center}
-		\input{diagrams/trace_assisted_cache/pipeline.tex}
+		\input{diagrams/trace_assisted_caching/pipeline.tex}
 		\caption[Pipeline Diagram - No Trace Assisted Caching]{The pipeline execution continues as normal until clock cycle 4 where the \texttt{LW} instruction enters its Execution phase. Because loading a value from main memory takes 5 clock cycles this extra latency is added not only to the \texttt{LW} but also to the \texttt{MUL} and \texttt{MV} instructions. Overall this leads to a program runtime of 14 clock cycles when the optimal time, assuming no pipeline stalls would be 8. To further clarify the memory system row contains \texttt{PR} and \texttt{AV} these stand for Processing and Available resp.}
 		\label{fig:pipeline}
 	\end{center}
@@ -147,7 +147,7 @@ We see in this diagram that the pipeline fills up to its maximum depth but then 
 
 \begin{figure}
 	\begin{center}
-		\input{diagrams/trace_assisted_cache/ideal_pipeline.tex}
+		\input{diagrams/trace_assisted_caching/ideal_pipeline.tex}
 		\caption[Pipeline Diagram - With Trace Assisted Caching]{In this example we see the power of trace assisted caching. If we assume the pre-emptive action to take is the one at line 3 in Listing \ref{listing:pipeline-test} then because the effective address can be known at clock cycle 0 the memory system can begin this load much earlier. As a consequence, the stalls associated with performing the memory operation are eliminated from the program's runtime reducing the overall runtime by 4 clock cycles. A decrease of nearly 30\%.}
 		\label{fig:ideal-pipeline}
 	\end{center}
