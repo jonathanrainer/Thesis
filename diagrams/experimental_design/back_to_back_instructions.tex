@@ -1,0 +1,19 @@
+\begin{center}
+		\begin{tikztimingtable}[timing/xunit=30, timing/yunit=8]
+			clk        			& 19{c}@{\gtikzset{timing/rowdist=3}}\\
+			data\_req\_o       	& 5l3h3l3h5l\\
+			data\_addr\_o		& 5u3d{0xFEEC}3u3d{0xFFF8}5u\\
+			data\_be\_o			& 5u3d{0xF}3u3d{0xF}5u\\
+			data\_we\_o			& 11l3h5l\\
+			data\_wdata\_o		& 11u3d{0x778899AA}5u\\
+			data\_gnt\_i		& 7lh5lh5l\\
+			data\_rvalid\_i		& 11lh4lh2l\\
+			data\_rdata\_i		& 11u5d{0xAABBCCDD}3u\\
+			\extracode \background
+			\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
+				\vertlines{0.5,...,\twidth}
+			\end{scope}
+			\endbackground
+		\end{tikztimingtable}
+		\caption{A \texttt{LOAD} followed immediately by a \texttt{STORE}}
+\end{center}

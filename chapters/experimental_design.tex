@@ -1,25 +1,35 @@
 \chapter{Implementation \& Experimental Design}
 \label{chap:experimental-design}
 
-So far in this thesis we have seen examples of what a system that implements trace assisted caching might look like from a very high level. In this chapter we are going to explore the actual implementation of this scheme that was undertaken as part of this project. We'll first explore some of the pre-existing components that were used, and then follow that by discussing the development of each of the new elements that were necessary to implement the scheme. To conclude we'll discuss the actual experiment that is to be run and illustrate some of the tooling that was developed to enable this to proceed smoothly.
+So far in this thesis we have seen examples of what a system that implements trace assisted caching might look like from a very high level. For the purposes of context, our ambition for this experiment is to design the hardware that would be necessary to implement trace assisted caching. To then evaluate the efficacy of the design we will then synthesise this design so that it can be realised inside the Xilinx VC707 \gls{fpga} \cite{UG885VC707Evaluation2019}. We will then perform measurements on the newly designed hardware, as well as on other simpler designs to attempt to demonstrate the performance increase that is seen as a result of trace-assisted caching. 
+
+In this chapter we are going to explore the actual implementation of this scheme that was undertaken as part of this project. We'll first explore some of the pre-existing components that were used, and then follow that by discussing the development of each of the new elements that were necessary to implement the scheme. To conclude we'll discuss the actual experiment that is to be run and illustrate some of the tooling that was developed to enable this to proceed smoothly.
 
 \section{Pre-existing Components}
 
-When beginning the construction of the hardware necessary to implement trace-assisted caching there are several modules that we can simply re-purpose from other projects. Starting with the processor as a whole, for these experiments we are going to use the \texttt{RI5CY}\cite{gautschiNearThresholdRISCVCore2017} processor from the PULP Foundation which implements the \texttt{RISC-V} ISA. The \texttt{RI5CY} is a 32-bit, in order processor with a 4-stage pipeline. It supports the RV32I,RV32C and RV32M standards found within the \texttt{RISC-V} standard which allows for integer computation, compressed instructions and integer multiplication and division. There is an optional floating point mechanism but that will not be included in our instance of the \texttt{RI5CY}. A big benefit of the \texttt{RI5CY} is that it has a Harvard Architecture, making it ideal for these experiments because we can isolate the data memory to more accurately to quantify the benefit from trace assisted caching. In addition because the \texttt{RISC-V} ISA is based on classic \gls{risc} we don't have to be concerned about multiple esoteric addressing modes or microcode as we might have to with a \gls{cisc} architecture. 
+When beginning the construction of the hardware necessary to implement trace-assisted caching there are several modules that we can simply re-purpose from other projects. Starting with the processor as a whole, for these experiments we are going to use the \texttt{RI5CY}\cite{gautschiNearThresholdRISCVCore2017} processor from the PULP Foundation which implements the \texttt{RISC-V} ISA. The \texttt{RI5CY} is a 32-bit, in order processor with a 4-stage pipeline. It supports the RV32I,RV32C and RV32M standards found within the \texttt{RISC-V} standard which allows for integer computation, compressed instructions and integer multiplication and division. There is an optional floating point module but that will not be included in our instance of the \texttt{RI5CY} because it simplifies tracking the computation of the instructions. A big benefit of the \texttt{RI5CY} is that it has a Harvard Architecture, making it ideal for these experiments because we can isolate the data memory to more accurately to quantify the benefit from trace assisted caching. In addition because the \texttt{RISC-V} ISA is based on classic \gls{risc} we don't have to be concerned about multiple esoteric addressing modes or microcode as we might have to with a \gls{cisc} architecture. To be precise only \texttt{LOAD} and \texttt{STORE} are allowed to access memory which simplifies the task of tracking memory operations significantly.
 
-As the \texttt{RI5CY} processor is released under the OpenHardware \cite{OpenSourceHardware} initiative all of the source code is publically available to be changed to be scrutinised and adapted if necessary. We will need to make certain changes to the \texttt{RI5CY} processor to expose some internal signals, but because we have source code access and Vivado can synthesise this code into a hardware description for an \gls{fpga} this is less problematic than it otherwise might be. This will be dealt with more fully in the next section where we discuss the trace recorder. A further benefit of using the \texttt{RI5CY} processor is that it has already been integrated into the PULPino \gls{soc} which was built using the Xilinx Vivado toolchain. This means there are several ancillary hardware blocks, available online, that allow the \texttt{RI5CY}'s native memory protocol to talk to the Xilinx proprietary \texttt{AXI} protocol, used to communicate easily with the various hardware blocks on the \gls{fpga} this means we can re-use lots of different \texttt{AXI} based memory implementations without having to write our own adapter. This adapter is known as a \texttt{core2axi} block. 
+As the \texttt{RI5CY} processor is released under the OpenHardware \cite{OpenSourceHardware} initiative all of the source code is publicly available to be scrutinised and adapted if necessary. We will need to make certain changes to the \texttt{RI5CY} processor to expose some internal signals, but because we have source code access, and because Xilinx's Vivado Design Suite can synthesise this code into a hardware description for an \gls{fpga} this is relatively straightforward. This will be dealt with more fully in the next section where we discuss the trace recorder. A further benefit of using the \texttt{RI5CY} processor is that it has already been integrated into the PULPino \cite{traberPULPinoDatasheet2017} \gls{soc} which was built using the Xilinx Vivado toolchain. This means there are several ancillary hardware blocks, available online, that allow the \texttt{RI5CY}'s native memory protocol to talk to the Xilinx \texttt{AXI} protocol, used to communicate easily with the various hardware blocks on the \gls{fpga} this means we can re-use lots of different \texttt{AXI} based memory implementations without having to write our own adapter. This adapter is known as a \texttt{core2axi} block. 
 
-Turning now to the memory implementation we will use, Xilinx provide a feature as part of newer versions of Vivado known as \glspl{xpm}. What these \glspl{xpm} allow is for you to specify the parameters of your memory implementation (size, address width, latency etc.) and then delegate the problem of constructing such a memory system to Vivado's in-built tool set. You can communicate with this memory system using the \texttt{AXI} protocol, all the interfaces for which are generated by Vivado itself. This allows us to specify the instruction memory and data memory separately in a much simpler way than having to write all the code to implement the \texttt{AXI} protocol and manage individual physical memory elements. 
+Another important factor is the memory technology we will use to support the processor. Xilinx provide a feature as part of newer versions of Vivado known as \glspl{xpm}\cite{UG974UltraScaleArchitecture2018}. What these \glspl{xpm} allow is for you to specify the parameters of your memory implementation (size, address width, latency etc.) and then delegate the problem of constructing such a memory system to Vivado's in-built tool set. As memory system design can be one of the more complex areas of design when dealing with \glspl{fpga} and is not something we are that interested in for these experiments it makes sense to make use of this facility rather than manually crafting our own memory implementation. You can communicate with this memory system using the \texttt{AXI} protocol\cite{AMBAAXIACE2013}, all the interfaces for which are generated by Vivado itself. This allows us to specify the instruction memory and data memory separately in a much simpler way than having to write all the code to implement the \texttt{AXI} protocol and manage individual physical memory elements. 
 
-So at this point we have a fully functioning processor, connected to two physically separate memory implementations, generated by the \glspl{xpm}. Between the processor and the \texttt{AXI} ports on the \gls{xpm} generated memory are two \texttt{core2axi} blocks that convert the processors native memory protocol to a set of signals that conform to the \texttt{AXI4} standard. A diagram of the current architecture can be seen below
+So at this point we have a fully functioning processor, connected to two physically separate memory implementations, generated by the \glspl{xpm}. Between the processor and the \texttt{AXI} ports on the \gls{xpm} generated memory are two \texttt{core2axi} blocks that convert the processors native memory protocol to a set of signals that conform to the \texttt{AXI4} standard. A diagram of the current architecture can be seen in Figure \ref{fig:kuuga-architecture}.
 
-%TODO Insert diagram of starting architecture 
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/starting_architecture.tex}
+	\caption[The Basic Implemented Architecture]{The resulting architecture that is used as a starting point for implementing the more complex parts of trace-assisted caching. The Memory protocols used are the \texttt{RI5CY}'s built in protocol before the \texttt{core2axi} adapter where the protocol is converted to \texttt{AXI4} for communication with the \glspl{xpm}. The \glspl{xpm} are implemented as collections of \glspl{bram}}
+	\label{fig:kuuga-architecture}
+\end{figure}
 
 \section{Trace Recorder (Gouram)}
 
-Now that we have a sensible starting point it's possible to consider the construction of the trace recorder part of Kuuga, this will be known as Gouram. To start with, we need a way to track the execution of each instruction as it passes through the various pipeline stages of the processor. Further to that we need to track the effective addresses of each memory instruction as they are generated by the running program. The basic construction for this new piece of hardware will be to have it made of two submodules, the first will track the \texttt{IF}/\texttt{ID} phase of the pipeline execution and the second will track the \texttt{EX} phase. We do not need to track the \texttt{WB} phase because it will have no bearing on either the effective address or the timing of other instructions as it's merely a formality that results get written back to registers. This overall architecture can be seen in Figure [??]. First to help us understand how each phase will work it's important that we understand the memory protocol that is implemented by the \texttt{RI5CY} processor. With that in hand we can move forward to describing each of sub-blocks and then the overall trace recorder module and the data it produces.
+Now that we have a starting point it's possible to consider the construction of the trace recorder part of Kuuga, this will be known as Gouram. To start with, we need a way to track the execution of each instruction as it passes through the various pipeline stages of the processor. Further to that we need to track the effective addresses of each memory instruction as they are generated by the running program. The basic construction for this new piece of hardware will be to have it made of two sub-modules, the first will track the \texttt{IF}/\texttt{ID} phase of the pipeline execution and the second will track the \texttt{EX} phase. We do not need to track the \texttt{WB} phase because it will have no bearing on either the effective address or the timing of other instructions as it's merely a formality that results get written back to registers. This overall architecture can be seen in Figure \ref{fig:gouram-architecture}. First to help us understand how each phase will work it's important that we understand the memory protocol that is implemented by the \texttt{RI5CY} processor. With that in hand we can move forward to describing each of sub-blocks and then the overall trace recorder module and the data it produces.
 
-% TODO Insert diagram of Gouram
+\begin{figure}
+	\input{diagrams/experimental_design/gouram_high_level_architecture.tex}
+	\caption[Gouram High Level Architecture]{The modules and connections that make up Gouram and its tracking capabilities. There are some other ancillary connections that are omitted from this diagram including the clock and reset lines for each module. These are omitted to add clarity to the diagram.}
+	\label{fig:gouram-architecture}
+\end{figure}
 
 \subsection{\texttt{RI5CY} Memory Protocol}
 
@@ -51,71 +61,17 @@ The memory protocol that is implemented by the \texttt{RI5CY} is documented in t
 The protocol then proceeds thus. When an instruction requires access to memory the \gls{lsu} sets \texttt{data\_req\_o} high, whilst at the same time placing the calculated address (\texttt{data\_addr\_o}, byte enable bits (\texttt{data\_be\_o}), any data to be written to memory (\texttt{data\_wdata\_o)} and selecting a read or a write with \texttt{data\_we\_o}. Then the processor waits for the memory system to respond by setting \texttt{data\_gnt\_i} high. Once this has happened the processor can change any of the 4 signals it set originally, assuming them to be cached in the memory controller now \texttt{data\_gnt\_i} is high. This may happen in the same cycle that \texttt{data\_req\_o} goes high or it may take several cycles with a slower memory technology. After the grant the memory system will execute the load or store as required and once it has completed it will set \texttt{data\_rvalid\_i} high. This will happen after at least 1 clock cycle from the setting of \texttt{data\_gnt\_i} to high. Once \texttt{data\_rvalid\_i} is high \texttt{data\_rdata\_i} will contain the fetched data from memory in the case of a \texttt{LOAD} or arbitrary data in the case of a \texttt{STORE}. If another memory request is queued, \texttt{data\_req\_o} will be set high at the same time that \texttt{data\_rvalid\_i} is and the processor continues. Several examples of timing diagrams are included below in Figure \ref{fig:memory-protocol} to illustrate how this protocol works.
 	
 \begin{figure}[htbp]
-	% LOAD
 	\begin{subfigure}{\textwidth}
-		\begin{center}
-			\begin{tikztimingtable}[timing/xunit=30, timing/yunit=8]
-				clk        			& 19{c}@{\gtikzset{timing/rowdist=3}}\\
-				data\_req\_o       	& 5l3h11l\\
-				data\_addr\_o		& 5u3d{0xFEEC}11u\\
-				data\_be\_o			& 5u3d{0xF}11u\\
-				data\_gnt\_i		& 7lh11l\\
-				data\_rvalid\_i		& 11lh7l\\
-				data\_rdata\_i		& 11u5d{0xAABBCCDD}3u\\
-				\extracode \background
-				\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
-					\vertlines{0.5,...,\twidth}
-				\end{scope}
-				\endbackground
-			\end{tikztimingtable}
-			\caption{A \texttt{LOAD} instruction to retrieve the contents of address \texttt{0xFEEC} from memory.}
-		\end{center}
+		\input{diagrams/experimental_design/load_instruction.tex}
 	\end{subfigure}
-	% STORE
 	\begin{subfigure}{\textwidth}
-		\begin{center}
-			\begin{tikztimingtable}[timing/xunit=30, timing/yunit=8]
-				clk        			& 19{c}@{\gtikzset{timing/rowdist=3}}\\
-				data\_req\_o       	& 5l3h11l\\
-				data\_addr\_o		& 5u3d{0xFEEC}11u\\
-				data\_we\_o			& 5l3h11l\\
-				data\_be\_o			& 5u3d{0xF}11u\\
-				data\_wdata\_o		& 5u3d{0x4256FFCC}11u\\
-				data\_gnt\_i		& 7lh11l\\
-				data\_rvalid\_i		& 11lh7l\\
-				\extracode \background
-				\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
-					\vertlines{0.5,...,\twidth}
-				\end{scope}
-				\endbackground
-			\end{tikztimingtable}
-			\caption{A \texttt{STORE} instruction to \texttt{0xFEEC} from the processor.}
-		\end{center}
+		\input{diagrams/experimental_design/store_instruction.tex}
 	\end{subfigure}
-	% BACKTOBACK
 	\begin{subfigure}{\textwidth}
-	\begin{center}
-		\begin{tikztimingtable}[timing/xunit=30, timing/yunit=8]
-			clk        			& 19{c}@{\gtikzset{timing/rowdist=3}}\\
-			data\_req\_o       	& 5l3h3l3h5l\\
-			data\_addr\_o		& 5u3d{0xFEEC}3u3d{0xFFF8}5u\\
-			data\_be\_o			& 5u3d{0xF}3u3d{0xF}5u\\
-			data\_we\_o			& 11l3h5l\\
-			data\_wdata\_o		& 11u3d{0x778899AA}5u\\
-			data\_gnt\_i		& 7lh5lh5l\\
-			data\_rvalid\_i		& 11lh4lh2l\\
-			data\_rdata\_i		& 11u5d{0xAABBCCDD}3u\\
-			\extracode \background
-			\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
-				\vertlines{0.5,...,\twidth}
-			\end{scope}
-			\endbackground
-		\end{tikztimingtable}
-		\caption{A \texttt{LOAD} followed immediately by a \texttt{STORE}}
-	\end{center}
-\end{subfigure}
-\caption{Several examples of the signal transitions that occur when memory transactions happen. Further of these diagrams can be seen in the \texttt{RI5CY} instruction manual. It should be noted however that the diagram in the manual labelled ``back-to-back'' does not occur in our context because of the memory implementation used.}
-\label{fig:memory-protocol}
+		\input{diagrams/experimental_design/back_to_back_instructions.tex}
+	\end{subfigure}
+	\caption{Several examples of the signal transitions that occur when memory transactions happen. Further of these diagrams can be seen in the \texttt{RI5CY} instruction manual. It should be noted however that the diagram in the manual labelled ``back-to-back'' does not occur in our context because of the memory implementation used.}
+	\label{fig:memory-protocol}
 \end{figure}
 
 It should be pointed out that this protocol works for the instruction memory as well but uses a reduced number of signals as the instruction memory cannot be written to. These signals are labelled \texttt{inst\_req\_o} etc.
@@ -138,11 +94,19 @@ If transition \texttt{A} is taken the state machine then waits for \texttt{instr
 
 \subsubsection{Branch Decision State Machine}
 
-It's easy to think at this point that our job is complete and we should simply output the data now it's been captured. However the problem with this is that the instructions that are fetched could very easily be jump or branch instructions and this is not resolved until the Decode phase. Furthermore because that takes a non-trivial amount of time it's often the case that the processor will fetch instructions that are never actually executed because they are invalidated once the branch or jump has been taken. Consequently before we decide if we can output the instruction we have just captured we have to wait for its decode phase to end and any branch conditions to be calculated. This is especially complicated by the fact that the instructions affected are the ones that occur in the window between the calculation of the jump or branch address and the successful fetch of the branch instruction. This is shown in Figure [??] below:
+It's easy to think at this point that our job is complete and we should simply output the data now it's been captured. However the problem with this is that the instructions that are fetched could very easily be jump or branch instruction and this is not resolved until the Decode phase. Furthermore because that takes a non-trivial amount of time it's often the case that the processor will fetch instructions that are never actually executed because they are invalidated once the branch or jump has been taken. Consequently, before we decide if we can output the instruction we have just captured we have to wait for its decode phase to end and any branch conditions to be calculated. This is especially complicated by the fact that the instructions affected are the ones that occur in the window between the calculation of the jump or branch address and the successful fetch of the branch instruction. This is shown in Figure \ref{fig:weird-branch-behaviour}.
 
-% TODO Add diagram of weird branching situation
+\begin{figure}[hbtp]
+	\begin{center}
+		\input{diagrams/experimental_design/branching_behaviour_edge_case.tex}	
+	\end{center}
+	\caption[Branching Behaviour Edge Case]{Due to the long running data memory fetch that completes during Clock Cycle 12 the decode phase for the fetched \texttt{0xF85FF0EF}, a jump instruction does not get decoded until Clock Cycle 12. Due to the architecture of the \texttt{RI5CY} processor jump address are calculated in the Decode Phase so the decision as to whether to jump or not is not made until Clock Cycle 12 either. However, as the blue highlighted signals show, the instruction at address \texttt{0x280} has already been fetched when the decision is made to jump to address \texttt{0x29C}. 
+		
+	This occurs and so the next fetch is correct and the processor has a method of ignoring these incorrect fetches, this means we have to implement something similar so we don't track instructions that never happened. This example explicitly targets jump instructions but they delay is even more pronounced in branch instructions as the target address and, by proxy, branch decision are calculated in the \texttt{EX} phase.}
+	\label{fig:weird-branch-behaviour}
+\end{figure}
 
-When we want to track instructions that execute while a branch condition is being calculated we work in the following way. When the decode phase is complete for a potential branching instruction the code will extract it from the tracking buffer and also will test whether this instruction was granted after the last branch decision was made. For the sake of argument let us assume that is true so we are not at present in a branching state. The next operation will be to store the time at which the decode phase ended and then we will test what kind of instruction we are dealing with. This is important because there are 3 situations that here could arise:
+When we want to track instructions that execute while a branch condition is being calculated we work in the following way. When the decode phase is complete for a potential branching instruction the code will extract the instruction from the tracking buffer and also will test whether this instruction was granted after the last branch decision was made. For the sake of argument let us assume that is true so we are not at present in a branching state. The next operation will be to store the time at which the decode phase ended and then we will test what kind of instruction we are dealing with. This is important because there are 3 situations that here could arise:
 
 \begin{enumerate}
 	\item The instruction is not a branching or jump instruction and has not been output while the processor is in a branching state. In which case we can simply output this into the next module in the tracker.
@@ -162,29 +126,129 @@ What is described is very complicated because tracking the behaviour of the proc
 
 \subsubsection{Simple Load Example}
 
-The diagram of the signals issued by the memory system can be seen in Figure [??]. We will also track the contents of the tracking buffer and the state machines so we can see how all of the aspects of this fit together. An empty entry in the tracking buffer and the state machines at the start of the execution can be seen in Figures [??] and [??] resp.I have abbreviated the names of the states in the machine down to acroynms of their original names for reasons of space but they are the same as the diagram in \ref{fig:if-state-machine}. 
+The diagram of the signals issued by the memory system can be seen in Figure \ref{fig:simple-load-signal-diagram}. We will also track the contents of the tracking buffer and the state machines so we can see how all of the aspects of this fit together. An empty entry in the tracking buffer and the state machines at the start of the execution can be seen in Figure \ref{fig:load-example-starting-state} resp. The names of the states in the machine have been shortened into acronyms for reasons of space but they are the same as the diagram in \ref{fig:if-state-machine}. 
 
-% TODO Add figure of memory signals with a counter at the top
+\begin{figure}[htbp]
+		\input{diagrams/experimental_design/simple_load_example_signal_diagram.tex}
+		\caption{Fetching the instruction \texttt{0x00112e23} from memory}
+		\label{fig:simple-load-signal-diagram}
+\end{figure}
 
-% TODO Add figure of the tracking buffer with nothing in it
+\begin{figure}[htbp]
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/simple_load_tracking_buffer.tex}
+		\caption{Schematic of a single record in the tracking buffer that will be filled out as this example progresses.}
+	\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/simple_load_reduced_state_machines.tex}
+		\caption{A reduced version of the previously described state machines to allow us to follow the progress of the hardware as we progress through the example. The light blue highlight indicates the current state of the machine, with the Output State}
+	\end{subfigure}
+\caption{The state of the \texttt{IF} tracker, we'll return to updated versions of these diagrams as we progress through the example}
+\label{fig:load-example-starting-state}
+\end{figure}
 
-% TODO Add smaller figure to show the state machines 
+The process begins as \texttt{instr\_req\_o} goes high at Clock Cycle 2 and this will cause the Instruction Fetch State Machine to take transition \texttt{A} to the \texttt{TRACK\_GNT} phase. In doing so the tracking buffer will have its entry cleared out. This is necessary because it's a circular buffer so there could be data left over from a previous instruction. Then the value of the counter will be stored at the start of the \texttt{instr\_req}, this can be seen in Figure \ref{fig:load-example-step-1}. 
 
-The first step is that the \texttt{instr\_req} signal will go high and this will cause the Instruction Fetch State Machine to take transition \texttt{A} to the \texttt{TRACK\_GNT} phase. In doing so the tracking buffer will have its entry cleared out. This is necessary because it's a circular buffer so there could be data left over from a previous instruction. Then the value of the counter will be stored at the start of the \texttt{instr\_req}, this can be seen in Figure [??]. Then the grant phase will continue until [??] when the \texttt{instr\_gnt\_i} goes high. This will cause the tracking buffer to be updated with the instructions address and the time at which the \texttt{instr\_gnt\_i} went high and cause transition \texttt{C} to be taken. Then at [??] \texttt{TRACK\_RVALID} will store the final pieces in the tracking buffer and then return to \texttt{TRACK\_REQ} to track the next instruction. 
+\begin{figure}[htbp]
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/simple_load_tracking_buffer_step_1.tex}
+	\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/simple_load_reduced_state_machines_step_1.tex}
+	\end{subfigure}
+	\caption{}
+	\label{fig:load-example-step-1}
+\end{figure}
 
-% TODO Tidy up diagrams here
 
-Once the decode phase of this instruction is complete, the processor signals this by setting the internal signals \texttt{is\_decoding} and \texttt{id\_ready} high, the tracking buffer will be linearly scanned and the entry generated for \texttt{0x00112e23} will be marked as the earliest unprocessed index. Since we haven't yet encountered a branch or jump instruction we are not in a pending branching state which means we can store we are in situation 1 as above. Consequently we store the end of the decode phase and then mark this instruction as ready for output. In the next clock cycle the Output State Machine will scan the tracking buffer until it finds data that is marked ready for output (it additionally checks some other conditions but we will omit these for now). It will find the data for \texttt{0x00112e23}, and run a simple check to ensure this is a \texttt{LOAD}/\texttt{STORE} instruction which it is and so will take transition \texttt{I} to the \texttt{OUTPUT\_DATA} state where it will transfer the data into the next module.
+Then the grant phase will continue until clock cycle 3 when \texttt{instr\_gnt\_i} goes high. This will cause the tracking buffer to be updated with the instructions address and the time at which the \texttt{instr\_gnt\_i} went high and cause transition \texttt{C} to be taken. Then at Clock Cycle 5 \texttt{TRACK\_RVALID} will store the final pieces in the tracking buffer. The net result of these two steps can be seen in Figure \ref{fig:load-example-step-2}. Following this transition \texttt{D} will be taken back to \texttt{TRACK\_REQ} to track the next instruction.
+
+\begin{figure}[htbp]
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/simple_load_tracking_buffer_step_2.tex}
+	\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/simple_load_reduced_state_machines_step_2.tex}
+	\end{subfigure}
+	\caption{}
+	\label{fig:load-example-step-2}
+\end{figure}
+
+Once the decode phase of this instruction is complete, the processor signals this by setting the internal signals \texttt{is\_decoding} and \texttt{id\_ready} high in clock cycle 6. At this point the tracking buffer will be linearly scanned and the entry generated for \texttt{0x00112e23} will be marked as the earliest unprocessed index. Since we haven't yet encountered a branch or jump instruction we are not in a pending branching state which means we can store we are in situation 1 as above. Consequently we store the end of the decode phase and then mark this instruction as ready for output. 
+
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/simple_load_tracking_buffer_step_3.tex}
+	\caption{}
+	\label{fig:load-example-step-3}
+\end{figure}
+
+In the next clock cycle the Output State Machine will scan the tracking buffer until it finds data that is marked ready for output (it additionally checks some other conditions but we will omit these for now). It will find the data for \texttt{0x00112e23}, and run a simple check to ensure this is a \texttt{LOAD}/\texttt{STORE} instruction by looking at its opcode and so will take transition \texttt{I} to the \texttt{OUTPUT\_DATA} state where it will transfer the data into the next module. Following that it will mark \texttt{0x00112e23} as finished and then transition back via \texttt{J} to the \texttt{FIND\_DATA} state. This can be seen in Figure \ref{fig:load-example-step-4}.
+
+\begin{figure}[htbp]
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/simple_load_tracking_buffer_step_4.tex}
+	\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/simple_load_reduced_state_machines_step_4.tex}
+	\end{subfigure}
+	\caption{}
+	\label{fig:load-example-step-4}
+\end{figure}
 
 \subsubsection{Complex Branching Example}
 
-The previous example is relatively simple but introducing branching causes several other factors to have to be taken into account. The dynamics of Instruction Fetch State Machine are quite similar, however the big change occurs when the decode phase ends for \texttt{0xfce7dae3}. At the start it proceeds very much as before, \texttt{0xfce7dae3} is identified by the module as the earliest unprocessed instruction and we are not currently branching so we mark the end of the decode phase but then we detect \texttt{0xfce7dae3} as a branching instruction. So we set the \texttt{branch\_pointer} to mark this instruction as the object of the branching behaviour and then trigger the Branch Decision State Machine to take transition \texttt{G}. 
+The previous example is relatively simple but introducing branching causes several other factors to have to be taken into account. For this example we will use the signal diagram in Figure \ref{fig:complex-example-signal-diagram}. An important point to note about this diagram is that a fetch from data memory is already in progress when this diagram starts, this prevents the decode phase for \texttt{0x2A4} starting as soon as it is fetched and sets this train of events in motion.
 
-Now, because \texttt{0xfce7dae3} is a branching instruction that relies on a condition it needs to enter the execution phase in order to calculate whether a branch will be taken or not. However rather than simply stalling the processor when this happens the next instruction sequentially is fetched from instruction memory, in this case \texttt{0xfe842783}. Let us assume that in this case the branch is in fact taken, so the next instruction to be executed will be \texttt{0xfec42503} at address \texttt{0x278}. In the \texttt{CHECK\_BRANCH\_DECISION} phase, the \texttt{branch\_decision} signal goes high so we then store the time at which that occurred and set the cut off time. This cut off time is important because it defines the time at which an instruction grant would need to take place after to be a valid fetch. We then also set a marker to state that we are in a branching state and mark the branching instruction as ready to output. The Branch Decision State Machine then returns to the \texttt{IDLE} state.
+\begin{sidewaysfigure}[htbp]
+	\input{diagrams/experimental_design/complex_branching_example_signal_diagram.tex}
+	\caption{}
+	\label{fig:complex-example-signal-diagram}
+\end{sidewaysfigure}
 
-Now the Output State Machine will deal with this instruction as appropriate but to see the import of what we've just done we have to consider what happens what happens when \texttt{0xfe842783} reaches the end of its decode phase. At first it will a similar process to the simple example, it will be selected as the earliest index but then, because, as can be seen in Figure [??] its grant occurs before the cut off time we were still in branching state when the fetch occurred. Consequently we simply mark this instruction in the tracking buffer as finished and then move on. This mirrors what happens in the processor where instructions that are incorrectly predicted are invalidated and therefore never propagate throughout the processor. Once we reach an instruction that is beyond the calculated cut off point we are non-longer in a branching state and so can start outputting data again in a similar fashion to before.
+The dynamics of Instruction Fetch State Machine are quite similar, however the big change occurs when the decode phase ends for \texttt{0xFCE7DAE3}. At the start it proceeds very much as before, \texttt{0xFCE7DAE3} is identified by the module as the earliest unprocessed instruction and we are not currently branching so we mark the end of the decode phase but then we detect \texttt{0xFCE7DAE3} as a branching instruction. So we set the \texttt{branch\_pointer} to mark this instruction as the object of the branching behaviour and then trigger the Branch Decision State Machine to take transition \texttt{G}. The net result of this can be seen in Figure \ref{fig:complex-example-step-1}.
 
-% TODO Add diagrams here to further explain what's going on 
+\begin{figure}[htbp]
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/complex_tracking_buffer_step_1.tex}
+	\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/complex_reduced_state_machines_step_1.tex}
+	\end{subfigure}
+	\caption{}
+	\label{fig:complex-example-step-1}
+\end{figure} 
+
+Now, because \texttt{0xFCE7DAE3} is a branching instruction that relies on a condition it needs to enter the execution phase in order to calculate whether a branch will be taken or not. However rather than simply stalling the processor when this happens the next instruction sequentially is fetched from instruction memory, in this case \texttt{0xFE842783}. Now because of the previously mentioned fetch from data memory this fetch actually completes before a branch decision can be made, causing a new entry to enter the tracking buffer as in Figure \ref{fig:complex-example-step-2}
+
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/complex_tracking_buffer_step_2.tex}
+	\caption{}
+	\label{fig:complex-example-step-2}
+\end{figure} 
+
+
+Let us assume that in this case the branch is in fact taken, so the next instruction to be executed will be \texttt{0xFEC42503} at address \texttt{0x278}. In the \texttt{CHECK\_BRANCH\_DECISION} phase, the \texttt{branch\_decision} signal goes high so we then store the time at which that occurred and set the cut off time as 112. This cut off time is important because it defines the time at which an instruction grant would need to take place after to be a valid fetch, forming a window with the lower bound set by the grant time of the branching instruction itself. We then also set a marker to state that we are in a branching state and mark the branching instruction as ready to output. The effect of these concurrent changes, both the fetch from \texttt{0x2A8} and the effect of the branch decision state machine can be seen in Figure \ref{fig:complex-example-step-3}. The Branch Decision State Machine then returns to the \texttt{IDLE} state.
+
+\begin{figure}[htbp]
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/complex_tracking_buffer_step_3.tex}
+	\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\input{diagrams/experimental_design/complex_reduced_state_machines_step_3.tex}
+	\end{subfigure}
+	\caption{}
+	\label{fig:complex-example-step-3}
+\end{figure} 
+
+Now the Output State Machine will deal with both the accumulated instructions first it will process the \texttt{0xFCE7DAE3} and this will simply be set to finished immediately as it's not a \texttt{LOAD} or \texttt{STORE} instruction. However when it reaches the next instruction after clock cycle 118. At first it will a similar process to the simple example, it will be selected as the earliest index but then, because, as can be seen in Figure \ref{fig:complex-example-signal-diagram} its grant occurs before the cut off time we were still in branching state when the fetch occurred so this fetch is invalid. Consequently we simply mark this instruction in the tracking buffer as finished, and then search again for another instruction to assign this decode phase to. The net result of this can be seen in the final contents of the tracking buffer as shown in Figure \ref{fig:complex-example-step-4}.
+
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/complex_tracking_buffer_step_4.tex}
+	\caption{}
+	\label{fig:complex-example-step-4}
+\end{figure} 
+
+This mirrors what happens in the processor where instructions that are incorrectly predicted are invalidated and therefore never propagate throughout the processor. Once we reach an instruction that is beyond the calculated cut off point we are non-longer in a branching state and so can start outputting data again in a similar fashion to before.
 
 \subsection{The \texttt{EX} Module}
 
@@ -342,7 +406,7 @@ To achieve this goal each experiment will follow a pre-defined set of steps that
 	\item Store these values and then begin again with a new hardware configuration or benchmark as appropriate. 
 \end{enumerate}
 
-All these steps are dealt with in an automated way via a automation framework, the source code of which can be found on Github or can be found in Appendix [??]. 
+All these steps are dealt with in an automated way via a automation framework, the source code of which can be found on Github. 
 
 \subsection{Specific Experimental Concerns}
 

@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+\matrix [
+space, 
+column 1/.style={nodes={cell,minimum width=6em}},
+column 2/.style={nodes={cell,minimum width=6em}},
+column 3/.style={nodes={cell,minimum width=7em}},
+column 4/.style={nodes={cell,minimum width=6em}},
+column 5/.style={nodes={cell,minimum width=6em}},
+column 6/.style={nodes={cell,minimum width=6em}}
+] 
+(tracking-buffer-1)
+{
+	\textbf{INST} & \textbf{ADDR} & \textbf{REQ\_START} & \textbf{GNT} & \textbf{RVALID} & \textbf{DEC\_END} \\
+	\texttt{0xFCE7DAE3} & \texttt{0x2A4} & \texttt{102} & \texttt{103} & \texttt{107} & \texttt{112} \\
+	\texttt{0xFE842783} & \texttt{0x2A8} & \texttt{107} & \texttt{108} & \texttt{112} & \texttt{X} \\
+};
+
+\matrix [
+space, below=of tracking-buffer-1,
+column 1/.style={nodes={cell,minimum width=9em}},
+column 2/.style={nodes={cell,minimum width=11em}},
+column 3/.style={nodes={cell,minimum width=9em}},
+column 4/.style={nodes={cell,minimum width=7em}}
+] 
+(tracking-buffer-1)
+{
+	\textbf{BRANCH\_DEC} & \textbf{BRANCH\_DEC\_TIME} & \textbf{OUTPUT\_READY} & \textbf{FINISHED} \\
+	\texttt{1} & \texttt{112} & \texttt{0} & \texttt{0} \\
+	\texttt{X} & \texttt{X} & \texttt{0} & \texttt{0} \\
+};
+\end{tikzpicture}

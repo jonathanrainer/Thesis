@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+\matrix [
+space, 
+column 1/.style={nodes={cell,minimum width=6em}},
+column 2/.style={nodes={cell,minimum width=6em}},
+column 3/.style={nodes={cell,minimum width=7em}},
+column 4/.style={nodes={cell,minimum width=6em}},
+column 5/.style={nodes={cell,minimum width=6em}},
+column 6/.style={nodes={cell,minimum width=6em}}
+] 
+(tracking-buffer-1)
+{
+	\textbf{INST} & \textbf{ADDR} & \textbf{REQ\_START} & \textbf{GNT} & \textbf{RVALID} & \textbf{DEC\_END} \\
+	\texttt{X} & \texttt{X} & \texttt{2} & \texttt{X} & \texttt{X} & \texttt{X} \\
+};
+
+\matrix [
+space, below=of tracking-buffer-1,
+column 1/.style={nodes={cell,minimum width=9em}},
+column 2/.style={nodes={cell,minimum width=11em}},
+column 3/.style={nodes={cell,minimum width=9em}},
+column 4/.style={nodes={cell,minimum width=7em}}
+] 
+(tracking-buffer-1)
+{
+	\textbf{BRANCH\_DEC} & \textbf{BRANCH\_DEC\_TIME} & \textbf{OUTPUT\_READY} & \textbf{FINISHED} \\
+	\texttt{X} & \texttt{X} & \texttt{0} & \texttt{0} \\
+};
+\end{tikzpicture}

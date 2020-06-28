@@ -1,0 +1,17 @@
+\begin{center}
+			\begin{tikztimingtable}[timing/xunit=30, timing/yunit=8]
+				clk        			& 19{c}@{\gtikzset{timing/rowdist=3}}\\
+				data\_req\_o       	& 5l3h11l\\
+				data\_addr\_o		& 5u3d{0xFEEC}11u\\
+				data\_be\_o			& 5u3d{0xF}11u\\
+				data\_gnt\_i		& 7lh11l\\
+				data\_rvalid\_i		& 11lh7l\\
+				data\_rdata\_i		& 11u5d{0xAABBCCDD}3u\\
+				\extracode \background
+				\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
+					\vertlines{0.5,...,\twidth}
+				\end{scope}
+				\endbackground
+			\end{tikztimingtable}
+			\caption{A \texttt{LOAD} instruction to retrieve the contents of address \texttt{0xFEEC} from memory.}
+\end{center}

@@ -1,0 +1,46 @@
+\tikzstyle{block} = [draw, rectangle, text width=2cm, text centered, minimum height=1.2cm, node distance=2.7cm,fill=blue!30]
+\tikzstyle{container} = [draw, rectangle, inner sep=0.3cm, fill=orange!50,minimum height=3cm, minimum width=3cm]
+\def\bottom#1#2{\hbox{\vbox to #1{\vfill\hbox{#2}}}}
+\tikzset{
+	mybackground/.style={execute at end picture={
+			\begin{scope}[on background layer]
+				\node[] at (current bounding box.north){\bottom{1cm} #1};
+			\end{scope}
+	}},
+}
+
+\newarray\inputsignals
+\readarray{inputsignals}{jump\_done&branch\_decision&is\_decoding&pc\_set&branch\_req&id\_ready&instr\_req&instr\_rvalid&instr\_rdata&instr\_addr&instr\_gnt&data\_mem\_req&data\_mem\_addr&data\_mem\_rvalid}
+\pgfmathsetmacro{\inputlowerlimit}{-7}
+\pgfmathsetmacro{\inputupperlimit}{6}
+\pgfmathsetmacro{\inputarrlength}{\inputupperlimit - \inputlowerlimit}
+\def\inputgap{0.5}
+
+\newarray\outputsignals
+\readarray{outputsignals}{trace\_data\_o&trace\_capture\_enable&lock&trace\_ready&counter}
+\pgfmathsetmacro{\outputlowerlimit}{-2}
+\pgfmathsetmacro{\outputupperlimit}{2}
+\pgfmathsetmacro{\outputarrlength}{\outputupperlimit - \outputlowerlimit}
+\def\outputgap{0.5}
+
+\begin{center}
+	\begin{tikzpicture}
+	
+	\node [block,  minimum height=3cm] (if-tracker) {\texttt{IF} Tracker};
+	\node [block, below of=if-tracker] (counter) {Monotonic Counter};
+	\node [block, right=1.5cm and 1cm of if-tracker, minimum height=4.5cm, yshift=-0.9cm] (ex-tracker) {\texttt{EX} Tracker};
+	\begin{scope}[on background layer]
+	\node [container,fit=(if-tracker) (counter) (ex-tracker),label=above:Gouram] (container) {};
+	\end{scope}
+	
+	\foreach \i [count=\c]  in {\inputlowerlimit,...,\inputupperlimit}{% 
+		\pgfmathtruncatemacro{\arrayindex}{\inputarrlength - \c + 2}
+		\draw[-] ([yshift=\i * \inputgap cm, xshift=-1cm]container.west) -- ([yshift=\i * \inputgap cm]container.west) node [left, xshift=-1cm] {\texttt{\inputsignals(\arrayindex)}};
+	}
+	
+	\foreach \i [count=\c]  in {\outputlowerlimit,...,\outputupperlimit}{% 
+		\pgfmathtruncatemacro{\arrayindex}{\outputarrlength - \c + 2}
+		\draw[-] ([yshift=\i * \outputgap cm]container.east) -- ([yshift=\i * \inputgap cm, xshift=1cm]container.east) node [right] {\texttt{\outputsignals(\arrayindex)}};}
+	
+	\end{tikzpicture}
+\end{center}

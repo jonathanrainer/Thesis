@@ -1,0 +1,42 @@
+\tikzstyle{block} = [draw, rectangle, text width=2cm, text centered, minimum height=1.2cm, node distance=2.7cm,fill=blue!30]
+\tikzstyle{container} = [draw, rectangle, inner sep=0.3cm, fill=orange!50,minimum height=3cm, minimum width=3cm]
+\def\bottom#1#2{\hbox{\vbox to #1{\vfill\hbox{#2}}}}
+\tikzset{
+	mybackground/.style={execute at end picture={
+			\begin{scope}[on background layer]
+				\node[] at (current bounding box.north){\bottom{1cm} #1};
+			\end{scope}
+	}},
+}
+
+\begin{center}
+	\begin{tikzpicture}
+	
+	\node [block,  minimum height=3cm] (if-tracker) {\texttt{IF} Tracker};
+	\node [block, below of=if-tracker] (counter) {Monotonic Counter};
+	\node [block, right=1.5cm and 1cm of if-tracker, minimum height=4.5cm, yshift=-0.9cm] (ex-tracker) {\texttt{EX} Tracker};
+	\begin{scope}[on background layer]
+	\node [container,fit=(if-tracker) (counter) (ex-tracker),label=above:Gouram] (container) {};
+	\end{scope}
+	
+	\foreach \i in {-6,...,6}{% 
+		\draw[-] ([yshift=\i * 0.3 cm, xshift=-1cm]container.west) -- ([yshift=\i * 0.3cm]container.west);
+	}
+
+	\foreach \i in {-3,...,3}{% 
+	\draw[-] ([yshift=\i * 0.3 cm]container.east) -- ([yshift=\i * 0.3cm, xshift=1cm]container.east);
+		}
+	
+	\draw [decorate,decoration={brace,amplitude=10pt,raise=4pt},yshift=0pt]
+	([yshift=-1.5cm, xshift=1cm]container.north east) -- ([yshift=1.5cm, xshift=1cm]container.south east) node [black,midway,rotate=90, yshift=-1cm] {Trace Data Output};
+	
+	\draw [decorate,decoration={brace,amplitude=10pt,raise=4pt,mirror},yshift=0pt]
+	([yshift=-0.3cm, xshift=-1cm]container.north west) -- ([yshift=0.3cm, xshift=-1cm]container.south west) node [black,midway,rotate=90, yshift=1cm] {Input signals observed from processor};
+	
+	\draw [->, thick] (counter.north) -- (if-tracker.south);
+	
+	\draw [->, thick] (counter.east) -- ([xshift=0.2cm]counter.east) |- ([yshift=-0.1cm]ex-tracker.west);
+	\draw [->, thick] (if-tracker.east) -- ([xshift=0.2cm]if-tracker.east) |- ([yshift=0.1cm]ex-tracker.west);
+	
+	\end{tikzpicture}
+\end{center}

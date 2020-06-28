@@ -1,0 +1,21 @@
+\begin{tikztimingtable}[timing/xunit=15, timing/yunit=8, timing/lslope=0.1, timing/zslope=0.1, timing/dslope=0.1 ]
+				counter & [timing/counter/new={char=q}] u22{q}\\
+				clk        			& 45{c}\\
+				instr\_req\_o       & 5l4h6l4h6l4h6l4h6l\\
+				instr\_addr\_o		& 5u4d{0x27C}{[color=blue]10d{0x280}6d{0x284}}4d{0x29C}10d{0x2A0}6u\\
+				instr\_gnt\_i		& 7l2h8l2h8l2h8l2h6l\\
+				instr\_rvalid\_i	& 15lH8lH8lH8l\\
+				instr\_rdata\_i		& 15u5D{0xF85FF0EF}{[color=blue]5D{0x00050713}}5D{0xFE442783}\\
+				data\_req\_o       	& h4H18L\\
+				data\_addr\_o		& d4D{0xfee4}18U\\
+				data\_gnt\_i		& l3LH18L\\
+				data\_rvalid\_i		& l12LH9L\\
+				data\_rdata\_i		& u12U20d{0x00000005}\\
+				is\_decoding		& l12LH5LH3L\\
+				jump\_done			& l12LH9L\\
+				\extracode \background
+				\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
+					\vertlines{0.5,...,\twidth}
+				\end{scope}
+				\endbackground
+\end{tikztimingtable}

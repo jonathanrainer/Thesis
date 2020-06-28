@@ -1,0 +1,18 @@
+\begin{center}
+	\begin{tikztimingtable}[timing/xunit=30, timing/yunit=8, timing/lslope=0, timing/dslope=0.1]
+		counter & [timing/counter/new={char=q}] u9{q}\\
+		clk        			& 19{c}@{\gtikzset{timing/rowdist=3}}\\
+		inst\_req\_o       	& 5l4h10l\\
+		instr\_addr\_o		& 5u4d{0x258}10u\\
+		instr\_gnt\_i		& 7l2h10l\\
+		instr\_rvalid\_i		& 11l2h6l\\
+		instr\_rdata\_i		& 11u8d{0x00112e23}\\
+		is\_decoding		& 13lH4l\\
+		id\_ready			& 13lH4l\\
+		\extracode \background
+		\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
+			\vertlines{0.5,...,\twidth}
+		\end{scope}
+		\endbackground
+	\end{tikztimingtable}
+\end{center}

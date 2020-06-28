@@ -1,0 +1,20 @@
+\begin{center}
+	\begin{tikzpicture} [shorten >=1pt,node distance=3cm,on grid]
+	\node[state,initial] (track-req) [font=\ttfamily, fill=blue!30] {TR}; 
+	\node[state] (track-gnt) [right=of track-req,font=\ttfamily]{TG};
+	\node[state] (track-rvalid) [right=of track-gnt,font=\ttfamily]{TRV}; 
+	
+	\path[->] (track-req)  		edge 				node [above] {A} (track-gnt);
+	\path[->] (track-req)  		edge [bend left]	node [above] {B} (track-rvalid);
+	\path[->] (track-gnt)  		edge [bend left]	node [below] {C} (track-rvalid);
+	\path[->] (track-rvalid)  	edge [bend left]	node [below] {D} (track-req);
+	\path[->] (track-rvalid)  	edge [bend left]	node [above] {E} (track-gnt);
+	
+	\node[state,initial] (find-data) [font=\ttfamily, right=of track-rvalid] {FD}; 
+	\node[state] (output-data) [right=of find-data,font=\ttfamily, fill=blue!30]{OD};
+	
+	\path[->] (find-data)  		edge [bend left]	node [above] {I} (output-data);
+	\path[->] (output-data)  		edge [bend left]	node [above] {J} (find-data);
+	
+	\end{tikzpicture}
+\end{center}
