@@ -1,5 +1,5 @@
 \begin{center}
-		\begin{tikzpicture} [shorten >=1pt,node distance=3.5cm,on grid]
+		\begin{tikzpicture} [shorten >=1pt,node distance=4.5cm,on grid]
 		\node[state,initial] (ex-start) [font=\ttfamily] {EX\_START}; 
 		\node[state] (get-data) [right=of track-req,font=\ttfamily]{GET\_DATA};
 		\node[state] (check-mem-req) [right=of get-data,font=\ttfamily]{CHECK\_MEM\_REQ}; 
@@ -17,8 +17,8 @@
 		\path[->] (scan-mem-req)  	edge 	node [above] {F} (check-mem-rvalid);
 		\path[->] (check-mem-rvalid)  	edge [bend right=70] 	node [left] {G} (scan-mem-rvalid);
 		\path[->] (check-mem-rvalid)  	edge [bend left] 	node [right] {H} (output-result);
-		\path[->] (scan-mem-rvalid)  	edge [bend left=70]	node [right] {I} (output-result);
-		\path[->] (output-result)  	edge [bend left=10] node [above] {J} (ex-start);
+		\path[->] (scan-mem-rvalid.north)  	edge [bend left=80]	node [right] {I} (output-result);
+		\path[->] (output-result)  	edge [bend left=10] node [above] {J} (ex-start.south);
 		
 		
 		\end{tikzpicture}

@@ -10,7 +10,7 @@
 	\path[->] (track-rvalid)  	edge [bend left]	node [below] {D} (track-req);
 	\path[->] (track-rvalid)  	edge [bend left]	node [above] {E} (track-gnt);
 	
-	\node[state,initial] (find-data) [font=\ttfamily, below=of track-rvalid, fill=blue!30] {FD}; 
+	\node[state,initial] (find-data) [font=\ttfamily, right=of track-rvalid, fill=blue!30] {FD}; 
 	\node[state] (output-data) [right=of find-data,font=\ttfamily]{OD};
 	
 	\path[->] (find-data)  		edge [bend left]	node [above] {I} (output-data);

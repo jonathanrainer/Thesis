@@ -1,0 +1,12 @@
+a0010113    addi sp,sp,-1536
+5e812e23    sw	 s0,1532(sp)
+60010413    addi s0,sp,1536
+00200793    li	 a5,2
+fef42623    sw	 a5,-20(s0)
+4580906f    j	 966c <main+0x946c>
+fec42783    lw	 a5,-20(s0)
+fff78793    addi a5,a5,-1 $\lstsetnumber{\ldots}$
+...$\lstresetnumber\setcounter{lstnumber}{9626}$
+fec42783    lw	 a5,-20(s0)
+00f05463    blez a5,9678 <main+0x9478>
+ba5f606f    j    218 <main+0x18>

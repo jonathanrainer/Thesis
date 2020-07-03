@@ -1,0 +1,19 @@
+\begin{center}
+			\begin{tikztimingtable}[timing/xunit=30, timing/yunit=8, timing/lslope=0, timing/zslope=0.1, timing/dslope=0.1 ]
+				counter & [timing/counter/new={char=q, min value=50}] u10{q}\\
+				clk        			& 21{c}@{\gtikzset{timing/rowdist=3}}\\
+				data\_req\_o       	& 5l4h12l\\
+				data\_addr\_o		& 5u4d{0xFEEC}12u\\
+				data\_we\_o			& 5l4h12l\\
+				data\_be\_o			& 5u4d{0xF}12u\\
+				data\_wdata\_o		& 5u4d{0x4256FFCC}12u\\
+				data\_gnt\_i		& 7l2h12l\\
+				data\_rvalid\_i		& 11l2h8l\\
+				\extracode \background
+				\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
+					\vertlines{0.5,...,\twidth}
+				\end{scope}
+				\endbackground
+			\end{tikztimingtable}
+			\caption{A \texttt{STORE} instruction to \texttt{0xFEEC} from the processor.}
+		\end{center}

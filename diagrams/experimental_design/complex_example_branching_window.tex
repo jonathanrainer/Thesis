@@ -1,0 +1,23 @@
+\begin{tikztimingtable}[timing/xunit=25, timing/yunit=8, timing/lslope=0.1, timing/zslope=0.1, timing/dslope=0.1 ]
+				counter & [timing/counter/new={char=q, min value=100}] u20{q}\\
+				clk        			& 41{c}\\
+				instr\_req\_o       & 5l4h6l4h6l4h6l4h2l\\
+				instr\_addr\_o		& 5u4d{0x2A4}10d{0x2A8}8d{0x2AC}2d{0x278}10d{0x27C}2u\\
+				instr\_gnt\_i		& 7l2h8l2h8l2h8l2h2l\\
+				instr\_rvalid\_i	& 15lH8lH8lH4l\\
+				instr\_rdata\_i		& 15u5D{0xFCE7DAE3}5D{0xFE842783}3D{0xFEC42503}\\
+				data\_req\_o       	& h4H16L\\
+				data\_addr\_o		& d4D{0xfee4}16U\\
+				data\_gnt\_i		& l3LH16L\\
+				data\_rvalid\_i		& l12LH7L\\
+				data\_rdata\_i		& u12U16d{0x00000005}\\
+				is\_decoding		& l12LH5LHL\\
+				id\_ready			& l12LH5LHL\\
+				branch\_decision	& l13LH5L\\
+				\extracode \background
+				\shade [right color=yellow!20,left color=yellow!20] (3.5,0) rectangle (13.5,-42);
+				\begin{scope}[gray,semitransparent,semithick,node font=\tiny,anchor=west]
+					\vertlines{0.5,...,\twidth}
+				\end{scope}
+				\endbackground
+\end{tikztimingtable}

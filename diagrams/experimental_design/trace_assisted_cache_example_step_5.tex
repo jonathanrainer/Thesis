@@ -1,0 +1,33 @@
+\tikzstyle{block} = [draw, rectangle, text width=2.8cm, text centered, minimum height=1.2cm, node distance=2.1cm,fill=blue!30]
+\tikzstyle{container} = [draw, rectangle, inner sep=0.3cm, fill=orange!50,minimum height=3cm, minimum width=3cm]
+\def\bottom#1#2{\hbox{\vbox to #1{\vfill\hbox{#2}}}}
+\tikzset{
+	mybackground/.style={execute at end picture={
+			\begin{scope}[on background layer]
+				\node[] at (current bounding box.north){\bottom{1cm} #1};
+			\end{scope}
+	}},
+}
+
+\begin{center}
+	\begin{tikzpicture}
+	\node [block, text width=3cm] (trace-repo) {Trace Repository};
+	\node [block, below= of trace-repo, text width=3cm, yshift=-0.5cm] (cpu) {Processor};
+	\node [block, right= of trace-repo, minimum height=2.5cm, xshift=.8cm, text width=2cm] (tac-controller) at ($(trace-repo)!0.5!(cpu)$)  {Controller};
+	\node [block, right= of tac-controller, minimum height=3cm, text width=2.5cm, xshift=-0.8cm] (cache-imp) {Standard Cache};
+	\node [block, right= of cache-imp, xshift=-0.8cm] (memory) {Data Memory};
+	
+	\begin{scope}[on background layer]
+	\node [container,fit=(tac-controller) (cache-imp),label=above:Trace Assisted Cache] (container) {};
+	\end{scope}
+	
+	\draw [->, thick] ([xshift=-1.3cm]trace-repo.south) node [right, yshift=-0.55cm] {\textcolor{gray!40}{\textbf{(\texttt{FEC42783}, \texttt{FEEC})}}} |-  ([yshift=0.5cm]tac-controller.west);
+	\draw [->, thick] ([xshift=-1.3cm]cpu.north) node [right, yshift=0.55cm] {\textcolor{black}{\textbf{\texttt{0xFEEC}}}} |-  ([yshift=-0.5cm]tac-controller.west);
+	\draw [->, thick] (tac-controller.north) |- (trace-repo.east);
+	\draw [->, thick] ([yshift=0.5cm]tac-controller.east) -- node [above] {\textbf{\texttt{0xFEEC}}} ([yshift=0.5cm]cache-imp.west);
+	\draw [<-, thick] ([yshift=-0.5cm]tac-controller.east) -- ([yshift=-0.5cm]cache-imp.west);
+	\draw [->, thick] ([yshift=0.25cm]cache-imp.east) -- ([yshift=0.25cm]memory.west);
+	\draw [<-, thick] ([yshift=-0.25cm]cache-imp.east) -- ([yshift=-0.25cm]memory.west);
+	
+	\end{tikzpicture}
+\end{center}

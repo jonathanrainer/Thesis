@@ -1,0 +1,25 @@
+\begin{center}
+		\begin{tikzpicture} [shorten >=1pt,node distance=2.5cm,on grid]
+		\node[state,initial] (ex-start) [font=\ttfamily, fill=blue!30] {ES}; 
+		\node[state] (get-data) [right=of track-req,font=\ttfamily]{GD};
+		\node[state] (check-mem-req) [right=of get-data,font=\ttfamily]{CMR}; 
+		\node[state] (scan-mem-req) [above=of check-mem-req,font=\ttfamily]{SMR}; 
+		\node[state] (check-mem-rvalid) [right=of check-mem-req,font=\ttfamily]{CMRV}; 
+		\node[state] (scan-mem-rvalid) [above=of check-mem-rvalid,font=\ttfamily]{SMRV}; 
+		\node[state] (output-result) [below=of check-mem-rvalid,font=\ttfamily]{OR}; 
+		
+		
+		\path[->] (ex-start)  		edge 				node [above] {A} (get-data);
+		\path[->] (get-data)  		edge [bend left]	node [above] {B} (ex-start);
+		\path[->] (get-data)  		edge 	node [above] {C} (check-mem-req);
+		\path[->] (check-mem-req)  	edge [bend left]	node [above] {D} (check-mem-rvalid);
+		\path[->] (check-mem-req)  	edge 	node [left] {E} (scan-mem-req);
+		\path[->] (scan-mem-req)  	edge 	node [above] {F} (check-mem-rvalid);
+		\path[->] (check-mem-rvalid)  	edge [bend right=70] 	node [left] {G} (scan-mem-rvalid);
+		\path[->] (check-mem-rvalid)  	edge [bend left] 	node [right] {H} (output-result);
+		\path[->] (scan-mem-rvalid)  	edge [bend left=70]	node [right] {I} (output-result.north);
+		\path[->] (output-result)  	edge [bend left=10] node [above] {J} (ex-start);
+		
+		
+		\end{tikzpicture}
+\end{center}

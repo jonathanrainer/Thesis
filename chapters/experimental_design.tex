@@ -156,7 +156,7 @@ The process begins as \texttt{instr\_req\_o} goes high at Clock Cycle 2 and this
 	\begin{subfigure}{\linewidth}
 		\input{diagrams/experimental_design/simple_load_reduced_state_machines_step_1.tex}
 	\end{subfigure}
-	\caption{}
+	\caption{In this phase of the example the start of an instruction transaction has been detected so we progress to the \texttt{TRACK\_GRANT} phase and record the start of the request in the \texttt{REQ\_START} field of the tracking buffer.}
 	\label{fig:load-example-step-1}
 \end{figure}
 
@@ -170,7 +170,7 @@ Then the grant phase will continue until clock cycle 3 when \texttt{instr\_gnt\_
 	\begin{subfigure}{\linewidth}
 		\input{diagrams/experimental_design/simple_load_reduced_state_machines_step_2.tex}
 	\end{subfigure}
-	\caption{}
+	\caption{In this phase the grant signal is detected which means we can populate the \texttt{ADDR} and \texttt{GNT} fields of the tracking buffer as they are guaranteed at this point. Furthermore when transition \texttt{C} is taken and we move into the \texttt{TRACK\_RVALID} state we can populate the \texttt{RVALID} and \texttt{INST} fields also.}
 	\label{fig:load-example-step-2}
 \end{figure}
 
@@ -178,7 +178,7 @@ Once the decode phase of this instruction is complete, the processor signals thi
 
 \begin{figure}[htbp]
 	\input{diagrams/experimental_design/simple_load_tracking_buffer_step_3.tex}
-	\caption{}
+	\caption{When the end of the decode phase is detected we can mark the instruction as ready to output and track the time at which the decode phase is completed.}
 	\label{fig:load-example-step-3}
 \end{figure}
 
@@ -191,17 +191,17 @@ In the next clock cycle the Output State Machine will scan the tracking buffer u
 	\begin{subfigure}{\linewidth}
 		\input{diagrams/experimental_design/simple_load_reduced_state_machines_step_4.tex}
 	\end{subfigure}
-	\caption{}
+	\caption{Now we are in the output data phase this record is marked as finished so it will not be considered again when the tracking buffer is searched. Then we move back to looking for another instruction transaction in the \texttt{TRACK\_RVALID} state.}
 	\label{fig:load-example-step-4}
 \end{figure}
 
 \subsubsection{Complex Branching Example}
 
-The previous example is relatively simple but introducing branching causes several other factors to have to be taken into account. For this example we will use the signal diagram in Figure \ref{fig:complex-example-signal-diagram}. An important point to note about this diagram is that a fetch from data memory is already in progress when this diagram starts, this prevents the decode phase for \texttt{0x2A4} starting as soon as it is fetched and sets this train of events in motion.
+The previous example is relatively simple but introducing branching causes several other factors to have to be taken into account. For this example we will use the signal diagram in Figure \ref{fig:complex-example-signal-diagram}. An important point to note about this diagram is that a \texttt{LOAD} from data memory is already in progress when this diagram starts, this prevents the decode phase for \texttt{0x2A4} starting as soon as it is fetched and sets this train of events in motion.
 
 \begin{sidewaysfigure}[htbp]
 	\input{diagrams/experimental_design/complex_branching_example_signal_diagram.tex}
-	\caption{}
+	\caption{In this signal diagram we join as a \texttt{LOAD} from data memory is already in progress, only finishing at cycle 112. This causes a large delay in between the successful fetch of the branching instruction and its eventual decoding and address calculation. The processor has built in mechanisms to stop any incorrect fetches that occur in between from propagating so this is something we have to emulate in the tracker.}
 	\label{fig:complex-example-signal-diagram}
 \end{sidewaysfigure}
 
@@ -214,7 +214,7 @@ The dynamics of Instruction Fetch State Machine are quite similar, however the b
 	\begin{subfigure}{\linewidth}
 		\input{diagrams/experimental_design/complex_reduced_state_machines_step_1.tex}
 	\end{subfigure}
-	\caption{}
+	\caption{At this point we have already fetched and decoded the instruction in question, however because \texttt{0xFCE7DAE3} is a branching instruction we have to engage the Branch Decision State Machine to help us decide whether fetches made before the condition is known are valid or not.}
 	\label{fig:complex-example-step-1}
 \end{figure} 
 
@@ -222,12 +222,21 @@ Now, because \texttt{0xFCE7DAE3} is a branching instruction that relies on a con
 
 \begin{figure}[htbp]
 	\input{diagrams/experimental_design/complex_tracking_buffer_step_2.tex}
-	\caption{}
+	\caption{As the decoding and address calculation are delayed a second record enters the tracking buffer. This record may be an entirely legitimate fetch or it may be an oversight on the part of the processor. We need to know definitively to achieve a trace that has parity with what was executed.}
 	\label{fig:complex-example-step-2}
 \end{figure} 
 
 
-Let us assume that in this case the branch is in fact taken, so the next instruction to be executed will be \texttt{0xFEC42503} at address \texttt{0x278}. In the \texttt{CHECK\_BRANCH\_DECISION} phase, the \texttt{branch\_decision} signal goes high so we then store the time at which that occurred and set the cut off time as 112. This cut off time is important because it defines the time at which an instruction grant would need to take place after to be a valid fetch, forming a window with the lower bound set by the grant time of the branching instruction itself. We then also set a marker to state that we are in a branching state and mark the branching instruction as ready to output. The effect of these concurrent changes, both the fetch from \texttt{0x2A8} and the effect of the branch decision state machine can be seen in Figure \ref{fig:complex-example-step-3}. The Branch Decision State Machine then returns to the \texttt{IDLE} state.
+Let us assume that in this case the branch is in fact taken, so the next instruction to be executed will be \texttt{0xFEC42503} at address \texttt{0x278}. In the \texttt{CHECK\_BRANCH\_DECISION} phase, the \texttt{branch\_decision} signal goes high so we then store the time at which that occurred and set the cut off time as 112. This cut off time is important because it defines the time at which an instruction grant would need to take place after to be a valid fetch, forming a window with the lower bound set by the grant time of the branching instruction itself. A visual representation of this can be seen in Figure \ref{fig:complex-example-branching-window}.
+
+\begin{sidewaysfigure}
+	\input{diagrams/experimental_design/complex_example_branching_window.tex}
+	\caption{The highlighted region indicates the region within which any successful fetches should be ignored. It ranges from the cycle after the grant of the branching instruction to the cycle in which the branch decision signal goes high. Now because the grant signal for \texttt{0x2A8} falls in this window it must be disregarded.}
+	\label{fig:complex-example-branching-window}	
+\end{sidewaysfigure}
+
+
+We then also set a marker to state that we are in a branching state and mark the branching instruction as ready to output. The effect of these concurrent changes, both the fetch from \texttt{0x2A8} and the effect of the branch decision state machine can be seen in Figure \ref{fig:complex-example-step-3}. The Branch Decision State Machine then returns to the \texttt{IDLE} state.
 
 \begin{figure}[htbp]
 	\begin{subfigure}{\linewidth}
@@ -236,7 +245,7 @@ Let us assume that in this case the branch is in fact taken, so the next instruc
 	\begin{subfigure}{\linewidth}
 		\input{diagrams/experimental_design/complex_reduced_state_machines_step_3.tex}
 	\end{subfigure}
-	\caption{}
+	\caption{When \texttt{CHECK\_BRANCH\_DECISION} is entered the \texttt{branch\_decision} flag goes high to indicate the branch is to be taken. That means that because \texttt{0x2A8} follows \texttt{0x2A4} sequentially it must be disregarded and the next decode phase assigned to the next instruction after it to ensure consistency.}
 	\label{fig:complex-example-step-3}
 \end{figure} 
 
@@ -244,7 +253,7 @@ Now the Output State Machine will deal with both the accumulated instructions fi
 
 \begin{figure}[htbp]
 	\input{diagrams/experimental_design/complex_tracking_buffer_step_4.tex}
-	\caption{}
+	\caption{The final state of the tracking buffer: the branching instruction is marked as finished, even though it was not output due to it not being a memory operation; the incorrect fetch is marked as finished and not output as it was incorrectly tracked and finally the next correct fetch is ready for output the next time the \texttt{OUTPUT\_DATA} state is returned to.}
 	\label{fig:complex-example-step-4}
 \end{figure} 
 
@@ -252,13 +261,13 @@ This mirrors what happens in the processor where instructions that are incorrect
 
 \subsection{The \texttt{EX} Module}
 
-Once the process has completed in the \texttt{IF} module the pertinent data is passed into the \texttt{EX} module which tracks the data memory querying part of the process. Since we have already filtered out a lot of the instructions the process in this phase is slightly simpler however since there are dependencies between instructions this module cannot act synchronously with the processor. This means there are several signal buffers that record previously seen signal values and are then queried so that the beginning and the end of the transactions can be seen. 
+Once the process has completed in the \texttt{IF} module the pertinent data is passed into the \texttt{EX} module which tracks the data memory querying part of the process. Since we have already filtered out a lot of the instructions the process in this phase is slightly simpler, however since there are dependencies between instructions this module cannot act synchronously with the processor. This means there are several signal buffers that record previously seen signal values and are then queried so that the beginning and the end of the transactions can be seen. 
 
-\begin{figure}[htbp]
+\begin{sidewaysfigure}[htbp]
 	\input{diagrams/experimental_design/ex_state_machine.tex}
-	\caption{Bloop}
+	\caption{The central state machine that controls the operation of the \texttt{EX} module. This works asynchronously with the processor, operating in a producer/consumer model with the \texttt{IF} module that works synchronously with the processor.}
 	\label{fig:ex-state-machine}
-\end{figure} 
+\end{sidewaysfigure} 
 
 \subsubsection{The Main State Machine}
 
@@ -283,27 +292,33 @@ Once it has been classified into one of those categories this information is com
 
 \subsubsection{Example}
 
-To demonstrate this process fully we'll discuss the progression of \texttt{0x00112e23} through this state machine. First we'll assume that the memory transaction associated with this instruction happened as follows in Figure [??]. This happened between counter values [??] and [??] and we've now arrived at counter value [??] just as the data associated with \texttt{0x00112e23} is pulled out of the trace buffer. So our starting state looks as it does in Figure [??] below.
+To demonstrate this process fully we'll discuss the progression of \texttt{0x00112E23} through this state machine. First we'll assume that the memory transaction associated with this instruction happened as follows in Figure \ref{fig:ex-tracker-example-memory-transaction}.Let us assume we have now arrived at clock cycle 57, the point the data associated with \texttt{0x00112e23} is pulled out of the trace buffer.
 
-% TODO Add diagram for memory transaction
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/ex_tracker_memory_transaction.tex}
+	\caption{A memory transaction to triggered by instruction \texttt{0x00112E23}, a \texttt{STORE} to \texttt{0xFEFC}}
+	\label{fig:ex-tracker-example-memory-transaction}
+\end{figure}
 
-% TODO Add figure for starting state
+We start in the \texttt{EX\_START} phase and then the \texttt{data\_present} flag goes high to indicate data is present. We then transition into the \texttt{GET\_DATA} phase on the next clock cycle (58) where the data associated with \texttt{0x00112e23} is transferred into the internal trace buffer of the \texttt{EX} module. At the same time we trigger the signal tracker to check for \texttt{data\_req\_o} signals in the last 7 clock cycles as the decode phase for this instruction ended at 51 and we're currently in clock cycle 58. We then transition to the \texttt{CHECK\_MEMORY\_REQS} phase where we wait for the signal tracker to return. At the same time as this we are tracking the state of the \texttt{data\_req\_o} signal so we do not have a blindspot where the signal tracker has no records. 
 
-We start in the \texttt{EX\_START} phase and then the \texttt{data\_present} flag goes high to indicate data is present. We then transition into the \texttt{GET\_DATA} phase where the data associated with \texttt{0x00112e23} is transferred into the internal trace buffer of the \texttt{EX} module. At the same time we trigger the signal tracker to check for \texttt{data\_req} signals in the last ?? clock cycles as the decode phase for this instruction ended at ?? and we're currently in clock cycle ??. We then transition to the \texttt{CHECK\_MEMORY\_REQS} phase where we wait for the signal tracker to return.
+The signal tracker will then begin to scan the area highlighted in blue in Figure \ref{fig:ex-tracker-example-memory-transaction-req-regions-highlighted} below. Once the scanning is complete, in clock cycle 59, it will return a pair (52,53) indicating the start and end of the transaction. We then store the start in the trace buffer and then trigger two more signal buffer searches for the address and the \texttt{rvalid} times. These will be asked to look 6 clock cycles back because the current time is now 59 clock cycles and the end of the \texttt{req} phase was at 53. This can further be seen as the green coloured section in Figure \ref{fig:ex-tracker-example-memory-transaction-rvalid-regions-highlighted}.
 
-At the same time as this we are tracking the state of the \texttt{data\_mem\_req} signal so we do not have a blindspot where the signal tracker has no records. The signal tracker will then begin to scan the area highlighted in Figure [??] below. At it will return a pair (??,??) indicating the start and end of the transaction. We then store the start in the trace buffer and then trigger two more signal buffer searches for the address and the \texttt{rvalid} times. These will be asked to look ?? clock cycles back because the current time is now ?? and the end of the \texttt{req} phase was ??. This can further be seen as the ?? coloured section in Figure [??]
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/ex_tracker_memory_transaction_req_regions_highlighted.tex}
+	\caption{The yellow highlighted region of the signal diagram indicates the current time at which the request to the signal tracker is made. The blue region then indicates the signals that the signal tracker has stored in its internal buffer and therefore can be queried. Due to not wanting to cause a race condition the current clock cycle cannot be queried and so has to be tracked separately.}
+	\label{fig:ex-tracker-example-memory-transaction-req-regions-highlighted}
+\end{figure}
 
-% TODO Add figure with the 2 windows of the signal tracker highlighted.
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/ex_tracker_memory_transaction_rvalid_regions_highlighted.tex}
+	\caption{The green highlighted region of the diagram indicates the area that will be queried by the signal tracker, akin to the previous example the time at which the request was made has also to be stored so it can be queried later but this is dealt with outside the signal tracker.}
+	\label{fig:ex-tracker-example-memory-transaction-rvalid-regions-highlighted}
+\end{figure}
 
-% TODO Add figure to illustrate this next phase
-
-We then move to the \texttt{CHECK\_MEM\_RVALID} phase where after 1 clock cycle the address signal tracker returns the value ?? and this is stored in the trace buffer. In the next cycle the \texttt{rvalid} tracker returns a pair with the value ?? and ??, which means we've managed to find the \texttt{rvalid} in the window tracked by the signal tracker. So we store this information in the signal buffer and then move to the \texttt{OUTPUT\_RESULT} phase. This can be seen in the figure below:
-
-% TODO Add figure decipting above scene
+We then move to the \texttt{CHECK\_MEM\_RVALID} phase where after 1 clock cycle the address signal tracker returns the value \texttt{0xFEEC} and this is stored in the trace buffer. In the next cycle the \texttt{rvalid} tracker returns a pair with the value 55 and 55, which means we've managed to find the \texttt{rvalid} in the window tracked by the signal tracker. So we store this information in the signal buffer and then move to the \texttt{OUTPUT\_RESULT} phase. This can be seen in the figure below:
 
 Finally we have all the information required about this instruction's execution so we output this data to be stored in the trace repository to be recalled later as required. The trace repository is implemented as part of the trace-assisted cache and as such will be described in the coming sections, suffice to say that when data is written to the trace repository it simply acts as a memory device would. There is more logic associated with recalling the traces but from our point of view it simply acts as a memory store for the traces produced.
-
-% TODO Add figure depicting above scene.
 
 \section{Trace Assisted Cache (Enokida)}
 
@@ -368,9 +383,56 @@ The previous section describes the operation of Enokida but it relies on a stand
 
 \subsubsection{Example}
 
-Now we've fully described the hardware that implements the ideas from Chapter \ref{chap:trace-assisted-caching} we can see an end to end example of exactly how this technique works assuming that the data is already captured inside the trace repository. For the purposes of this we'll look at the execution of \texttt{fac.c} the source code, and decompiled \texttt{RISC-V} assembly for which are shown in the figures below. We will only focus on the first few memory operations that are executed as these are the most illustrative and will assume that this program has already run to fruition once so that the trace cache is filled with useful information to reduce the runtime on a subsequent run.
+Now we've fully described the hardware that implements the ideas from Chapter \ref{chap:trace-assisted-caching} we can see an end to end example of exactly how this technique works assuming that the data is already captured inside the trace repository. For the purposes of this we'll look at the execution of a small part of \texttt{nsichneu.c} the decompiled \texttt{RISC-V} assembly for which are shown in Listing \ref{listing:nsichneu-decompiled}. We will only focus on the first few memory operations that are executed as these are the most illustrative and will assume that this program has already run to fruition once so that the trace cache is filled with useful information to reduce the runtime on a subsequent run.
 
-% TODO Fill in example, following along from Vivado
+{
+	\renewcommand*\thelstnumber{\ifnum\value{lstnumber}<8 0\fi \xintDecToHex{\the\value{lstnumber}*4}}
+	\makeatletter
+	\let\orig@lstnumber=\thelstnumber
+	
+	\newcommand\lstsetnumber[1]{\gdef\thelstnumber{#1}}
+	\newcommand\lstresetnumber{\global\let\thelstnumber=\orig@lstnumber}
+	\makeatother
+	\lstinputlisting[label={listing:nsichneu-decompiled},language=risc-v, style=printing, caption={This is a snippet from the execution of nsichneu.c, address \texttt{0x200} is the start of \texttt{main} and so execution begins from there.}, captionpos=b,mathescape=true,firstnumber=128, numberstyle=\ttfamily, xleftmargin=.2\textwidth, xrightmargin=.2\textwidth]{diagrams/experimental_design/nsichneu-decompiled.txt}
+}
+
+Execution of the example begins, after some boot up code which is omitted for brevity, at address \texttt{0x200} which the processor will execute but the trace repository is already primed with data as soon as the fetch begins for \texttt{0xa0010113} so the trace repository will return the pair (\texttt{5E812E23}, \texttt{FEFC}) to the cache, which corresponds to the instruction on line \texttt{204} in Listing \ref{listing:nsichneu-decompiled} and it will begin its work. As this instruction is a \texttt{STORE} it will simply look at the contents of the cache, discover that the appropriate entry is empty, mark it as reserved and then signal the trace cache to update the state of that particular trace. This will update the trace as stored in the trace repository's active set as it is still technically 'in-flight'. The movement of data in the architecture described can be seen in Figure \ref{fig:trace-assisted-cache-example-step-1}
+
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/trace_assisted_cache_example_step_1.tex}
+	\caption{The first step of this example shows the trace repository signalling an intent to store data at \texttt{0xFEFC}. This is communicated to the cache, which then reserves the space and then the controller communicates with the trace repository to mark that trace as in-flight.}
+	\label{fig:trace-assisted-cache-example-step-1}
+\end{figure}
+
+While this is happening the processor is still executing \texttt{0xa0010113} so the trace repository will return a new pair (\texttt{FEF42623}, \texttt{FEEC}), corresponding to \texttt{0x210} in Listing  \ref{listing:nsichneu-decompiled}. The sequence of events will then be very similar to before, the cache will look into the space it has available, discover the entry required is empty, reserve it and then return control to the trace repository. At this point the trace repository will add this store trace to its active set as a second in flight instruction.
+
+At this point the processor has \texttt{0x5e812e23} which means that the trace repository, despite returning the pair (\texttt{FEC42783}, \texttt{FEEC}) will be ignored in favour of servicing the processor's request. This request will store the data from register \texttt{s0} at address \texttt{0xFEFC}, which in reality simply fills up the already reserved space in the cache from the previous trace execution of the \texttt{STORE} instruction. At this point this is exactly what would have happened in any case because the cache is cold, the real power of this solution comes in the next action. Once this happens the trace repository is again signalled to update the state of its active set. This update causes the object that represents the trace element (\texttt{5E812E23}, \texttt{FEFC}) to be marked as complete so it can be safely overwritten as it is no longer in flight. This can be seen in Figure \ref{fig:trace-assisted-cache-example-step-3}
+
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/trace_assisted_cache_example_step_3.tex}
+	\caption{In this step the processor overrides the pair from the trace repository by requesting to store \texttt{0x1122AABB} at address \texttt{0x1122AABB}. This is communicated to the cache which writes the data as the memory has not been used before.}
+	\label{fig:trace-assisted-cache-example-step-3}
+\end{figure}
+
+Now the processor moves on to executing \texttt{0x00200793} but the trace repository has returned the same pair as previously (\texttt{FEC42783}, \texttt{FEEC}). This pair can now be actioned so the cache performs a load to the correct place in the cache for address \texttt{FEFC}. This load happens much earlier than it otherwise would have done, not taking place, from the processor's point of view, for another 4 instructions. This allows more overlapping so when the memory bus would have been idle it's now performing useful work. This load will execute, be stored in the cache and then the trace repository will be signalled to mark this trace element as done because it has been completely performed, unlike the \texttt{STORE} operations where you need to wait for the data to become available. This can be seen in Figure \ref{fig:trace-assisted-cache-example-step-4}.
+
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/trace_assisted_cache_example_step_4.tex}
+	\caption{Here the processor is not requesting any memory operations so the trace repository's request for a \texttt{LOAD} can be actioned, this misses in the cache, and then is passed to the data memory to be recalled. Once this is completed the trace repository can be updated to mark this trace as complete.}
+	\label{fig:trace-assisted-cache-example-step-4}
+\end{figure}
+
+The trace repository then returns a new pair (\texttt{FEC42783}, \texttt{FEEC}) however again the processor wants to execute the instruction at \texttt{0x210} so that supersedes the pre-emptive call. This store takes very little time because again the data can very quickly be stored in the cache. Then the processor will take the jump instruction to \texttt{0x966c} as per the instruction at \texttt{0x214} and will execute the load instruction at \texttt{0x966c} to load data from \texttt{FEEC}. Now at this point, under normal circumstances the processor would have to stall and wait for this load to complete because the data cannot be in the cache and the caches are cold so a long wait would ensure. However because of trace-assisted caching this isn't the case and the data is in-fact already available in the cache. This means that the instructions takes relatively little time and the processor can move on to the next branch instruction instead, this can be seen in Figure \ref{fig:trace-assisted-cache-example-step-5}.
+
+\begin{figure}[htbp]
+	\input{diagrams/experimental_design/trace_assisted_cache_example_step_5.tex}
+	\caption{Now the cache is primed with the information from \texttt{0xFEEC} when the processor requests the data it becomes a cache hit when otherwise it might have been a cache miss. This then reduces the overall runtime of the program by having overlapped this fetch with the processor executing other instructions.}
+	\label{fig:trace-assisted-cache-example-step-5}
+\end{figure}
+
+This pattern is repeated throughout the execution of this code, with the cache getting as far ahead of the processor as it can without violating the semantics of the program being executed and then the processor catching up as it actually executes the program. This means the processor is transparent as far as the processor is concerned, from its point of view it seems as though every memory access that is pre-emptively resolved is a cache hit so all of the modifications are confined to the cache not to the processor itself. 
+
+This example brings us to the end of a description of the hardware that implements trace assisted caching. The next step is to design an experiment such that we can verify if the addition of this new technique is in fact worthwhile. Using these experiments we can more robustly quantify the improvement that we will hopefully and also begin to identify and generalise a pattern for the types of program that are most amenable to this technique. The next section describes how this experiment is set up and the following will document and analyse the results.
 
 \section{Experimental Setup}
 
@@ -410,15 +472,19 @@ All these steps are dealt with in an automated way via a automation framework, t
 
 \subsection{Specific Experimental Concerns}
 
-In discussing the experiment itself there are a few important issues that should be raised at this point to give a full and accurate account of exactly how the experiments work. The first point to make is that the entire gamut of the Mälardalen was not run against these hardware variants several had to be excluded because of how they are architected or because they generate too many memory instructions so they overwhelm the trace repository. This was the case for the following list of benchmarks listed below with the reason for their exclusion also listed:
+In discussing the experiment itself there are a few important issues that should be raised at this point to give a full and accurate account of exactly how the experiments work. The first point to make is that the entire gamut of the Mälardalen was not run against these hardware variant. This was the case for the following set of benchmarks: \texttt{compress}, \texttt{crc}, \texttt{edn}, \texttt{fir}, \texttt{lms}, \texttt{ndes}, \texttt{sqrt}, \texttt{st} \& \texttt{whet}
 
-% TODO Add table
+They were largely discounted for three key reasons, with each one presenting either 1 or multiple of the following problems:
 
-\begin{itemize}
-	\item 
-\end{itemize}
- 
-In addition to this with benchmarks like \texttt{bsort} and ones that relied on arbitrary data this was fixed to a known value before the execution of the benchmarks. For example in \texttt{bsort} there was a fixed array of 100 numbers given to the function rather than generating them randomly on each run. This was done because we had made a simplifying assumption that the two runs of a program would be consistently parameterised so as to focus on the implementation of the Trace-Assisted Cache rather than focussing on other issues. In Chapter \ref{chap:conclusion} it will be further explored how these restrictions might be relaxed but this would enforce re-architecting some of the solution proposed in this chapter and this was not possible within the time allowed for this thesis project.
+\begin{enumerate}
+	\item The Benchmarks required access to memory directly - In certain benchmarks, particularly \texttt{compress} it's assumed you can know \texttt{a-priori} how much memory will be available to the program however because of the way Vivado generates memory it was very difficult to tune the parameter effectively so the decision was made to exclude benchmarks that exhibited this behaviour.
+	\item Intrinsic use of Floating Point Operations - The \texttt{RI5CY} processor that was used for these experiments, whilst having the option to be configured with a floating point unit, was not configured as such for these experiments due to the complicated pipeline behaviour that would introduce. Consequently any benchmarks that relied on the use of floating point numbers were excluded.
+	\item Traces Too Large for Trace Repository - The trace repository was limited in size to 131072 trace entries, consequently any benchmarks that had more than that number of memory operations in them simply could not be used. This eliminated some of the largest benchmarks due to their length and the profligate way they utilise memory instructions.
+\end{enumerate}
+
+It's also worth mentioning that some of the other benchmarks had to be slightly modified in order to remove their reliance on floating point calculations. The three benchmarks that suffered from this were \texttt{minver}, \texttt{select} and \texttt{qsort-exam}, consequently they are postfixed by \texttt{-int} when they are presented in the results. There were also a few small fixes to the logic in some benchmarks as some were hitting segementation faults in the processor and reading undefined data leading to unspecified behaviour. 
+
+In addition to all this benchmarks like \texttt{bsort} and ones that relied on arbitrary data this was fixed to a known value before the execution of the benchmarks. For example in \texttt{bsort} there was a fixed array of 100 numbers given to the function rather than generating them randomly on each run. This was done because we had made a simplifying assumption that the two runs of a program would be consistently parameterised so as to focus on the implementation of the Trace-Assisted Cache rather than focussing on other issues. In Chapter \ref{chap:conclusion} it will be further explored how these restrictions might be relaxed but this would enforce re-architecting some of the solution proposed in this chapter and this was not possible within the time allowed for this thesis project.
 
 A further point to make is that there was also extra hardware introduced to artificially delay calls to memory. Though this was not ideal it was necessary for two reasons, the first was that the FPGA we used, the VC707 did not have an easy way to communicate with it's on-board DRAM when the definition of memory that was expected by the \texttt{RI5CY} was not provided by the on-board \gls{dram}. This meant it was very difficult to store the programs we wanted in memory and then measure the interactions with the DRAM. \gls{bram} on the other hand can be reconfigured into any non-standard configuration you like and is compatible with the Xilinx \gls{xpm} system so a compromise was arrived at, that we would use \gls{bram}, which are on-board and have very low latency, and delay them by introducing artificial delay modules. This effectively simulates a very slow main memory compared to a \gls{cpu} that can execute instructions much faster.
 
